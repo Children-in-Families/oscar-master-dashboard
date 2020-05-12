@@ -4,6 +4,13 @@ ActiveAdmin.register Organization, as: 'Instance' do
 
     column :full_name
     column 'Subdomain', :short_name
+    # For debug data
+    column 'Number of Clients', :active_client do |orgnanization|
+      MultiSchema.within_schema(orgnanization.short_name) do
+        Client.count
+      end
+    end
+
     column 'Number of Active Clients', :active_client do |orgnanization|
       MultiSchema.within_schema(orgnanization.short_name) do
         Client.active_status.count
