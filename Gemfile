@@ -16,6 +16,9 @@ gem 'activeadmin'
 gem 'bootstrap-sass'
 gem 'active_bootstrap_skin'
 gem 'country_select'
+gem 'apartment', :github => 'influitive/apartment', :ref => 'f266f73e58835f94e4ec7c16f28443fe5eada1ac'
+gem 'carrierwave',            '~> 1.1.0'
+gem 'mini_magick',            '~> 4.5'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

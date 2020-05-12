@@ -1,18 +1,20 @@
 ActiveAdmin.register Organization, as: 'Instance' do
+  index do
+    selectable_column
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  # permit_params :full_name, :short_name, :logo, :fcf_ngo, :country, :aht, :integrated
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:full_name, :short_name, :logo, :fcf_ngo, :country, :aht, :integrated]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
+    column :short_name
+    column 'Number of Active Clients', :active_client do |orgnanization|
+      Apartment::Tenant.switch(orgnanization.short_name) do
+        Client.active_status.count
+      end
+    end
 
+    column 'Number of accepted clients', :active_client do |orgnanization|
+      Apartment::Tenant.switch(orgnanization.short_name) do
+        Client.accepted_status.count
+      end
+    end
+
+    actions
+  end
 end
