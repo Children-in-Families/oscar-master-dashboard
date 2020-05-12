@@ -2,7 +2,8 @@ ActiveAdmin.register Organization, as: 'Instance' do
   index do
     selectable_column
 
-    column :short_name
+    column :full_name
+    column 'Subdomain', :short_name
     column 'Number of Active Clients', :active_client do |orgnanization|
       Apartment::Tenant.switch(orgnanization.short_name) do
         Client.active_status.count
