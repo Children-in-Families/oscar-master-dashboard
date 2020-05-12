@@ -20,6 +20,10 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog-aws'
 
+group :production, :staging do
+  gem 'asset_sync'
+end
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
