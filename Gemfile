@@ -21,6 +21,9 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog-aws'
 
+gem 'sidekiq', '~> 4.1.0'
+gem 'httparty'
+
 group :production, :staging do
   gem 'asset_sync'
 end
