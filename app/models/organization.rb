@@ -7,6 +7,7 @@ class Organization < ApplicationRecord
 
   mount_uploader :logo, ImageUploader
 
+  validates :supported_languages, presence: true
   validates :logo, presence: true
   validates :full_name, :short_name, presence: true
   validates :short_name, uniqueness: { case_sensitive: false }, format: { with: %r{\A[a-z](?:[a-z0-9-]*[a-z0-9])?\z}i }, length: { in: 1..63 }
@@ -19,6 +20,10 @@ class Organization < ApplicationRecord
     def switch_to(tenant_name)
       Apartment::Tenant.switch!(tenant_name)
     end
+  end
+
+  def display_supported_languages
+    supported_languages.map{ |lang| SUPPORTED_LANGUAGES[lang.to_sym] }.to_sentence
   end
 
   def save_and_load_generic_data

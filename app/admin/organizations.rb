@@ -25,6 +25,8 @@ ActiveAdmin.register Organization, as: 'Instance' do
       end
     end
 
+    column :display_supported_languages
+
     actions
   end
 
@@ -33,8 +35,10 @@ ActiveAdmin.register Organization, as: 'Instance' do
       row :full_name
       row :short_name
       row :logo do |instance|
-        image_tag instance.logo.url
+        image_tag instance.logo.url, height: 120
       end
+
+      row :display_supported_languages
 
       row :created_at
     end
@@ -45,6 +49,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
       f.input :full_name
       f.input :short_name
       f.input :logo
+      f.input :supported_languages, collection: Organization::SUPPORTED_LANGUAGES.map{ |key, label| [label, key]}, multiple: true, include_blank: false
     end
 
     f.actions
@@ -52,7 +57,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
 
   controller do
     def create
-      @resource = Organization.new(params.require(:organization).permit(:full_name, :short_name, :logo))
+      @resource = Organization.new(params.require(:organization).permit(:full_name, :short_name, :logo, supported_languages: []))
 
       if @resource.valid?
         @org = create_instance_request
@@ -66,6 +71,24 @@ ActiveAdmin.register Organization, as: 'Instance' do
       else
         render :new
       end
+    end
+
+    private
+
+    def create_instance_request
+      # Update token every request
+      current_admin_user.generate_token!
+
+      HTTParty.post(
+        "#{ENV["OSCAR_HOST"]}/api/v1/organizations",
+        headers: { Authorization: "Token token=#{current_admin_user&.token}" },
+        body: {
+          full_name: params.dig(:organization, :full_name),
+          short_name: params.dig(:organization, :short_name),
+          logo: params.dig(:organization, :logo),
+          supported_languages: params.dig(:organization, :supported_languages)
+        }
+      )
     end
   end
 end
