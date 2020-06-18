@@ -38,6 +38,18 @@ ActiveAdmin.register Organization, as: 'Instance' do
         image_tag instance.logo.url, height: 120
       end
 
+      row 'Number of Active Clients', :active_client do |orgnanization|
+        Apartment::Tenant.switch(orgnanization.short_name) do
+          Client.active_status.count
+        end
+      end
+
+      row 'Number of accepted clients', :active_client do |orgnanization|
+        Apartment::Tenant.switch(orgnanization.short_name) do
+          Client.accepted_status.count
+        end
+      end
+
       row :display_supported_languages
 
       row :created_at
