@@ -1,6 +1,10 @@
 ActiveAdmin.register Organization, as: 'Instance' do
   permit_params :logo, :full_name, :short_name, supported_languages: []
 
+  action_item :monthly_usage_report, only: [:show] do
+    link_to 'Monthly Usage Report', monthly_usage_report_admin_instance_path(resource)
+  end
+
   index do
     selectable_column
 
@@ -27,7 +31,9 @@ ActiveAdmin.register Organization, as: 'Instance' do
 
     column :display_supported_languages
 
-    actions
+    actions do |resource|
+      link_to 'Monthly Usage Report', monthly_usage_report_admin_instance_path(resource)
+    end
   end
 
   show do
@@ -65,6 +71,12 @@ ActiveAdmin.register Organization, as: 'Instance' do
     end
 
     f.actions
+  end
+
+  member_action :monthly_usage_report, method: :get do
+    @page_title = "Usage report for #{resource.full_name} in #{1.month.ago.strftime('%B %Y')}"
+    report = MonthlyUsageReport.new(resource)
+    @data = report.data
   end
 
   controller do

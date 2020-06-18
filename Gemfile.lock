@@ -247,6 +247,9 @@ GEM
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
+    paper_trail (10.3.1)
+      activerecord (>= 4.2)
+      request_store (~> 1.1)
     parallel (1.19.1)
     pg (1.2.3)
     polyamorous (2.3.2)
@@ -298,6 +301,8 @@ GEM
       ffi (~> 1.0)
     redis (3.3.5)
     regexp_parser (1.7.0)
+    request_store (1.5.0)
+      rack (>= 1.4)
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -405,6 +410,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)
   mini_magick
+  paper_trail
   pg
   puma (~> 4.1)
   rails (~> 6.0.2, >= 6.0.2.2)

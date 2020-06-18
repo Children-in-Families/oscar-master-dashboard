@@ -1,0 +1,7 @@
+table_for assigns[:data] do
+  assigns[:data].each do |key, value|
+    column key.to_s.titleize do
+      value
+    end
+  end
+end

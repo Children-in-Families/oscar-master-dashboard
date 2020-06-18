@@ -23,6 +23,7 @@ gem 'fog-aws'
 
 gem 'sidekiq', '~> 4.1.0'
 gem 'httparty'
+gem 'paper_trail'
 
 group :production, :staging do
   gem 'asset_sync'
