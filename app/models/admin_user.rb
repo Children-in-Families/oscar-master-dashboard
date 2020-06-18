@@ -2,6 +2,7 @@ class AdminUser < ApplicationRecord
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable
 
+  validates :first_name, :last_name, presence: true
   before_create :generate_token
 
   def generate_token!
