@@ -1,4 +1,6 @@
 ActiveAdmin.register Organization, as: 'Instance' do
+  menu priority: 2
+
   permit_params :logo, :full_name, :short_name, supported_languages: []
 
   action_item :monthly_usage_report, only: [:show] do
