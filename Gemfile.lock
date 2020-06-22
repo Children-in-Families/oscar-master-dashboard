@@ -94,6 +94,7 @@ GEM
     autoprefixer-rails (9.7.6)
       execjs
     bcrypt (3.1.13)
+    bcrypt_pbkdf (1.0.1)
     bindex (0.8.1)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
@@ -153,6 +154,7 @@ GEM
     dotenv-rails (2.7.5)
       dotenv (= 2.7.5)
       railties (>= 3.2, < 6.1)
+    ed25519 (1.2.4)
     erubi (1.9.0)
     excon (0.73.0)
     execjs (2.7.0)
@@ -393,6 +395,7 @@ DEPENDENCIES
   activeadmin
   apartment!
   asset_sync
+  bcrypt_pbkdf
   bootsnap (>= 1.4.2)
   bootstrap-sass
   byebug
@@ -405,6 +408,7 @@ DEPENDENCIES
   country_select
   devise
   dotenv-rails
+  ed25519
   fog-aws
   httparty
   jbuilder (~> 2.7)
