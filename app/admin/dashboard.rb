@@ -3,9 +3,10 @@ ActiveAdmin.register_page "Dashboard" do
 
   content title: proc { I18n.t("active_admin.dashboard") } do
     div class: "blank_slate_container", id: "dashboard_default_message" do
-      h2 'Monthly Usage Report'
+      h2 "Usage report in #{1.month.ago.strftime('%B %Y')}"
+
       table_for :monthly_usage_report do
-        MonthlyUsageReport.new.data.each do |key, value|
+        MonthlyUsageReport.new.aggregate_data_without_dev.each do |key, value|
           column key.to_s.titleize do
             value
           end

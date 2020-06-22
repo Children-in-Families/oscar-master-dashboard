@@ -75,8 +75,8 @@ ActiveAdmin.register Organization, as: 'Instance' do
 
   member_action :monthly_usage_report, method: :get do
     @page_title = "Usage report for #{resource.full_name} in #{1.month.ago.strftime('%B %Y')}"
-    report = MonthlyUsageReport.new(resource)
-    @data = report.data
+    report = MonthlyUsageReport.new
+    @data = report.data_per_org(resource)
   end
 
   controller do
