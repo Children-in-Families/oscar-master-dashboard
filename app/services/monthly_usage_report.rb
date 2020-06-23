@@ -8,6 +8,7 @@ class MonthlyUsageReport
 
   def aggregate_data_without_dev
     output = {
+      total_instance: 0,
       user_count: 0,
       user_added_count: 0,
       user_deleted_count: 0,
@@ -21,6 +22,7 @@ class MonthlyUsageReport
     Organization.where.not(short_name: %w(shared demo)).find_each do |organization|
       data = data_per_org(organization)
 
+      output[:total_instance] += 1
       output[:user_count] += data[:user_count]
       output[:user_added_count] += data[:user_added_count]
       output[:user_deleted_count] += data[:user_deleted_count]
