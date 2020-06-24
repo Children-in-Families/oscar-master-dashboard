@@ -84,6 +84,10 @@ ActiveAdmin.register Organization, as: 'Instance' do
     f.actions
   end
 
+  action_item :view, only: :monthly_usage_report do
+    link_to 'Date Filter', data: { href: monthly_usage_report_admin_instance_path(resource) }
+  end
+
   member_action :monthly_usage_report, method: :get do
     @page_title = "Usage report for #{resource.full_name} in #{1.month.ago.strftime('%B %Y')}"
     report = MonthlyUsageReport.new
