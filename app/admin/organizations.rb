@@ -3,6 +3,10 @@ ActiveAdmin.register Organization, as: 'Instance' do
 
   permit_params :logo, :full_name, :short_name, supported_languages: []
 
+  scope :non_demo, default: true
+  scope :demo
+  scope :all
+
   filter :full_name
   filter :short_name, label: 'Subdomain'
   filter :supported_languages, as: :select, collection: proc { Organization::SUPPORTED_LANGUAGES.map{ |key, label| [label, key]} }, multiple: true
