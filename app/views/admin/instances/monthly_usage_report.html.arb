@@ -1,3 +1,7 @@
+panel 'Filter' do
+  render 'filter', url: monthly_usage_report_admin_instance_path(assigns[:instance])
+end
+
 table_for assigns[:data] do
   assigns[:data].each do |key, value|
     column key.to_s.titleize do
