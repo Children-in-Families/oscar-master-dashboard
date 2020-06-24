@@ -3,6 +3,11 @@ ActiveAdmin.register Organization, as: 'Instance' do
 
   permit_params :logo, :full_name, :short_name, supported_languages: []
 
+  filter :full_name
+  filter :short_name, label: 'Subdomain'
+  filter :supported_languages, as: :select, collection: proc { Organization::SUPPORTED_LANGUAGES.map{ |key, label| [label, key]} }, multiple: true
+  filter :created_at
+
   action_item :monthly_usage_report, only: [:show] do
     link_to 'Monthly Usage Report', monthly_usage_report_admin_instance_path(resource)
   end
