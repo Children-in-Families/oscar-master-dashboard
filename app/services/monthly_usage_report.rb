@@ -19,7 +19,7 @@ class MonthlyUsageReport
       tranferred_client_count: 0
     }
 
-    Organization.where.not(short_name: %w(shared demo)).find_each do |organization|
+    Organization.non_demo.find_each do |organization|
       data = data_per_org(organization)
 
       output[:total_instance] += 1
