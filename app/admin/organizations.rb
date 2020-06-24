@@ -50,7 +50,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
   show do
     attributes_table do
       row :full_name
-      row :short_name
+      row 'Subdomain', :short_name
       row :logo do |instance|
         image_tag instance.logo.url, height: 120
       end
@@ -76,7 +76,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
   form do |f|
     f.inputs do
       f.input :full_name
-      f.input :short_name
+      f.input :short_name, label: 'Subdomain'
       f.input :logo
       f.input :supported_languages, collection: Organization::SUPPORTED_LANGUAGES.map{ |key, label| [label, key]}, multiple: true, include_blank: false
     end
@@ -89,6 +89,9 @@ ActiveAdmin.register Organization, as: 'Instance' do
   end
 
   member_action :monthly_usage_report, method: :get do
+    @beginning_of_month = 1.month.ago.beginning_of_month
+    @end_of_month       = 1.month.ago.end_of_month
+
     @page_title = "Usage report for #{resource.full_name} in #{1.month.ago.strftime('%B %Y')}"
     report = MonthlyUsageReport.new
     @data = report.data_per_org(resource)
