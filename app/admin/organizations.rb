@@ -12,7 +12,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
   filter :full_name
   filter :short_name, label: 'Subdomain'
   filter :supported_languages, as: :select, collection: proc { Organization::SUPPORTED_LANGUAGES.map{ |key, label| [label, key]} }, multiple: true
-  filter :created_at
+  filter :created_at, label: 'NGO Onboard Date'
 
   action_item :monthly_usage_report, only: [:show] do
     link_to 'Monthly Usage Report', monthly_usage_report_admin_instance_path(resource)
@@ -43,6 +43,8 @@ ActiveAdmin.register Organization, as: 'Instance' do
     end
 
     column :display_supported_languages
+    column 'NGO Onboard Date', :created_at
+
 
     actions do |resource|
       link_to 'Monthly Usage Report', monthly_usage_report_admin_instance_path(resource)
@@ -52,7 +54,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
   show do
     attributes_table do
       row :full_name
-      row 'Subdomain', :short_name
+      row :short_name, 'Subdomain'
       row :logo do |instance|
         image_tag instance.logo.url, height: 120
       end
@@ -71,7 +73,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
 
       row :display_supported_languages
 
-      row :created_at
+      row :created_at, 'NGO Onboard Date'
     end
   end
 
