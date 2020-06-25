@@ -1,6 +1,8 @@
 ActiveAdmin.register Organization, as: 'Instance' do
   menu priority: 2
 
+  actions :all, except: [:destroy]
+
   permit_params :logo, :full_name, :short_name, supported_languages: []
 
   scope :non_demo, default: true
