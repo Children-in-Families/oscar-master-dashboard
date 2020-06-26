@@ -12,9 +12,9 @@ ActiveAdmin.register Organization, as: 'Instance' do
 
   filter :full_name
   filter :short_name, label: 'Subdomain'
-  filter :clients_count, 'Number of Clients'
-  filter :active_client, 'Number of Active Clients'
-  filter :accepted_client, 'Number of accepted clients'
+  filter :clients_count, label: 'Number of Clients'
+  filter :active_client, label: 'Number of Active Clients'
+  filter :accepted_client, label: 'Number of accepted clients'
 
   filter :supported_languages, as: :select, collection: proc { Organization::SUPPORTED_LANGUAGES.map{ |key, label| [label, key]} }, multiple: true
   filter :created_at, label: 'NGO Onboard Date'
