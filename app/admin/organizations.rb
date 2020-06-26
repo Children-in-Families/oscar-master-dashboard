@@ -2,6 +2,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
   menu priority: 2
 
   actions :all, except: [:destroy]
+  before_action :update_client_data, only: [:show, :index]
 
   permit_params :logo, :full_name, :short_name, supported_languages: []
 
@@ -23,24 +24,10 @@ ActiveAdmin.register Organization, as: 'Instance' do
 
     column :full_name
     column 'Subdomain', :short_name
-    # For debug data
-    column 'Number of Clients', :active_client do |orgnanization|
-      Apartment::Tenant.switch(orgnanization.short_name) do
-        Client.count
-      end
-    end
 
-    column 'Number of Active Clients', :active_client do |orgnanization|
-      Apartment::Tenant.switch(orgnanization.short_name) do
-        Client.active_status.count
-      end
-    end
-
-    column 'Number of accepted clients', :active_client do |orgnanization|
-      Apartment::Tenant.switch(orgnanization.short_name) do
-        Client.accepted_status.count
-      end
-    end
+    column 'Number of Clients', :clients_count
+    column 'Number of Active Clients', :active_client
+    column 'Number of accepted clients', :accepted_client
 
     column :display_supported_languages
     column 'NGO Onboard Date', :created_at
@@ -59,21 +46,23 @@ ActiveAdmin.register Organization, as: 'Instance' do
         image_tag instance.logo.url, height: 120
       end
 
-      row 'Number of Active Clients', :active_client do |orgnanization|
-        Apartment::Tenant.switch(orgnanization.short_name) do
-          Client.active_status.count
-        end
+      row 'Number of Clients' do |instance|
+        instance.clients_count
       end
 
-      row 'Number of accepted clients', :active_client do |orgnanization|
-        Apartment::Tenant.switch(orgnanization.short_name) do
-          Client.accepted_status.count
-        end
+      row 'Number of Active Clients' do |instance|
+        instance.active_client
+      end
+
+      row 'Number of accepted clients' do |instance|
+        instance.accepted_client
+      end
+
+      row 'NGO Onboard Date' do |instance|
+        instance.created_at
       end
 
       row :display_supported_languages
-
-      row :created_at, 'NGO Onboard Date'
     end
   end
 
@@ -120,6 +109,10 @@ ActiveAdmin.register Organization, as: 'Instance' do
     end
 
     private
+
+    def update_client_data
+      Organization.update_client_data
+    end
 
     def create_instance_request
       # Update token every request

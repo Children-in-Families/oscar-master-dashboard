@@ -23,6 +23,18 @@ class Organization < ApplicationRecord
     def switch_to(tenant_name)
       Apartment::Tenant.switch!(tenant_name)
     end
+
+    def update_client_data
+      find_each do |organization|
+        Apartment::Tenant.switch(organization.short_name) do
+          organization.update_columns(
+            clients_count: Client.count,
+            active_client: Client.active_status.count,
+            accepted_client: Client.accepted_status.count
+          )
+        end
+      end
+    end
   end
 
   def display_supported_languages
