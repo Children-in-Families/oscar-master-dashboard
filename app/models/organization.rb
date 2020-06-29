@@ -12,8 +12,12 @@ class Organization < ApplicationRecord
   validates :full_name, :short_name, presence: true
   validates :short_name, uniqueness: { case_sensitive: false }, format: { with: %r{\A[a-z](?:[a-z0-9-]*[a-z0-9])?\z}i }, length: { in: 1..63 }
 
-  scope :demo, -> { where(short_name: %w(shared demo)) }
-  scope :non_demo, -> { where.not(short_name: %w(shared demo)) }
+  scope :demo, -> { where(demo: true) }
+  scope :non_demo, -> { where.not(demo: true) }
+
+  scope :km, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%km%") }
+  scope :en, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%en%") }
+  scope :my, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%my%") }
 
   class << self
     def current
@@ -39,6 +43,10 @@ class Organization < ApplicationRecord
 
   def display_supported_languages
     supported_languages.map{ |lang| SUPPORTED_LANGUAGES[lang.to_sym] }.to_sentence
+  end
+
+  def demo_status
+    'YES' if demo?
   end
 
   def save_and_load_generic_data

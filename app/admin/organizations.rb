@@ -2,13 +2,20 @@ ActiveAdmin.register Organization, as: 'Instance' do
   menu priority: 2
 
   actions :all, except: [:destroy]
+
   before_action :update_client_data, only: [:show, :index]
 
-  permit_params :logo, :full_name, :short_name, supported_languages: []
+  permit_params :logo, :demo, :full_name, :short_name, supported_languages: []
 
-  scope :non_demo, default: true
-  scope :demo
   scope :all
+
+  scope :non_demo, default: true, group: :demo
+  scope :demo, group: :demo
+
+  scope 'English', :en, group: :language
+  scope 'Khmer', :km, group: :language
+  scope 'Burmese', :my, group: :language
+
 
   filter :full_name
   filter :short_name, label: 'Subdomain'
@@ -16,7 +23,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
   filter :active_client, label: 'Number of Active Clients'
   filter :accepted_client, label: 'Number of accepted clients'
 
-  filter :supported_languages, as: :select, collection: proc { Organization::SUPPORTED_LANGUAGES.map{ |key, label| [label, key]} }, multiple: true
+  # filter :supported_languages, as: :select, collection: proc { Organization::SUPPORTED_LANGUAGES.map{ |key, label| [label, key]} }, multiple: true
   filter :created_at, label: 'NGO Onboard Date'
 
   action_item :monthly_usage_report, only: [:show] do
@@ -27,6 +34,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
     selectable_column
 
     column :full_name
+    column 'Demo?', :demo_status
     column 'Subdomain', :short_name
 
     column 'Number of Clients', :clients_count
@@ -48,6 +56,10 @@ ActiveAdmin.register Organization, as: 'Instance' do
       row :short_name, 'Subdomain'
       row :logo do |instance|
         image_tag instance.logo.url, height: 120
+      end
+
+      row 'Demo?' do |instance|
+        instance.demo_status
       end
 
       row 'Number of Clients' do |instance|
@@ -74,6 +86,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
     f.inputs do
       f.input :full_name
       f.input :short_name, label: 'Subdomain'
+      f.input :demo, label: 'Demo?'
       f.input :logo
       f.input :supported_languages, collection: Organization::SUPPORTED_LANGUAGES.map{ |key, label| [label, key]}, multiple: true, include_blank: false
     end
@@ -96,7 +109,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
 
   controller do
     def create
-      @resource = Organization.new(params.require(:organization).permit(:full_name, :short_name, :logo, supported_languages: []))
+      @resource = Organization.new(params.require(:organization).permit(:demo, :full_name, :short_name, :logo, supported_languages: []))
 
       if @resource.valid?
         @org = create_instance_request
@@ -127,6 +140,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
         headers: { Authorization: "Token token=#{current_admin_user&.token}" },
         body: {
           full_name: params.dig(:organization, :full_name),
+          demo: params.dig(:organization, :demo),
           short_name: params.dig(:organization, :short_name),
           logo: params.dig(:organization, :logo),
           supported_languages: params.dig(:organization, :supported_languages)
