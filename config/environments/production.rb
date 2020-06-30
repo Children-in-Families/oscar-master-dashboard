@@ -109,4 +109,30 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
+  config.action_controller.asset_host = "//#{ENV['S3_BUCKET_NAME']}.s3.amazonaws.com"
+  config.assets.prefix = "/md-assets"
+  # Asset digests allow you to set far-future HTTP expiration dates on all assets,
+  # yet still be able to expire them through the digest params.
+  config.action_mailer.asset_host = "http://md.oscarhq.com"
+  config.action_mailer.default_url_options = { host: 'http://md.oscarhq.com' }
+  config.assets.digest = true
+  config.assets.enabled = true
+  config.assets.initialize_on_precompile = true
+
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.smtp_settings = {
+    address:               'email-smtp.us-east-1.amazonaws.com',
+    authentication:        :login,
+    user_name:             ENV['AWS_SES_USER_NAME'],
+    password:              ENV['AWS_SES_PASSWORD'],
+    enable_starttls_auto:  true,
+    port:                  465,
+    openssl_verify_mode:   OpenSSL::SSL::VERIFY_NONE,
+    ssl:                   true,
+    tls:                   true
+  }
 end
