@@ -7,6 +7,8 @@ class Organization < ApplicationRecord
 
   mount_uploader :logo, ImageUploader
 
+  before_save :clean_supported_languages, if: :supported_languages?
+
   validates :supported_languages, presence: true
   validates :logo, presence: true
   validates :full_name, :short_name, presence: true
@@ -53,5 +55,9 @@ class Organization < ApplicationRecord
     return false if invalid?
 
     response = HTTParty.post("http://localhost:3000/api/v1/organizations", headers: { Authorization: "Token token=#{current_admin_user&.token}" })
+  end
+
+  def clean_supported_languages
+    self.supported_languages = supported_languages.select(&:present?)
   end
 end
