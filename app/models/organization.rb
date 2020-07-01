@@ -1,4 +1,9 @@
+require 'httparty'
+
 class Organization < ApplicationRecord
+  include HTTParty
+  default_options.update(verify: false)
+
   SUPPORTED_LANGUAGES = {
     en: 'English',
     km: 'Khmer',
