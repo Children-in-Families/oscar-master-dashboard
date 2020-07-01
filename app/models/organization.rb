@@ -2,7 +2,7 @@ require 'httparty'
 
 class Organization < ApplicationRecord
   include HTTParty
-  default_options.update(verify: false)
+  default_options.update(verify: false, timeout: 120)
 
   SUPPORTED_LANGUAGES = {
     en: 'English',
