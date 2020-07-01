@@ -1,7 +1,10 @@
 ActiveAdmin.register Organization, as: 'Instance' do
   menu priority: 2
 
-  actions :all, except: [:destroy]
+  actions :all
+
+  config.remove_action_item(:destroy)
+  config.clear_batch_actions!
 
   before_action :update_client_data, only: [:show, :index]
 
@@ -23,11 +26,17 @@ ActiveAdmin.register Organization, as: 'Instance' do
   filter :active_client, label: 'Number of Active Clients'
   filter :accepted_client, label: 'Number of accepted clients'
 
-  # filter :supported_languages, as: :select, collection: proc { Organization::SUPPORTED_LANGUAGES.map{ |key, label| [label, key]} }, multiple: true
+
   filter :created_at, label: 'NGO Onboard Date'
 
   action_item :monthly_usage_report, only: [:show] do
     link_to 'Monthly Usage Report', monthly_usage_report_admin_instance_path(resource)
+  end
+
+  action_item :delete, only: [:show] do
+    if resource.clients_count.zero?
+      link_to 'Delete Instance', { action: :destroy }, method: :delete, data: { confirm: 'This operation cannot be undo, are you sure you want to delete this instance?' }
+    end
   end
 
   index do
@@ -45,7 +54,19 @@ ActiveAdmin.register Organization, as: 'Instance' do
     column 'NGO Onboard Date', :created_at
 
 
-    actions do |resource|
+    actions defaults: false do |resource|
+      link_to 'View', admin_instance_path(resource)
+    end
+
+    actions defaults: false do |resource|
+      link_to 'Edit', edit_admin_instance_path(resource)
+    end
+
+    actions defaults: false do |resource|
+      link_to 'Delete', admin_instance_path(resource), method: :delete, data: { confirm: 'This operation cannot be undo, are you sure you want to delete this instance?' } if resource.clients_count.zero?
+    end
+
+    actions defaults: false do |resource|
       link_to 'Monthly Usage Report', monthly_usage_report_admin_instance_path(resource)
     end
   end
@@ -122,6 +143,14 @@ ActiveAdmin.register Organization, as: 'Instance' do
         end
       else
         render :new
+      end
+    end
+
+    def destroy
+      destroy! do
+        Apartment::Tenant.drop(resource.short_name)
+
+        return redirect_to admin_instances_path
       end
     end
 

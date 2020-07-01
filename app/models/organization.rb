@@ -26,6 +26,8 @@ class Organization < ApplicationRecord
   scope :en, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%en%") }
   scope :my, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%my%") }
 
+  before_destroy :check_client, prepend: true
+
   class << self
     def current
       find_by(short_name: Apartment::Tenant.current)
@@ -58,5 +60,11 @@ class Organization < ApplicationRecord
 
   def clean_supported_languages
     self.supported_languages = supported_languages.select(&:present?)
+  end
+
+  private
+
+  def check_client
+    clients_count.zero?
   end
 end
