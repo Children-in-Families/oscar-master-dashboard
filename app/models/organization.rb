@@ -2,7 +2,9 @@ require 'httparty'
 
 class Organization < ApplicationRecord
   include HTTParty
-  default_options.update(verify: false)
+
+  # default_options.update(verify: false)
+  ssl_ca_path '/var/www/oscar-web/'
 
   SUPPORTED_LANGUAGES = {
     en: 'English',
@@ -54,12 +56,6 @@ class Organization < ApplicationRecord
 
   def demo_status
     'YES' if demo?
-  end
-
-  def save_and_load_generic_data
-    return false if invalid?
-
-    response = HTTParty.post("http://localhost:3000/api/v1/organizations", headers: { Authorization: "Token token=#{current_admin_user&.token}" })
   end
 
   def clean_supported_languages
