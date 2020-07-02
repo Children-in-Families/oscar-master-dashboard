@@ -26,7 +26,7 @@ class Organization < ApplicationRecord
   scope :en, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%en%") }
   scope :my, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%my%") }
 
-  before_destroy :check_client, prepend: true
+  before_destroy :deletable?, prepend: true
 
   class << self
     def current
@@ -62,9 +62,12 @@ class Organization < ApplicationRecord
     self.supported_languages = supported_languages.select(&:present?)
   end
 
-  private
+  # Monitoring and Evaluation Dashboard
+  def mande?
+    short_name == 'mande'
+  end
 
-  def check_client
-    clients_count.zero?
+  def deletable?
+    !mande? && clients_count.zero?
   end
 end

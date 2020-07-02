@@ -34,7 +34,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
   end
 
   action_item :delete, only: [:show] do
-    if resource.clients_count.zero?
+    if resource.deletable?
       link_to 'Delete Instance', { action: :destroy }, method: :delete, data: { confirm: 'This operation cannot be undo, are you sure you want to delete this instance?' }
     end
   end
@@ -63,7 +63,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
     end
 
     actions defaults: false do |resource|
-      link_to 'Delete', admin_instance_path(resource), method: :delete, data: { confirm: 'This operation cannot be undo, are you sure you want to delete this instance?' } if resource.clients_count.zero?
+      link_to 'Delete', admin_instance_path(resource), method: :delete, data: { confirm: 'This operation cannot be undo, are you sure you want to delete this instance?' } if resource.deletable?
     end
 
     actions defaults: false do |resource|
