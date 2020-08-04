@@ -10,6 +10,8 @@ class Organization < ApplicationRecord
     my: 'Burmese'
   }.freeze
 
+  SUPPORTED_COUNTRY = ["cambodia", "myanmar", "thailand", "lesotho"].freeze
+
   mount_uploader :logo, ImageUploader
 
   before_save :clean_supported_languages, if: :supported_languages?

@@ -22,6 +22,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
 
   filter :full_name
   filter :short_name, label: 'Subdomain'
+  filter :country
   filter :clients_count, label: 'Number of Clients'
   filter :active_client, label: 'Number of Active Clients'
   filter :accepted_client, label: 'Number of accepted clients'
@@ -45,6 +46,9 @@ ActiveAdmin.register Organization, as: 'Instance' do
     column :full_name
     column 'Demo?', :demo_status
     column 'Subdomain', :short_name
+    column :country do |instance|
+      instance.country&.titleize
+    end
 
     column 'Number of Clients', :clients_count
     column 'Number of Active Clients', :active_client
@@ -75,6 +79,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
     attributes_table do
       row :full_name
       row :short_name, 'Subdomain'
+      row :country
       row :logo do |instance|
         image_tag instance.logo.url, height: 120
       end
@@ -109,6 +114,11 @@ ActiveAdmin.register Organization, as: 'Instance' do
       f.input :short_name, label: 'Subdomain'
       f.input :demo, label: 'Demo?'
       f.input :logo
+      if f.object.persisted? && f.object.country.present?
+        f.input :country, as: :string, input_html: { value: f.object.country, disabled: true }
+      else
+        f.input :country, as: :select, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose
+      end
       f.input :supported_languages, collection: Organization::SUPPORTED_LANGUAGES.map{ |key, label| [label, key]}, multiple: true, include_blank: false
     end
 
