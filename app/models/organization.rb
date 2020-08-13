@@ -10,7 +10,7 @@ class Organization < ApplicationRecord
     my: 'Burmese'
   }.freeze
 
-  SUPPORTED_COUNTRY = ["cambodia", "myanmar", "thailand", "lesotho"].freeze
+  SUPPORTED_COUNTRY = ["cambodia", "myanmar", "thailand", "lesotho", "nepal"].freeze
 
   mount_uploader :logo, ImageUploader
 
