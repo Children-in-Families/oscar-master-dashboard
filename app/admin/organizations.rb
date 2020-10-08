@@ -112,6 +112,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
     f.inputs do
       f.input :full_name
       f.input :short_name, label: 'Subdomain'
+      f.input :referral_source_category_id, as: :select, collection: ReferralSource.parent_categories.pluck(:name_en, :id), label: 'Referral Source Category'
       f.input :demo, label: 'Demo?'
       f.input :logo
       if f.object.persisted? && f.object.country.present?
@@ -182,7 +183,8 @@ ActiveAdmin.register Organization, as: 'Instance' do
           demo: params.dig(:organization, :demo),
           short_name: params.dig(:organization, :short_name),
           logo: params.dig(:organization, :logo),
-          supported_languages: params.dig(:organization, :supported_languages)
+          supported_languages: params.dig(:organization, :supported_languages),
+          referral_source_category_id: params.dig(:organization, :referral_source_category_id)
         }
       )
     end

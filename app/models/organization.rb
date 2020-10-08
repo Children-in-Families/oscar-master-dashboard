@@ -11,6 +11,9 @@ class Organization < ApplicationRecord
   }.freeze
 
   SUPPORTED_COUNTRY = ["cambodia", "myanmar", "thailand", "lesotho", "nepal"].freeze
+  REFERRAL_SOURCES  = ['ក្រសួង សអយ/មន្ទីរ សអយ', 'អង្គការមិនមែនរដ្ឋាភិបាល', 'មន្ទីរពេទ្យ', 'នគរបាល', 'តុលាការ/ប្រព័ន្ធយុត្តិធម៌', 'រកឃើញនៅតាមទីសាធារណៈ', 'ស្ថាប័នរដ្ឋ', 'មណ្ឌលថែទាំបណ្ដោះអាសន្ន', 'ទូរស័ព្ទទាន់ហេតុការណ៍', 'មកដោយខ្លួនឯង', 'គ្រួសារ', 'មិត្តភក្ដិ', 'អាជ្ញាធរដែនដី', 'ផ្សេងៗ', 'សហគមន៍', 'ព្រះវិហារ', 'MoSVY External System'].freeze
+
+  attr_accessor :referral_source_category_id
 
   mount_uploader :logo, ImageUploader
 
@@ -19,6 +22,7 @@ class Organization < ApplicationRecord
   validates :supported_languages, presence: true
   validates :logo, presence: true
   validates :full_name, :short_name, presence: true
+  validates :referral_source_category_id, presence: :true
   validates :short_name, uniqueness: { case_sensitive: false }, format: { with: %r{\A[a-z](?:[a-z0-9-]*[a-z0-9])?\z}i }, length: { in: 1..63 }
 
   scope :demo, -> { where(demo: true) }
