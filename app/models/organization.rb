@@ -22,7 +22,6 @@ class Organization < ApplicationRecord
   validates :supported_languages, presence: true
   validates :logo, presence: true
   validates :full_name, :short_name, presence: true
-  validates :referral_source_category_id, presence: :true
   validates :short_name, uniqueness: { case_sensitive: false }, format: { with: %r{\A[a-z](?:[a-z0-9-]*[a-z0-9])?\z}i }, length: { in: 1..63 }
 
   scope :demo, -> { where(demo: true) }
