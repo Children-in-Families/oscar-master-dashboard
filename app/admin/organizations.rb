@@ -112,7 +112,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
     f.inputs do
       f.input :full_name
       f.input :short_name, label: 'Subdomain'
-      f.input :referral_source_category_id, as: :select, collection: ReferralSource.parent_categories.pluck(:name_en, :id), label: 'Referral Source Category'
+      f.input :referral_source_category_id, as: :select, collection: ReferralSource.parent_categories.pluck(:name_en, :id), label: 'Referral Source Category', required: true
       f.input :demo, label: 'Demo?'
       f.input :logo
       if f.object.persisted? && f.object.country.present?
@@ -141,7 +141,7 @@ ActiveAdmin.register Organization, as: 'Instance' do
 
   controller do
     def create
-      @resource = Organization.new(params.require(:organization).permit(:demo, :full_name, :short_name, :logo, supported_languages: []))
+      @resource = Organization.new(params.require(:organization).permit(:demo, :full_name, :short_name, :logo, :referral_source_category_id, supported_languages: []))
 
       if @resource.valid?
         @org = create_instance_request
