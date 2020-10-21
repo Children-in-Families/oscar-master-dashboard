@@ -143,7 +143,6 @@ ActiveAdmin.register Organization, as: "Instance" do
 
       if @resource.valid?
         @org = upsert_instance_request("POST")
-
         if @org && @org["id"]
           @resource = Organization.find(@org["id"])
           redirect_to resource_url(@resource)
@@ -170,10 +169,20 @@ ActiveAdmin.register Organization, as: "Instance" do
     end
 
     def destroy
-      destroy! do
-        Apartment::Tenant.drop(resource.short_name)
+      @organization = Organization.find(params[:id])
+      if @organization
+        response = destroy_instance_request
+        if response.success?
+          destroy! do
+            Apartment::Tenant.drop(resource.short_name)
 
-        return redirect_to admin_instances_path
+            return redirect_to admin_instances_path
+          end
+        else
+          redirect_to resource_url(@organization)
+        end
+      else
+        redirect_to admin_instances_path
       end
     end
 
@@ -209,6 +218,14 @@ ActiveAdmin.register Organization, as: "Instance" do
           attributes
         )
       end
+    end
+
+    def destroy_instance_request
+      Organization.delete(
+        "#{ENV["OSCAR_HOST"]}/api/v1/organizations/#{@organization.id}", {
+          headers: {Authorization: "Token token=#{current_admin_user&.token}"}
+        }
+      )
     end
   end
 end
