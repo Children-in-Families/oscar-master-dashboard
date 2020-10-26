@@ -139,7 +139,7 @@ ActiveAdmin.register Organization, as: "Instance" do
 
   controller do
     def create
-      @resource = Organization.new(params.require(:organization).permit(:demo, :full_name, :short_name, :logo, :referral_source_category_name, supported_languages: []))
+      @resource = Organization.new(params.require(:organization).permit(:demo, :full_name, :short_name, :logo, :country, :referral_source_category_name, supported_languages: []))
 
       if @resource.valid?
         @org = upsert_instance_request("POST")
@@ -202,6 +202,7 @@ ActiveAdmin.register Organization, as: "Instance" do
           demo: params.dig(:organization, :demo),
           short_name: params.dig(:organization, :short_name),
           logo: params.dig(:organization, :logo),
+          country: params.dig(:organization, :country),
           supported_languages: params.dig(:organization, :supported_languages),
           referral_source_category_name: params.dig(:organization, :referral_source_category_name)
         }
