@@ -113,11 +113,7 @@ ActiveAdmin.register Organization, as: "Instance" do
       f.input :referral_source_category_name, as: :select, collection: ReferralSource.parent_categories.pluck(:name_en, :name_en), label: "Referral Source Category", required: true
       f.input :demo, label: "Demo?"
       f.input :logo
-      if f.object.persisted? && f.object.country.present?
-        f.input :country, as: :string, input_html: {value: f.object.country, disabled: true}
-      else
-        f.input :country, as: :select, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose
-      end
+      f.input :country, as: :select, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, selected: f.object.country
       f.input :supported_languages, collection: Organization::SUPPORTED_LANGUAGES.map { |key, label| [label, key] }, multiple: true, include_blank: false
     end
 
@@ -195,16 +191,17 @@ ActiveAdmin.register Organization, as: "Instance" do
     def upsert_instance_request(http_verb)
       # Update token every request
       current_admin_user.generate_token!
+      logo = params.dig(:organization, :logo) ? { logo: params.dig(:organization, :logo) } : {}
       attributes = {
-        headers: {Authorization: "Token token=#{current_admin_user&.token}"},
+        headers: { Authorization: "Token token=#{current_admin_user&.token}" },
         body: {
           full_name: params.dig(:organization, :full_name),
           demo: params.dig(:organization, :demo),
           short_name: params.dig(:organization, :short_name),
-          logo: params.dig(:organization, :logo),
           country: params.dig(:organization, :country),
           supported_languages: params.dig(:organization, :supported_languages),
-          referral_source_category_name: params.dig(:organization, :referral_source_category_name)
+          referral_source_category_name: params.dig(:organization, :referral_source_category_name),
+          **logo
         }
       }
 
