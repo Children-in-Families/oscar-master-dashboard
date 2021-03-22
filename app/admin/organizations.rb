@@ -139,8 +139,9 @@ ActiveAdmin.register Organization, as: "Instance" do
 
       if @resource.valid?
         @org = upsert_instance_request("POST")
-        if @org && @org["id"]
-          @resource = Organization.find(@org["id"])
+        org_id = @org&.parsed_response&.dig('organization', 'id')
+        if org_id
+          @resource = Organization.find(org_id)
           redirect_to resource_url(@resource)
         else
           render :new
