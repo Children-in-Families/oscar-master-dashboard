@@ -21,7 +21,7 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog-aws'
 
-gem 'sidekiq', '~> 4.1.0'
+gem 'sidekiq', '~> 6.4.0'
 gem 'httparty'
 gem 'paper_trail'
 
