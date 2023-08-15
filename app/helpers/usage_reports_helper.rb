@@ -1,0 +1,2 @@
+module UsageReportsHelper
+end
