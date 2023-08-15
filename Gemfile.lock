@@ -424,6 +424,7 @@ DEPENDENCIES
   pry
   puma (~> 4.1)
   rails (~> 6.0.2, >= 6.0.2.2)
+  ransack (~> 2.3)
   sass-rails (>= 6)
   selenium-webdriver
   sidekiq (~> 4.1.0)
