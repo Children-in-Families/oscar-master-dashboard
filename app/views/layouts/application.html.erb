@@ -11,6 +11,7 @@
 
   <body id="<%= controller_name %>-<%= action_name %>" class="<%= 'devise-controller' if devise_controller? %>">
     <div class="container">
+      <%= render "layouts/navbar" %>
       <div class="row">
         <div class="<%= devise_controller? ? 'col-4 mx-auto' : 'col-12' %>">
           <%= yield %>
