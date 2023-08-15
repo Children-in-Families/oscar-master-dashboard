@@ -110,7 +110,7 @@ ActiveAdmin.register Organization, as: "Instance" do
     f.inputs do
       f.input :full_name
       f.input :short_name, label: "Subdomain"
-      f.input :referral_source_category_name, as: :select, collection: ReferralSource.parent_categories.pluck(:name_en, :name_en), label: "Referral Source Category", required: true
+      f.input :referral_source_category_name, as: :select, collection: ReferralSource.parent_categories.where.not(name_en: [nil, '']).pluck(:name_en, :name_en), label: "Referral Source Category", required: true
       f.input :demo, label: "Demo?"
       f.input :logo
       f.input :country, as: :select, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, selected: f.object.country
