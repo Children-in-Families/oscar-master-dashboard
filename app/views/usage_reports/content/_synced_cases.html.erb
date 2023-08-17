@@ -23,7 +23,7 @@
         <tbody>
           <% @usage_reports.each do |report| %>
             <tr>
-              <th scope="row"><%= report.organization.full_name %></th>
+              <td><%= report.organization.full_name %></td>
               <td></td>
               <td></td>
               <td><%= report.added_cases['total'] %></td>
