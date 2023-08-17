@@ -1,5 +1,65 @@
 <% content_for :page_title do %>
-  <%= 'Usage Report' %>
+  <%= "Usage Report for #{params[:q][:month_eq]}/#{params[:q][:year_eq]}" %>
 <% end %>
 
 <%= render "tabs_menu" %>
+
+<div class="tab-content my-2">
+  <div class="row">
+    <div class="col-9">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">NGO Name</th>
+            <th scope="col">Total client</th>
+            <th scope="col">Adult female without disability</th>
+            <th scope="col">Adult female with disability</th>
+            <th scope="col">Adult male without disability</th>
+            <th scope="col">Adult male with disability</th>
+            <th scope="col">Child female without disability</th>
+            <th scope="col">Child female with disability</th>
+            <th scope="col">Child male without disability</th>
+            <th scope="col">Child male with disability</th>
+            <th scope="col">Other</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @usage_reports.each do |report| %>
+            <tr>
+              <th scope="row"><%= report.organization.full_name %></th>
+              <td><%= report.added_cases['total'] %></td>
+              <td><%= report.added_cases['adult_female'] - report.added_cases['adult_female_with_disability'] %></td>
+              <td><%= report.added_cases['adult_female_with_disability'] %></td>
+              <td><%= report.added_cases['adult_male'] - report.added_cases['adult_male_with_disability'] %></td>
+              <td><%= report.added_cases['adult_male_with_disability'] %></td>
+              <td><%= report.added_cases['child_female'] - report.added_cases['child_female_with_disability'] %></td>
+              <td><%= report.added_cases['child_female_with_disability'] %></td>
+              <td><%= report.added_cases['child_male'] - report.added_cases['child_male_with_disability'] %></td>
+              <td><%= report.added_cases['child_male_with_disability'] %></td>
+              <td>0</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-3">
+      <%= simple_form_for @q, url: usage_report_path(id: 'added_cases'), method: :get do |f| %>
+      
+      <div class="row">
+        <div class="col-6">
+          <%= f.input :month_eq, collection: (1..12), wrapper: :vertical_select, label: 'Month' %>
+        </div>
+      
+        <div class="rol-6">
+          <%= f.input :year_eq, collection: (2000..Date.current.year), wrapper: :vertical_select, label: 'Year' %>
+        </div>
+      </div>
+
+      <%= f.input :organization_full_name_cont, label: "NGO Name" %>
+      <%= f.submit 'Submit', class: "btn btn-primary" %>
+      <%= link_to "Clear Search", usage_report_path(id: 'added_cases')  %>
+    <% end %>
+    </div>
+  </div>
+</div>
