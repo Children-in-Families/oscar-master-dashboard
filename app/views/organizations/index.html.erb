@@ -46,7 +46,7 @@
     <%= simple_form_for @q, url: organizations_path, method: :get do |f| %>
       <%= f.input :full_name_cont, label: "Full Name" %>
       <%= f.input :short_name_cont, label: "Short Name" %>
-      <%= f.input :country_eq, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, input_html: { class: "form-control" }, label: "Country" %>
+      <%= f.input :country_eq, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, label: "Country" %>
       <%= f.input :demo_true, as: :boolean, label: 'Demo?' %>
 
       <%= f.label :onboarding_date %>
