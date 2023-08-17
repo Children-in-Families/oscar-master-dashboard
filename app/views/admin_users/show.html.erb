@@ -1,0 +1,16 @@
+<% content_for :page_title do %>
+  <%= "Admin User ##{resource.id}" %>
+<% end %>
+
+<%= content_for :action do %>
+  <%= link_to 'Edit', edit_admin_user_path(resource), class: 'btn btn-primary ml-auto' %>
+<% end %>
+
+<div class="card">
+  <div class="card-body">
+    <% %i(first_name last_name email created_at).each do |field| %>
+      <%= render partial: "show/row", locals: { resource: resource, field: field } %>
+    <% end %>
+  </div>
+</div>
+

@@ -1,0 +1,16 @@
+<% content_for :page_title do %>
+  <%= "Instance ##{resource.id}" %>
+<% end %>
+
+<%= content_for :action do %>
+  <%= link_to 'Edit', edit_organization_path(resource), class: 'btn btn-primary ml-auto' %>
+<% end %>
+
+<div class="card">
+  <div class="card-body">
+    <% %i(full_name short_name demo country supported_languages created_at).each do |field| %>
+      <%= render partial: "show/row", locals: { resource: resource, field: field } %>
+    <% end %>
+  </div>
+</div>
+

@@ -1,2 +1,61 @@
-<h1>Organizations#index</h1>
-<p>Find me in app/views/organizations/index.html.erb</p>
+<% content_for :page_title do %>
+  <%= 'Instances' %>
+<% end %>
+
+<%= content_for :action do %>
+  <%= link_to 'New', [:new, :organization], class: 'btn btn-primary ml-auto' %>
+<% end %>
+
+<div class="row">
+  <div class="col-9">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col"><%= sort_link(@q, :id, '#') %></th>
+          <th scope="col"><%= sort_link(@q, :full_name) %></th>
+          <th scope="col"><%= sort_link(@q, :demo, 'Demo?') %></th>
+          <th scope="col"><%= sort_link(@q, :short_name) %></th>
+          <th scope="col"><%= sort_link(@q, :country) %></th>
+          <th scope="col"><%= sort_link(@q, :created_at) %></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% collection.each do |instance| %>
+          <tr>
+            <th scope="row"><%= instance.id %></th>
+            <td><%= instance.full_name %></td>
+            <td><%= instance.demo? %></td>
+            <td><%= instance.short_name %></td>
+            <td><%= instance.country %></td>
+            <td><%= l(instance.created_at.to_date) %></td>
+            <td>
+              <%= link_to 'View', instance, class: "mr-2" %>
+              <%= link_to 'Edit', edit_organization_path(instance), class: "mr-2" %>
+
+              <% if instance.deletable? %>
+                <%= link_to 'Delete', organization_path(instance), data: { method: :delete, confirm: "This action cannot be undone, are you sure?" } %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-3">
+    <%= simple_form_for @q, url: organizations_path, method: :get do |f| %>
+      <%= f.input :full_name_cont, label: "Full Name" %>
+      <%= f.input :short_name_cont, label: "Short Name" %>
+      <%= f.input :country_eq, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, input_html: { class: "form-control" }, label: "Country" %>
+      <%= f.input :demo_true, as: :boolean, label: 'Demo?' %>
+
+      <%= f.label :onboarding_date %>
+      <%= f.input :created_at_gteq, label: false, input_html: { class: "form-control" }, placeholder: "From" %>
+      <%= f.input :created_at_lteq, label: false, input_html: { class: "form-control" }, placeholder: "To" %>
+
+      <%= f.submit 'Submit', class: "btn btn-primary" %>
+      <%= link_to "Clear Search", organizations_path  %>
+    <% end %>
+  </div>
+</div>
+

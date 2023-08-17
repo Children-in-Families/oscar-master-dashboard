@@ -59,3 +59,9 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "ransack", "~> 2.3"
+
+gem "responders", "~> 3.0"
+
+gem "simple_form", "~> 5.2"
+
+gem "kaminari", "~> 1.2"

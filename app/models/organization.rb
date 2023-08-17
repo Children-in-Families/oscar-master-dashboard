@@ -70,7 +70,11 @@ class Organization < ApplicationRecord
     short_name == "mande"
   end
 
+  def shared?
+    short_name == "shared"
+  end
+
   def deletable?
-    !mande? && clients_count.zero?
+    !mande? && !shared? && clients_count.zero?
   end
 end

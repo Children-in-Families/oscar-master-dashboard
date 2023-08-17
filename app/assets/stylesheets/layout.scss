@@ -1,0 +1,17 @@
+body {
+  .navbar.main {
+    background-color: #efefef !important;
+  }
+
+  .nav-item.active {
+    a {
+      font-weight: 600;
+      border-bottom: 5px solid #2e2f31;
+    }
+  }
+
+  .btn {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+}

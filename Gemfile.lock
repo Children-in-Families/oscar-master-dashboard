@@ -337,6 +337,9 @@ GEM
       connection_pool (~> 2.2, >= 2.2.0)
       redis (~> 3.2, >= 3.2.1)
       sinatra (>= 1.4.7)
+    simple_form (5.2.0)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
     sinatra (2.0.8.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -417,6 +420,7 @@ DEPENDENCIES
   fog-aws
   httparty
   jbuilder (~> 2.7)
+  kaminari (~> 1.2)
   listen (>= 3.0.5, < 3.2)
   mini_magick
   paper_trail
@@ -425,9 +429,11 @@ DEPENDENCIES
   puma (~> 4.1)
   rails (~> 6.0.2, >= 6.0.2.2)
   ransack (~> 2.3)
+  responders (~> 3.0)
   sass-rails (>= 6)
   selenium-webdriver
   sidekiq (~> 4.1.0)
+  simple_form (~> 5.2)
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
