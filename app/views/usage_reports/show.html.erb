@@ -46,35 +46,36 @@
     <div class="col-3">
       <%= simple_form_for @q, url: usage_report_path(id: 'added_cases'), method: :get do |f| %>
       
-      <div class="row">
-        <div class="col-6">
-          <%= f.input :month_eq, collection: (1..12), wrapper: :vertical_select, label: 'Month' %>
+        <div class="row">
+          <div class="col-6">
+            <%= f.input :month_eq, collection: (1..12), wrapper: :vertical_select, label: 'Month' %>
+          </div>
+        
+          <div class="col-6">
+            <%= f.input :year_eq, collection: (2000..Date.current.year), wrapper: :vertical_select, label: 'Year' %>
+          </div>
         </div>
-      
-        <div class="col-6">
-          <%= f.input :year_eq, collection: (2000..Date.current.year), wrapper: :vertical_select, label: 'Year' %>
-        </div>
-      </div>
 
-      <%= f.input :organization_full_name_cont, label: "NGO Name" %>
-      <%= f.input :organization_country_eq, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, wrapper: :horizontal_select, input_html: { multiple: true }, label: "Country" %>
-      <%= f.input :organization_demo_true, as: :boolean, label: 'Demo?' %>
+        <%= f.input :organization_id_in, label: 'NGO', collection: Organization.pluck(:full_name, :id), input_html: { multiple: true } %>
+        <%= f.input :organization_full_name_cont, label: "NGO Full Name" %>
+        <%= f.input :organization_country_eq, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, wrapper: :horizontal_select, input_html: { multiple: true }, label: "Country" %>
+        <%= f.input :organization_demo_true, as: :boolean, label: 'Demo?' %>
 
-      <%= f.label :organization_onboarding_date, label: "Onboarding date" %>
-      <div class="row">
-        <div class="col-6">
-          <%= f.input :organization_created_at_gteq, label: false, input_html: { class: "form-control flatpickr" }, placeholder: "From" %>
+        <%= f.label :organization_onboarding_date, label: "Onboarding date" %>
+        <div class="row">
+          <div class="col-6">
+            <%= f.input :organization_created_at_gteq, label: false, input_html: { class: "form-control flatpickr" }, placeholder: "From" %>
+          </div>
+        
+          <div class="col-6">
+            <%= f.input :organization_created_at_lteq, label: false, input_html: { class: "form-control flatpickr" }, placeholder: "To" %>
+          </div>
         </div>
-      
-        <div class="col-6">
-          <%= f.input :organization_created_at_lteq, label: false, input_html: { class: "form-control flatpickr" }, placeholder: "To" %>
-        </div>
-      </div>
-      
+        
 
-      <%= f.submit 'Submit', class: "btn btn-primary" %>
-      <%= link_to "Clear Search", usage_report_path(id: 'added_cases')  %>
-    <% end %>
+        <%= f.submit 'Submit', class: "btn btn-primary" %>
+        <%= link_to "Clear Search", usage_report_path(id: 'added_cases')  %>
+      <% end %>
     </div>
   </div>
 </div>

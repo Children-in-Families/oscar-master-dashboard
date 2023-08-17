@@ -27,7 +27,7 @@
             <td><%= instance.full_name %></td>
             <td><%= instance.demo? %></td>
             <td><%= instance.short_name %></td>
-            <td><%= instance.country %></td>
+            <td><%= instance.country&.titleize %></td>
             <td><%= l(instance.created_at.to_date) %></td>
             <td>
               <%= link_to 'View', instance, class: "mr-2" %>
@@ -44,9 +44,10 @@
   </div>
   <div class="col-3">
     <%= simple_form_for @q, url: organizations_path, method: :get do |f| %>
+      <%= f.input :id_in, label: 'NGO', collection: Organization.pluck(:full_name, :id), input_html: { multiple: true } %>
       <%= f.input :full_name_cont, label: "Full Name" %>
       <%= f.input :short_name_cont, label: "Short Name" %>
-      <%= f.input :country_eq, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, label: "Country" %>
+      <%= f.input :country_in, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, label: "Country", input_html: { multiple: true } %>
       <%= f.input :demo_true, as: :boolean, label: 'Demo?' %>
 
       <%= f.label :onboarding_date %>
