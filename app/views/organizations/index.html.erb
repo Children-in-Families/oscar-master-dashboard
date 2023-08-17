@@ -50,8 +50,15 @@
       <%= f.input :demo_true, as: :boolean, label: 'Demo?' %>
 
       <%= f.label :onboarding_date %>
-      <%= f.input :created_at_gteq, label: false, input_html: { class: "form-control" }, placeholder: "From" %>
-      <%= f.input :created_at_lteq, label: false, input_html: { class: "form-control" }, placeholder: "To" %>
+      <div class="row">
+        <div class="col-6">
+          <%= f.input :created_at_gteq, label: false, input_html: { class: "form-control flatpickr" }, placeholder: "From" %>
+        </div>
+      
+        <div class="col-6">
+          <%= f.input :created_at_lteq, label: false, input_html: { class: "form-control flatpickr" }, placeholder: "To" %>
+        </div>
+      </div>
 
       <%= f.submit 'Submit', class: "btn btn-primary" %>
       <%= link_to "Clear Search", organizations_path  %>
