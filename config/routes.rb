@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-  get 'usage_reports/index'
-  get 'finances/index'
-  get 'duplications/index'
-  get 'admin_users/index'
-  get 'organizations/index'
   # devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
@@ -16,5 +11,6 @@ Rails.application.routes.draw do
   resources :admin_users
   resources :duplications
   resources :finances
-  resources :usage_reports
+
+  resources :usage_reports, only: [:show], constraints: { id: /added_cases|synced_cases|cross_referral_oscar|cross_referral_primero/ }
 end

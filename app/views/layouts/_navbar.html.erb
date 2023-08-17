@@ -14,7 +14,7 @@
           <a class="nav-link" href="<%= organizations_path %>">Instances</a>
         </li>
         <li class="nav-item <%= active_class(controller_name == 'usage_reports') %>">
-          <a class="nav-link" href="<%= usage_reports_path %>">Usage Report</a>
+          <a class="nav-link" href="<%= usage_report_path(id: 'added_cases') %>">Usage Report</a>
         </li>
         <li class="nav-item <%= active_class(controller_name == 'finances') %>">
           <a class="nav-link" href="<%= finances_path %>">Finance</a>
