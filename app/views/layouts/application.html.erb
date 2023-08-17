@@ -12,10 +12,12 @@
   <body id="<%= controller_name %>-<%= action_name %>" class="<%= 'devise-controller' if devise_controller? %>">
     <%= render "layouts/navbar" %>
 
-    <nav class="navbar navbar-light bg-light mb-2">
-      <h1 class="navbar-brand mb-0 h1"><%= yield(:page_title) %></h1>
-      <%= yield(:action) %>
-    </nav>
+    <% if admin_user_signed_in? %>
+      <nav class="navbar navbar-light bg-light mb-2">
+        <h1 class="navbar-brand mb-0 h1"><%= yield(:page_title) %></h1>
+        <%= yield(:action) %>
+      </nav>
+    <% end %>
 
     <div class="container-fluid">
       <div class="row" id="content">

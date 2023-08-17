@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   
   devise_for :admin_users
-  root to: "dashboards#show"
+  root to: "usage_reports#show"
   
   resource :dashboard, only: :show
   resources :organizations, path: 'instances'
