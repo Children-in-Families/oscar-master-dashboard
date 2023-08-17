@@ -1,4 +1,4 @@
 <div class="row mb-2">
   <div class="col-2"><%= resource.class.human_attribute_name(field) %></div>
-  <div class="col-10 font-weight-bold"><%= resource.public_send(field) %></div>
+  <div class="col-10 font-weight-bold"><%= format_value(resource.public_send(field)) %></div>
 </div>

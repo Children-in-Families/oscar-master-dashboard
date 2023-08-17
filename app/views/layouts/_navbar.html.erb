@@ -8,30 +8,30 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item <%= active_class(controller_name == 'dashboards') %>">
-          <a class="nav-link" href="/">Dashboard <span class="sr-only">(current)</span></a>
+          <a class="nav-link text-uppercase" href="/">Dashboard <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item <%= active_class(controller_name == 'organizations') %>">
-          <a class="nav-link" href="<%= organizations_path %>">Instances</a>
+          <a class="nav-link text-uppercase" href="<%= organizations_path %>">Instances</a>
         </li>
         <li class="nav-item <%= active_class(controller_name == 'usage_reports') %>">
-          <a class="nav-link" href="<%= usage_report_path(id: 'added_cases') %>">Usage Report</a>
+          <a class="nav-link text-uppercase" href="<%= usage_report_path(id: 'added_cases') %>">Usage Report</a>
         </li>
         <li class="nav-item <%= active_class(controller_name == 'finances') %>">
-          <a class="nav-link" href="<%= finances_path %>">Finance</a>
+          <a class="nav-link text-uppercase" href="<%= finances_path %>">Finance</a>
         </li>
         <li class="nav-item <%= active_class(controller_name == 'duplications') %>">
-          <a class="nav-link" href="<%= duplications_path %>">Duplication Validation</a>
+          <a class="nav-link text-uppercase" href="<%= duplications_path %>">Duplication Validation</a>
         </li>
 
         <li class="nav-item <%= active_class(controller_name == 'admin_users') %>">
-          <a class="nav-link" href="<%= admin_users_path %>">Admin Users</a>
+          <a class="nav-link text-uppercase" href="<%= admin_users_path %>">Admin Users</a>
         </li>
       </ul>
     </div>
 
     <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
       <li class="nav-item dropdown">
-        <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-item nav-link dropdown-toggle mr-md-2 font-weight-bold" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <%= current_admin_user.email %>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
