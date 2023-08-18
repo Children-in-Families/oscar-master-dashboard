@@ -1,14 +1,14 @@
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link font-weight-bold <%= active_class(params[:id] == 'added_cases') %>" href="<%= usage_report_path(id: 'added_cases', q: params[:q]) %>">Added cases this month</a>
+    <a class="nav-link font-weight-bold <%= active_class(params[:id] == 'added_cases') %>" href="<%= usage_report_path(id: 'added_cases', q: params[:q].to_unsafe_h) %>">Added cases this month</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link font-weight-bold <%= active_class(params[:id] == 'synced_cases') %>" href="<%= usage_report_path(id: 'synced_cases', q: params[:q]) %>">Synced cases this month</a>
+    <a class="nav-link font-weight-bold <%= active_class(params[:id] == 'synced_cases') %>" href="<%= usage_report_path(id: 'synced_cases', q: params[:q].to_unsafe_h) %>">Synced cases this month</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link font-weight-bold <%= active_class(params[:id] == 'cross_referral_oscar') %>" href="<%= usage_report_path(id: 'cross_referral_oscar', q: params[:q]) %>">Cross referral within OSCaR</a>
+    <a class="nav-link font-weight-bold <%= active_class(params[:id] == 'cross_referral_oscar') %>" href="<%= usage_report_path(id: 'cross_referral_oscar', q: params[:q].to_unsafe_h) %>">Cross referral within OSCaR</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link font-weight-bold <%= active_class(params[:id] == 'cross_referral_primero') %>" href="<%= usage_report_path(id: 'cross_referral_primero', q: params[:q]) %>">Cross referral with Primero</a>
+    <a class="nav-link font-weight-bold <%= active_class(params[:id] == 'cross_referral_primero') %>" href="<%= usage_report_path(id: 'cross_referral_primero', q: params[:q].to_unsafe_h) %>">Cross referral with Primero</a>
   </li>
 </ul>
