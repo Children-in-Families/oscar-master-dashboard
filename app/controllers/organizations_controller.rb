@@ -2,6 +2,19 @@ class OrganizationsController < ApplicationController
   inherit_resources
   actions :all
 
+  def index
+    index! do |format|
+      format.html
+      format.csv do
+        send_data ExportHandler.call(
+          Organization,
+          @organizations,
+          Organization::EXPORTABLE_COLUMNS
+        ), filename: "instances-#{Date.today}.csv"
+      end
+    end
+  end
+
   def create
     @organization = Organization.new(params.require(:organization).permit(:demo, :full_name, :short_name, :logo, :country, :referral_source_category_name, supported_languages: []))
 

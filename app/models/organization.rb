@@ -10,6 +10,21 @@ class Organization < ApplicationRecord
     my: "Burmese"
   }.freeze
 
+  EXPORTABLE_COLUMNS = [
+    :full_name,
+    :short_name,
+    :country,
+    :clients_count,
+    :referred_count,
+    :accepted_client,
+    :active_client,
+    :exited_client,
+    :referral_source_category_name,
+    :supported_languages,
+    :demo,
+    :created_at
+  ].freeze
+
   SUPPORTED_COUNTRY = ["cambodia", "myanmar", "thailand", "lesotho", "nepal", "haiti"].freeze
   REFERRAL_SOURCES = ["ក្រសួង សអយ/មន្ទីរ សអយ", "អង្គការមិនមែនរដ្ឋាភិបាល", "មន្ទីរពេទ្យ", "នគរបាល", "តុលាការ/ប្រព័ន្ធយុត្តិធម៌", "រកឃើញនៅតាមទីសាធារណៈ", "ស្ថាប័នរដ្ឋ", "មណ្ឌលថែទាំបណ្ដោះអាសន្ន", "ទូរស័ព្ទទាន់ហេតុការណ៍", "មកដោយខ្លួនឯង", "គ្រួសារ", "មិត្តភក្ដិ", "អាជ្ញាធរដែនដី", "ផ្សេងៗ", "សហគមន៍", "ព្រះវិហារ", "MoSVY External System"].freeze
 
