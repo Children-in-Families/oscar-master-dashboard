@@ -1,0 +1,25 @@
+<div class="modal fade" id="deleteInstance-<%= instance.id %>" tabindex="-1" role="dialog" aria-labelledby="deleteInstance-<%= instance.id %>Label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteInstance-<%= instance.id %>Label">Delete Instance</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form>
+        <div class="modal-body">
+          <p>Please confirm this action by entering the <strong class="instance_name"><i><%= instance.full_name %></i></strong> in the box below:</p>
+            <div class="form-group">
+              <input type="text" class="form-control" name="instance_name" id="instance_name-<%= instance.id %>">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <%= link_to "Delete", organization_path(instance), data: { method: :delete }, class: "disabled btn btn-primary submit-btn" %>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

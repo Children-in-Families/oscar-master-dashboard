@@ -4,6 +4,8 @@ class Organization < ApplicationRecord
   include HTTParty
   default_options.update(verify: false, timeout: 120)
 
+  acts_as_paranoid
+  
   SUPPORTED_LANGUAGES = {
     en: "English",
     km: "Khmer",

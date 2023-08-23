@@ -1,5 +1,7 @@
 en:
   activerecord:
+    models:
+      organization: Instance
     attributes:
       organization:
         short_name: "Subdomain"

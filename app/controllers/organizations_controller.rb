@@ -47,27 +47,6 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  def destroy
-    @organization = Organization.find(params[:id])
-
-    if @organization
-      response = destroy_instance_request
-      if response.success?
-        destroy! do
-          Apartment::Tenant.drop(resource.short_name)
-
-          return redirect_to organizations_path
-        end
-      else
-        redirect_to resource_url(@organization)
-      end
-    else
-      redirect_to organizations_path
-    end
-  rescue Apartment::TenantNotFound
-    redirect_to organizations_path
-  end
-
   protected
 
   def collection

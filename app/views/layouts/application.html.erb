@@ -11,6 +11,7 @@
 
   <body id="<%= controller_name %>-<%= action_name %>" class="<%= 'devise-controller' if devise_controller? %>">
     <%= render "layouts/navbar" %>
+    <%= render 'layouts/flash' %>
 
     <% if admin_user_signed_in? %>
       <nav class="navbar navbar-light bg-light mb-2">

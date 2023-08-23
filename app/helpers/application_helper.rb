@@ -3,6 +3,17 @@ module ApplicationHelper
     condition ? 'active' : ''
   end
 
+  def bootsnap_alert_class(flass_type)
+    case flass_type
+    when 'alert'
+      'danger'
+    when 'notice'
+      'success'
+    else
+      flass_type
+    end
+  end
+
   def format_value(value)
     if value.is_a?(Date) || value.is_a?(Time)
       value.strftime('%d/%m/%Y')

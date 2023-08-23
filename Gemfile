@@ -65,3 +65,5 @@ gem "responders", "~> 3.0"
 gem "simple_form", "~> 5.2"
 
 gem "kaminari", "~> 1.2"
+
+gem "acts_as_paranoid", "~> 0.8.1"

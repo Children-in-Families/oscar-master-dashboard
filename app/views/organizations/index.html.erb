@@ -43,15 +43,17 @@
               <%= link_to 'Usage Report', usage_report_path(id: :added_cases, q: { organization_id_in: [instance.id]}), class: "mr-2" %>
               <%= link_to 'View', instance, class: "mr-2" %>
               <%= link_to 'Edit', edit_organization_path(instance), class: "mr-2" %>
-
-              <% if instance.deletable? %>
-                <%= link_to 'Delete', organization_path(instance), data: { method: :delete, confirm: "This action cannot be undone, are you sure?" } %>
-              <% end %>
+              <%= link_to 'Delete', "#", data: { url: organization_path(instance), toggle: "modal", target: "#deleteInstance-#{instance.id}" } %>
             </td>
           </tr>
+
         <% end %>
       </tbody>
     </table>
+
+    <% collection.each do |instance| %>
+      <%= render partial: 'delete_confirmation', locals: { instance: instance } %>
+    <% end %>
 
     <p>Download: <%= link_to 'CSV', organizations_path(q: params[:q].to_unsafe_h, format: :csv) %></p>
   </div>

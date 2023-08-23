@@ -15,6 +15,8 @@ $(document).on("turbolinks:load", function() {
   $('.dropdown-toggle').dropdown();
   $(".flatpickr").flatpickr({});
   $("select").selectize({});
+
+  deleteInstanceHandler();
 })
 
 $(document).on('turbolinks:before-cache', function() {
@@ -24,3 +26,17 @@ $(document).on('turbolinks:before-cache', function() {
     }
   });
 });
+
+
+function deleteInstanceHandler() {
+  $("input[name='instance_name'").on("keyup", function() {
+    var actualInstanceName = $(this).closest("form").find(".instance_name").text();
+    var deleteButton = $(this).closest("form").find(".submit-btn");
+
+    if ($(this).val() == actualInstanceName) {
+      deleteButton.removeClass("disabled");
+    } else {
+      deleteButton.addClass("disabled");
+    }
+  })
+}

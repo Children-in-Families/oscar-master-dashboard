@@ -1,4 +1,6 @@
 class Client < ActiveRecord::Base
+  acts_as_paranoid
+  
   scope :accepted,               ->        { where(state: 'accepted') }
   scope :rejected,               ->        { where(state: 'rejected') }
   scope :male,                   ->        { where(gender: 'male') }
