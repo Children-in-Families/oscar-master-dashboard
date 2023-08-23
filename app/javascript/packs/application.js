@@ -16,3 +16,11 @@ $(document).on("turbolinks:load", function() {
   $(".flatpickr").flatpickr({});
   $("select").selectize({});
 })
+
+$(document).on('turbolinks:before-cache', function() {
+  $('.select').each(function() {
+    if (this.selectize) {
+      this.selectize.destroy();
+    }
+  });
+});
