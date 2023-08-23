@@ -61,7 +61,7 @@ class OrganizationsController < ApplicationController
     params[:q] ||= {}
     params[:q][:s] ||= "created_at desc"
     
-    @q = (get_collection_ivar || set_collection_ivar(end_of_association_chain.page(params[:page]))
+    @q = (get_collection_ivar || set_collection_ivar(end_of_association_chain.without_shared.page(params[:page]))
     ).ransack(params[:q])
 
     @organizations = @q.result(distinct: true)

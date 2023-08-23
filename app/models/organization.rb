@@ -24,6 +24,7 @@ class Organization < ApplicationRecord
 
   scope :demo, -> { where(demo: true) }
   scope :non_demo, -> { where.not(demo: true) }
+  scope :without_shared, -> { where.not(short_name: "shared") }
 
   scope :km, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%km%") }
   scope :en, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%en%") }

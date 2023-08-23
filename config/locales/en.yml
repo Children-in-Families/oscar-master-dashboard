@@ -7,4 +7,11 @@ en:
         status: "Status"
         created_at: "Onboarding Date"
         updated_at: "Updated At"
+        clients_count: Total Client
+        referred_count: "# of referred client"
+        accepted_client: "# of accepted client"
+        active_client: "# of active client"
+        exited_client: "# of exited client"
+        referral_source_category_name: Referral Source Category
+        integrated: Interoperability
 
