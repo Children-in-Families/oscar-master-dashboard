@@ -43,6 +43,9 @@ class Organization < ApplicationRecord
   scope :non_demo, -> { where.not(demo: true) }
   scope :without_shared, -> { where.not(short_name: "shared") }
 
+  # Replacement for only_deleted which is not working with apartment gem
+  scope :archived, -> { unscoped{ Organization.where.not(deleted_at: nil) } }
+
   scope :km, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%km%") }
   scope :en, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%en%") }
   scope :my, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%my%") }

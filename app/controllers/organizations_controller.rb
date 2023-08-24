@@ -47,15 +47,31 @@ class OrganizationsController < ApplicationController
     end
   end
 
+  def destroy
+    @organization = Organization.with_deleted.find(params[:id])
+    
+    if @organization.deleted_at?
+      UsageReport.where(organization_id: @organization.id).delete_all
+      @organization.destroy_fully!
+      Apartment::Tenant.drop(@organization.short_name)
+
+      redirect_to collection_url(scope: "archived"), notice: 'Instance was successfully deleted.'
+    else
+      @organization.destroy!
+      redirect_to collection_url, notice: 'Instance was successfully archived.'
+    end
+  end
+
   protected
 
   def collection
     params[:q] ||= {}
     params[:q][:s] ||= "created_at desc"
-    
-    @q = (get_collection_ivar || set_collection_ivar(end_of_association_chain.without_shared.page(params[:page]))
-    ).ransack(params[:q])
 
+    list = get_collection_ivar || set_collection_ivar(end_of_association_chain.without_shared.page(params[:page]))
+    list = list.archived if params[:scope] == "archived"
+
+    @q = list.ransack(params[:q])
     @organizations = @q.result(distinct: true)
   end
 

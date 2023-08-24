@@ -2,7 +2,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteInstance-<%= instance.id %>Label">Delete Instance</h5>
+        <h5 class="modal-title" id="deleteInstance-<%= instance.id %>Label"><%= instance.deleted_at? ? 'Permanent Delete' : 'Archive' %> Instance</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -10,6 +10,15 @@
 
       <form>
         <div class="modal-body">
+          <p>
+            Are you sure you want to perform this action?
+            <% if instance.deleted_at? %>
+              <span>This action will permanently delete this instance and all associated data.</span>
+            <% else %>
+              <span>This action will archive this instance and hide it from OSCaR start page.</span>
+            <% end %>
+          </p>
+
           <p>Please confirm this action by entering the <strong class="instance_name"><i><%= instance.full_name %></i></strong> in the box below:</p>
             <div class="form-group">
               <input type="text" class="form-control" name="instance_name" id="instance_name-<%= instance.id %>">
@@ -17,7 +26,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <%= link_to "Delete", organization_path(instance), data: { method: :delete }, class: "disabled btn btn-primary submit-btn" %>
+          <%= link_to "Proceed", organization_path(instance), data: { method: :delete }, class: "disabled btn btn-primary submit-btn" %>
         </div>
       </form>
     </div>
