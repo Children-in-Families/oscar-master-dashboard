@@ -78,8 +78,8 @@
       <%= f.input :full_name_cont, label: "Full Name" %>
       <%= f.input :short_name_cont, label: "Short Name" %>
       <%= f.input :country_in, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, label: "Country", input_html: { multiple: true } %>
-      <%= f.input :demo_true, as: :boolean, label: 'Demo?' %>
-      <%= f.input :integrated_true, as: :boolean, label: 'Interoperability?' %>
+      <%= f.input :demo_eq, collection: [['Yes', true], ['No', false]], label: 'Demo?' %>
+      <%= f.input :integrated_eq, collection: [['Yes', true], ['No', false]], label: 'Interoperability?' %>
 
       <%= f.label :onboarding_date %>
       <div class="row">
