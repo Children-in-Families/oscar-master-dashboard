@@ -84,11 +84,11 @@
       <%= f.label :onboarding_date %>
       <div class="row">
         <div class="col-6">
-          <%= f.input :created_at_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_at_gteq) }, placeholder: "From" %>
+          <%= f.input :created_date_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_date_gteq) }, placeholder: "From" %>
         </div>
       
         <div class="col-6">
-          <%= f.input :created_at_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_at_lteq)&.to_date }, placeholder: "To" %>
+          <%= f.input :created_date_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_date_lteq) }, placeholder: "To" %>
         </div>
       </div>
 

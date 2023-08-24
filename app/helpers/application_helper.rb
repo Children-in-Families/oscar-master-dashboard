@@ -16,7 +16,7 @@ module ApplicationHelper
 
   def format_value(value)
     if value.is_a?(Date) || value.is_a?(Time)
-      value.strftime('%d/%m/%Y')
+      value.strftime('%Y-%m-%d')
     elsif value.is_a?(Array)
       value.join(', ')
     elsif value.is_a?(TrueClass)

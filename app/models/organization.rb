@@ -52,6 +52,10 @@ class Organization < ApplicationRecord
 
   before_destroy :deletable?, prepend: true
 
+  ransacker :created_date do
+    Arel.sql('date(organizations.created_at)')
+  end
+
   class << self
     def current
       find_by(short_name: Apartment::Tenant.current)
