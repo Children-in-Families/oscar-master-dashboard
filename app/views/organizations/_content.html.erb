@@ -16,6 +16,11 @@
           <th scope="col"><%= sort_link(@q, :short_name) %></th>
           <th scope="col"><%= sort_link(@q, :country) %></th>
           <th scope="col"><%= sort_link(@q, :created_at) %></th>
+
+          <% if params[:scope] == 'archived' %>
+            <th scope="col"><%= sort_link(@q, :deleted_at) %></th>
+          <% end %>
+
           <th scope="col"><%= sort_link(@q, :clients_count) %></th>
           <th scope="col"><%= sort_link(@q, :referred_count) %></th>
           <th scope="col"><%= sort_link(@q, :accepted_client) %></th>
@@ -33,6 +38,10 @@
             <td><%= instance.short_name %></td>
             <td><%= instance.country&.titleize %></td>
             <td><%= format_value(instance.created_at.to_date) %></td>
+            <% if instance.deleted_at? %>
+              <td><%= format_value(instance.deleted_at.to_date) %></td>
+            <% end %>
+            
             <td><%= instance.clients_count %></td>
             <td><%= instance.referred_count %></td>
             <td><%= instance.accepted_client %></td>
