@@ -19,11 +19,11 @@
     <%= f.label :organization_onboarding_date, label: "Onboarding date" %>
     <div class="row">
       <div class="col-6">
-        <%= f.input :organization_created_at_gteq, label: false, input_html: { class: "form-control flatpickr" }, placeholder: "From" %>
+        <%= f.input :organization_created_at_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :organization_created_at_gteq) }, placeholder: "From" %>
       </div>
     
       <div class="col-6">
-        <%= f.input :organization_created_at_lteq, label: false, input_html: { class: "form-control flatpickr" }, placeholder: "To" %>
+        <%= f.input :organization_created_at_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :organization_created_at_lteq)&.to_date }, placeholder: "To" %>
       </div>
     </div>
     

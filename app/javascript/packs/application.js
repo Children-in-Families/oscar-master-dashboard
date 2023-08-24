@@ -3,8 +3,8 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
+import 'jquery-ui/ui/widgets/datepicker';
 import "@selectize/selectize";
-import flatpickr from "flatpickr"; 
 
 import jQuery from "jquery";
 global.$ = jQuery;
@@ -12,8 +12,13 @@ global.$ = jQuery;
 require("bootstrap");
 
 $(document).on("turbolinks:load", function() {
+  $(".flatpickr").datepicker({
+    changeMonth: true,
+    changeYear: true,
+    dateFormat: "yy-mm-dd"
+  });
+  
   $('.dropdown-toggle').dropdown();
-  $(".flatpickr").flatpickr({});
   $("select").selectize({});
 
   deleteInstanceHandler();
