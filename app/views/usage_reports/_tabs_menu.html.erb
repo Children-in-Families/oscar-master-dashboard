@@ -9,6 +9,9 @@
     <a class="nav-link font-weight-bold <%= active_class(params[:id] == 'cross_referral_oscar') %>" href="<%= usage_report_path(id: 'cross_referral_oscar', q: params[:q].to_unsafe_h) %>">Cross referral within OSCaR</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link font-weight-bold <%= active_class(params[:id] == 'cross_referral_primero') %>" href="<%= usage_report_path(id: 'cross_referral_primero', q: params[:q].to_unsafe_h) %>">Cross referral with Primero</a>
+    <a class="nav-link font-weight-bold <%= active_class(params[:id] == 'cross_referral_to_primero') %>" href="<%= usage_report_path(id: 'cross_referral_to_primero', q: params[:q].to_unsafe_h) %>">Cross referral to Primero</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link font-weight-bold <%= active_class(params[:id] == 'cross_referral_from_primero') %>" href="<%= usage_report_path(id: 'cross_referral_from_primero', q: params[:q].to_unsafe_h) %>">Cross referral from Primero</a>
   </li>
 </ul>
