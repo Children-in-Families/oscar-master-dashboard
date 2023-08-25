@@ -9,25 +9,41 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item <%= active_class(controller_name == 'dashboards') %>">
-          <a class="nav-link text-uppercase" href="<%= dashboard_path %>">Dashboard <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item <%= active_class(controller_name == 'organizations') %>">
-          <a class="nav-link text-uppercase" href="<%= organizations_path %>">Instances</a>
-        </li>
-        <li class="nav-item <%= active_class(controller_name == 'usage_reports') %>">
-          <a class="nav-link text-uppercase" href="<%= usage_report_path(id: 'added_cases') %>">Usage Report</a>
-        </li>
-        <li class="nav-item <%= active_class(controller_name == 'finances') %>">
-          <a class="nav-link text-uppercase" href="<%= finances_path %>">Finance</a>
-        </li>
-        <li class="nav-item <%= active_class(controller_name == 'duplications') %>">
-          <a class="nav-link text-uppercase" href="<%= duplications_path %>">Duplication Validation</a>
-        </li>
+        <% if policy(:dashboard).show? %>
+          <li class="nav-item <%= active_class(controller_name == 'dashboards') %>">
+            <a class="nav-link text-uppercase" href="<%= dashboard_path %>">Dashboard <span class="sr-only">(current)</span></a>
+          </li>
+        <% end %>
 
-        <li class="nav-item <%= active_class(controller_name == 'admin_users') %>">
-          <a class="nav-link text-uppercase" href="<%= admin_users_path %>">Admin Users</a>
-        </li>
+        <% if policy(Organization).index? %>
+          <li class="nav-item <%= active_class(controller_name == 'organizations') %>">
+            <a class="nav-link text-uppercase" href="<%= organizations_path %>">Instances</a>
+          </li>
+        <% end %>
+
+        <% if policy(UsageReport).show? %>
+          <li class="nav-item <%= active_class(controller_name == 'usage_reports') %>">
+            <a class="nav-link text-uppercase" href="<%= usage_report_path(id: 'added_cases') %>">Usage Report</a>
+          </li>
+        <% end %>
+
+        <% if policy(:finance).index? %>
+          <li class="nav-item <%= active_class(controller_name == 'finances') %>">
+            <a class="nav-link text-uppercase" href="<%= finances_path %>">Finance</a>
+          </li>
+        <% end %>
+
+        <% if policy(:duplication).index? %>
+          <li class="nav-item <%= active_class(controller_name == 'duplications') %>">
+            <a class="nav-link text-uppercase" href="<%= duplications_path %>">Duplication Validation</a>
+          </li>
+        <% end %>
+
+        <% if policy(AdminUser).index? %>
+          <li class="nav-item <%= active_class(controller_name == 'admin_users') %>">
+            <a class="nav-link text-uppercase" href="<%= admin_users_path %>">Admin Users</a>
+          </li>
+        <% end %>
       </ul>
     </div>
 
