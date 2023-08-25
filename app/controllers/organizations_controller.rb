@@ -78,7 +78,7 @@ class OrganizationsController < ApplicationController
 
   def restore
     @organization = Organization.with_deleted.find(params[:id])
-    @organization.recover
+    @organization.recover!
     redirect_to collection_url, notice: 'Instance was successfully restored.'
   end
 

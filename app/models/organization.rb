@@ -35,7 +35,7 @@ class Organization < ApplicationRecord
   before_save :clean_supported_languages, if: :supported_languages?
 
   validates :supported_languages, presence: true
-  validates :logo, presence: true
+  validates :logo, presence: true, on: :create
   validates :full_name, :short_name, :referral_source_category_name, presence: true
 
   # This regex will match any string that starts with a lowercase letter, followed by any number of lowercase letters, digits, underscores. This is based on the rules for postgres identifiers, which state that:
