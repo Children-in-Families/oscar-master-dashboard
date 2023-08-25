@@ -9,5 +9,14 @@ class UsageReportsController < ApplicationController
  
     @q = UsageReport.joins(:organization).ransack(params[:q])
     @usage_reports = @q.result.includes(:organization)
+
+    respond_to do |format|
+      format.html
+      format.xlsx do
+        filename = "tmp/usage-report-#{Date.today.strftime("%Y-%m-%d")}.xlsx"
+        UsageReportExportHandler.call(@usage_reports, params[:q][:month_eq], params[:q][:year_eq], filename)
+        send_file filename, disposition: :attachment
+      end
+    end
   end
 end

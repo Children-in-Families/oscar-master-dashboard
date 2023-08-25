@@ -72,3 +72,5 @@ gem "inherited_resources", "~> 1.13"
 gem "pundit", "~> 2.3"
 
 gem "enumerize", "~> 2.7"
+
+gem "caxlsx", "~> 3.0"
