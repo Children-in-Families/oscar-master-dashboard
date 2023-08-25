@@ -27,4 +27,10 @@ module ApplicationHelper
       value
     end
   end
+
+  def link_to_if(condition, name, options = {}, html_options = {}, &block)
+    if condition
+      link_to(name, options, html_options, &block)
+    end
+  end
 end

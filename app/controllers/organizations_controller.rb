@@ -2,6 +2,8 @@ class OrganizationsController < ApplicationController
   inherit_resources
   actions :all
 
+  before_action :authorize_resource!
+
   def index
     index! do |format|
       format.html
@@ -133,5 +135,13 @@ class OrganizationsController < ApplicationController
         headers: {Authorization: "Token token=#{current_admin_user&.token}"}
       }
     )
+  end
+
+  def authorize_resource!
+    if params[:id]
+      authorize resource
+    else
+      authorize Organization
+    end
   end
 end

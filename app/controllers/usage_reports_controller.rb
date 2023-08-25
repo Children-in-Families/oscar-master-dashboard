@@ -1,5 +1,7 @@
 class UsageReportsController < ApplicationController
   def show
+    authorize UsageReport
+
     params[:q] ||= {}
     params[:q][:month_eq] ||= 1.month.ago.month
     params[:q][:year_eq] ||= Date.current.year

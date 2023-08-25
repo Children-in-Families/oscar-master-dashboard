@@ -68,3 +68,7 @@ gem "kaminari", "~> 1.2"
 gem "acts_as_paranoid", "~> 0.8.1"
 
 gem "inherited_resources", "~> 1.13"
+
+gem "pundit", "~> 2.3"
+
+gem "enumerize", "~> 2.7"

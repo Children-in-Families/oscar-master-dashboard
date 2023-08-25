@@ -3,7 +3,7 @@
 <% end %>
 
 <%= content_for :action do %>
-  <%= link_to 'New', new_admin_user_path, class: 'btn btn-primary ml-auto' %>
+  <%= link_to_if policy(AdminUser).new?, 'New', new_admin_user_path, class: 'btn btn-primary ml-auto' %>
 <% end %>
 
 <div class="row">
@@ -15,6 +15,7 @@
           <th scope="col">First Name</th>
           <th scope="col">Last Name</th>
           <th scope="col">Email</th>
+          <th scope="col">Role</th>
           <th scope="col">Created at</th>
           <th scope="col"></th>
         </tr>
@@ -26,11 +27,12 @@
             <td><%= user.first_name %></td>
             <td><%= user.last_name %></td>
             <td><%= user.email %></td>
+            <td><%= user.role.titleize %></td>
             <td><%= format_value(user.created_at.to_date) %></td>
             <td>
-              <%= link_to 'View', user, class: "mr-2" %>
-              <%= link_to 'Edit', edit_admin_user_path(user), class: "mr-2" %>
-              <%= link_to 'Delete', admin_user_path(user), data: { method: :delete, confirm: "This action cannot be undone, are you sure?" } %>
+              <%= link_to_if policy(user).show?, 'View', user, class: "mr-2" %>
+              <%= link_to_if policy(user).edit?, 'Edit', edit_admin_user_path(user), class: "mr-2" %>
+              <%= link_to_if policy(user).destroy?, 'Delete', admin_user_path(user), data: { method: :delete, confirm: "This action cannot be undone, are you sure?" } %>
             </td>
           </tr>
         <% end %>
