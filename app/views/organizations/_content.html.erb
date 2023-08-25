@@ -56,10 +56,10 @@
             <td><%= format_value instance.demo? %></td>
             <td>
               <% if instance.deleted_at?%>
-                <%= link_to 'Restore', organization_restore_path(instance), data: { method: :put, confirm: "Are you sure you want to restore this instance?" } %>
+                <%= link_to 'Restore', organization_restore_path(instance), data: { method: :put, confirm: "Are you sure you want to restore this instance?" }, class: "mr-2" %>
                 <%= link_to 'Permanent Delete', "#", data: { url: organization_path(instance), toggle: "modal", target: "#deleteInstance-#{instance.id}" } %>
               <% else %>
-                <%= link_to 'Usage Report', usage_report_path(id: :added_cases, q: { organization_id_in: [instance.id]}), class: "mr-2" %>
+                <%= link_to 'Usage Report', usage_report_path(id: :added_cases, q: { organization_id_in: [instance.id]}), class: "d-block" %>
                 <%= link_to 'View', instance, class: "mr-2" %>
                 <%= link_to 'Edit', edit_organization_path(instance), class: "mr-2" %>
                 <%= link_to 'Archive', "#", data: { url: organization_path(instance), toggle: "modal", target: "#deleteInstance-#{instance.id}" } %>
