@@ -20,7 +20,11 @@ class OrganizationsController < ApplicationController
 
     if @organization.valid?
       @org = upsert_instance_request("POST")
+      Rails.logger.info "========================== @org =========================="
+      Rails.logger.info @org
+
       org_id = @org&.parsed_response&.dig('organization', 'id')
+
       if org_id
         @organization = Organization.find(org_id)
         redirect_to resource_url(@organization)
