@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   root to: "dashboards#show"
   
   resource :dashboard, only: :show
-  resources :organizations, path: 'instances'
+  
+  resources :organizations, path: 'instances' do
+    put :restore
+  end
+
   resources :admin_users
   resources :duplications
   resources :finances
