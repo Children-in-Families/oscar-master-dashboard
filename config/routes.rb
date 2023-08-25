@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   resource :dashboard, only: :show
   
   resources :organizations, path: 'instances' do
-    put :restore
+    member do
+      put :restore
+    end
   end
 
   resources :admin_users
