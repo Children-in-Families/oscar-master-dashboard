@@ -9,7 +9,7 @@
 
 <div class="card">
   <div class="card-body">
-    <% %i(full_name short_name demo country supported_languages created_at).each do |field| %>
+    <% %i(full_name short_name demo country supported_languages created_at onboarding_status).each do |field| %>
       <%= render partial: "show/row", locals: { resource: resource, field: field } %>
     <% end %>
   </div>

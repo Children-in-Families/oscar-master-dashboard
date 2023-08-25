@@ -17,4 +17,5 @@ en:
         referral_source_category_name: Referral Source Category
         integrated: Interoperability
         deleted_at: Archived Date
+        users_count: "# of active user"
 

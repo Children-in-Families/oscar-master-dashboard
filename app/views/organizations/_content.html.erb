@@ -27,6 +27,7 @@
           <th scope="col"><%= sort_link(@q, :accepted_client) %></th>
           <th scope="col"><%= sort_link(@q, :active_client) %></th>
           <th scope="col"><%= sort_link(@q, :exited_client) %></th>
+          <th scope="col"><%= sort_link(@q, :users_count) %></th>
           <th scope="col"><%= sort_link(@q, :referral_source_category_name) %></th>
           <th scope="col"><%= sort_link(@q, :demo, 'Demo?') %></th>
           <th scope="col">Manage</th>
@@ -50,6 +51,7 @@
             <td><%= instance.accepted_client %></td>
             <td><%= instance.active_client %></td>
             <td><%= instance.exited_client %></td>
+            <td><%= instance.users_count %></td>
             <td><%= instance.referral_source_category_name %></td>
             <td><%= format_value instance.demo? %></td>
             <td>
