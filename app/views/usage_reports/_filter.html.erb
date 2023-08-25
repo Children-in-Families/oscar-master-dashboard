@@ -15,6 +15,7 @@
     <%= f.input :organization_full_name_cont, label: "NGO Full Name" %>
     <%= f.input :organization_country_in, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, input_html: { multiple: true }, label: "Country" %>
     <%= f.input :organization_demo_eq, collection: [['Yes', true], ['No', false]], label: 'Demo?' %>
+    <%= f.input :organization_integrated_eq, collection: [['Yes', true], ['No', false]], label: 'Interoperability?' %>
 
     <%= f.label :organization_onboarding_date, label: "Onboarding date" %>
     <div class="row">
