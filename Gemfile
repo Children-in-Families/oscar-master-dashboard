@@ -12,7 +12,6 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'pg'
 gem 'dotenv-rails'
 gem 'devise'
-gem 'activeadmin'
 # gem 'bootstrap-sass'
 gem 'bootstrap', '~> 4.5.3'
 # gem 'active_bootstrap_skin'
@@ -67,3 +66,5 @@ gem "simple_form", "~> 5.2"
 gem "kaminari", "~> 1.2"
 
 gem "acts_as_paranoid", "~> 0.8.1"
+
+gem "inherited_resources", "~> 1.13"

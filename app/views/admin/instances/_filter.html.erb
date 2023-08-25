@@ -1,8 +1,0 @@
-<%= semantic_form_for :report, url: url, method: :get do |f| %>
-  <%= f.inputs do %>
-    <%= f.input :month, collection: Date::MONTHNAMES.last(12).map.with_index{ |month, index| [month, index+1] }, selected: @month %>
-    <%= f.input :year, collection: (Date.current.year - 10)..Date.current.year, selected: @year %>
-  <% end %>
-
-  <%= f.submit 'View Report' %>
-<% end %>
