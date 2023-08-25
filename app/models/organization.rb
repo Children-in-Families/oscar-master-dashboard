@@ -37,7 +37,13 @@ class Organization < ApplicationRecord
   validates :supported_languages, presence: true
   validates :logo, presence: true
   validates :full_name, :short_name, :referral_source_category_name, presence: true
-  validates :short_name, uniqueness: {case_sensitive: false}, format: {with: %r{\A[a-z](?:[a-z0-9]*[a-z0-9])?\z}i}, length: {in: 1..63}
+
+  # This regex will match any string that starts with a lowercase letter, followed by any number of lowercase letters, digits, underscores. This is based on the rules for postgres identifiers, which state that:
+  # -  An identifier can contain only ASCII letters, digits, underscores, and dollar signs.
+  # -  An identifier must begin with a letter or an underscore. A letter is an ASCII character in the range a-z or A-Z. The lower case letters are mapped to upper case when stored.
+  # -  The maximum length of an identifier is 63 characters.
+  # Anyway, we remove support for leading underscores, digits and dollar signs, and enforce a minimum length of 1 character.
+  validates :short_name, uniqueness: { case_sensitive: false }, format: { with: /\A[a-z][a-z_]*\z/ }, length: { in: 1..63 }
 
   scope :demo, -> { where(demo: true) }
   scope :non_demo, -> { where.not(demo: true) }
