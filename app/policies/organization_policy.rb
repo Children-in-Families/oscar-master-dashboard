@@ -12,4 +12,8 @@ class OrganizationPolicy < ApplicationPolicy
   def destroy?
     user.admin?
   end
+
+  def export?
+    user.admin? || user.editor?
+  end
 end
