@@ -55,14 +55,19 @@ class OrganizationsController < ApplicationController
     @organization = Organization.with_deleted.find(params[:id])
     
     if @organization.deleted_at?
-      Organization.transaction do
-        GlobalIdentityOrganization.where(organization_id: @organization.id).delete_all
-        UsageReport.where(organization_id: @organization.id).delete_all
+      begin
+        Organization.transaction do
+          GlobalIdentityOrganization.where(organization_id: @organization.id).delete_all
+          UsageReport.where(organization_id: @organization.id).delete_all
 
-        @organization.destroy_fully!
+          @organization.destroy_fully!
+        end
+
+        Apartment::Tenant.drop(@organization.short_name)
+      rescue Apartment::TenantNotFound => e
+        # Ignore this error as it has issue when creating new instance
+        Rails.logger.info "========================== e =========================="
       end
-
-      Apartment::Tenant.drop(@organization.short_name)
 
       redirect_to collection_url(scope: "archived"), notice: 'Instance was successfully deleted.'
     else
