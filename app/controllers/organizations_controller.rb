@@ -39,7 +39,6 @@ class OrganizationsController < ApplicationController
   end
 
   def update
-    @organization = Organization.find(params[:id])
     if @organization
       @org = upsert_instance_request("PUT")
      
@@ -54,8 +53,6 @@ class OrganizationsController < ApplicationController
   end
 
   def destroy
-    @organization = Organization.with_deleted.find(params[:id])
-    
     if @organization.deleted_at?
       begin
         Organization.transaction do
@@ -63,6 +60,7 @@ class OrganizationsController < ApplicationController
           UsageReport.where(organization_id: @organization.id).delete_all
 
           @organization.destroy_fully!
+          OrganizationMailer.notify_organization_deleted(@organization.full_name, current_admin_user).deliver_now
         end
 
         Apartment::Tenant.drop(@organization.short_name)
@@ -74,12 +72,13 @@ class OrganizationsController < ApplicationController
       redirect_to collection_url(scope: "archived"), notice: 'Instance was successfully deleted.'
     else
       @organization.destroy!
+      OrganizationMailer.notify_organization_archived(@organization, current_admin_user).deliver_now
+
       redirect_to collection_url, notice: 'Instance was successfully archived.'
     end
   end
 
   def restore
-    @organization = Organization.with_deleted.find(params[:id])
     @organization.recover!
     redirect_to collection_url, notice: 'Instance was successfully restored.'
   end
@@ -139,7 +138,8 @@ class OrganizationsController < ApplicationController
 
   def authorize_resource!
     if params[:id]
-      authorize resource
+      @organization = Organization.with_deleted.find(params[:id])
+      authorize @organization
     else
       authorize Organization
     end
