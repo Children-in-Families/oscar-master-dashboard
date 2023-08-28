@@ -8,67 +8,69 @@
 </ul>
 
 <div class="row my-2">
-  <div class="col-10">
-    <table class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th scope="col"><%= sort_link(@q, :full_name) %></th>
-          <th scope="col"><%= sort_link(@q, :short_name) %></th>
-          <th scope="col"><%= sort_link(@q, :country) %></th>
-          <th scope="col"><%= sort_link(@q, :created_at) %></th>
-          <th scope="col">Onboarding Status</th>
-
-          <% if params[:scope] == 'archived' %>
-            <th scope="col"><%= sort_link(@q, :deleted_at) %></th>
-          <% end %>
-
-          <th scope="col"><%= sort_link(@q, :clients_count) %></th>
-          <th scope="col"><%= sort_link(@q, :referred_count) %></th>
-          <th scope="col"><%= sort_link(@q, :accepted_client) %></th>
-          <th scope="col"><%= sort_link(@q, :active_client) %></th>
-          <th scope="col"><%= sort_link(@q, :exited_client) %></th>
-          <th scope="col"><%= sort_link(@q, :users_count) %></th>
-          <th scope="col"><%= sort_link(@q, :referral_source_category_name) %></th>
-          <th scope="col"><%= sort_link(@q, :demo, 'Demo?') %></th>
-          <th scope="col">Manage</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% collection.each do |instance| %>
+  <div class="col-9 col-xl-10">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-bordered table-hover">
+        <thead>
           <tr>
-            <td><%= instance.full_name %></td>
-            <td><%= instance.short_name %></td>
-            <td><%= instance.country&.titleize %></td>
-            <td><%= format_value(instance.created_at.to_date) %></td>
-            <td><%= instance.onboarding_status.titleize %></td>
+            <th scope="col"><%= sort_link(@q, :full_name) %></th>
+            <th scope="col"><%= sort_link(@q, :short_name) %></th>
+            <th scope="col"><%= sort_link(@q, :country) %></th>
+            <th scope="col"><%= sort_link(@q, :created_at) %></th>
+            <th scope="col">Onboarding Status</th>
 
-            <% if instance.deleted_at? %>
-              <td><%= format_value(instance.deleted_at.to_date) %></td>
+            <% if params[:scope] == 'archived' %>
+              <th scope="col"><%= sort_link(@q, :deleted_at) %></th>
             <% end %>
-            
-            <td><%= instance.clients_count %></td>
-            <td><%= instance.referred_count %></td>
-            <td><%= instance.accepted_client %></td>
-            <td><%= instance.active_client %></td>
-            <td><%= instance.exited_client %></td>
-            <td><%= instance.users_count %></td>
-            <td><%= instance.referral_source_category_name %></td>
-            <td><%= format_value instance.demo? %></td>
-            <td>
-              <% if instance.deleted_at?%>
-                <%= link_to_if policy(instance).restore?, 'Restore', restore_organization_path(instance), data: { method: :put, confirm: "Are you sure you want to restore this instance?" }, class: "d-block" %>
-                <%= link_to_if policy(instance).destroy?, 'Permanent Delete', "#", data: { url: organization_path(instance), toggle: "modal", target: "#deleteInstance-#{instance.id}" } %>
-              <% else %>
-                <%= link_to_if policy(instance).show?, 'Usage Report', usage_report_path(id: :added_cases, q: { organization_id_in: [instance.id]}), class: "d-block" %>
-                <%= link_to_if policy(instance).show?, 'View', instance, class: "mr-2" %>
-                <%= link_to_if policy(instance).edit?, 'Edit', edit_organization_path(instance), class: "mr-2" %>
-                <%= link_to_if policy(instance).destroy?, 'Archive', "#", data: { url: organization_path(instance), toggle: "modal", target: "#deleteInstance-#{instance.id}" } %>
-              <% end %>
-            </td>
+
+            <th scope="col"><%= sort_link(@q, :clients_count) %></th>
+            <th scope="col"><%= sort_link(@q, :referred_count) %></th>
+            <th scope="col"><%= sort_link(@q, :accepted_client) %></th>
+            <th scope="col"><%= sort_link(@q, :active_client) %></th>
+            <th scope="col"><%= sort_link(@q, :exited_client) %></th>
+            <th scope="col"><%= sort_link(@q, :users_count) %></th>
+            <th scope="col"><%= sort_link(@q, :referral_source_category_name) %></th>
+            <th scope="col"><%= sort_link(@q, :demo, 'Demo?') %></th>
+            <th scope="col">Manage</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% collection.each do |instance| %>
+            <tr>
+              <td><%= instance.full_name %></td>
+              <td><%= instance.short_name %></td>
+              <td><%= instance.country&.titleize %></td>
+              <td><%= format_value(instance.created_at.to_date) %></td>
+              <td><%= instance.onboarding_status.titleize %></td>
+
+              <% if instance.deleted_at? %>
+                <td><%= format_value(instance.deleted_at.to_date) %></td>
+              <% end %>
+              
+              <td><%= instance.clients_count %></td>
+              <td><%= instance.referred_count %></td>
+              <td><%= instance.accepted_client %></td>
+              <td><%= instance.active_client %></td>
+              <td><%= instance.exited_client %></td>
+              <td><%= instance.users_count %></td>
+              <td><%= instance.referral_source_category_name %></td>
+              <td><%= format_value instance.demo? %></td>
+              <td>
+                <% if instance.deleted_at?%>
+                  <%= link_to_if policy(instance).restore?, 'Restore', restore_organization_path(instance), data: { method: :put, confirm: "Are you sure you want to restore this instance?" }, class: "d-block" %>
+                  <%= link_to_if policy(instance).destroy?, 'Permanent Delete', "#", data: { url: organization_path(instance), toggle: "modal", target: "#deleteInstance-#{instance.id}" } %>
+                <% else %>
+                  <%= link_to_if policy(instance).show?, 'Usage Report', usage_report_path(id: :added_cases, q: { organization_id_in: [instance.id]}), class: "d-block" %>
+                  <%= link_to_if policy(instance).show?, 'View', instance, class: "mr-2" %>
+                  <%= link_to_if policy(instance).edit?, 'Edit', edit_organization_path(instance), class: "mr-2" %>
+                  <%= link_to_if policy(instance).destroy?, 'Archive', "#", data: { url: organization_path(instance), toggle: "modal", target: "#deleteInstance-#{instance.id}" } %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
 
     <% collection.each do |instance| %>
       <%= render partial: 'delete_confirmation', locals: { instance: instance } %>
@@ -78,7 +80,7 @@
       <p>Download: <%= link_to 'CSV', organizations_path(q: params[:q].to_unsafe_h, scope: params[:scope], format: :csv) %></p>
     <% end %>
   </div>
-  <div class="col-2">
+  <div class="col-3 col-xl-2">
     <%= simple_form_for @q, url: organizations_path, method: :get do |f| %>
       <%= hidden_field_tag :scope, params[:scope] %>
       <%= f.input :id_in, label: 'NGO', collection: Organization.pluck(:full_name, :id), input_html: { multiple: true } %>

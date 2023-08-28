@@ -1,5 +1,9 @@
 body {
-  font-size: 14.5px;
+  font-size: 14px;
+
+  @media (min-width: 1600px) {
+    font-size: 16px;
+  }
 
   .navbar.main {
     background-color: #efefef !important;
