@@ -41,7 +41,7 @@
 
         <% if policy(AdminUser).index? %>
           <li class="nav-item <%= active_class(controller_name == 'admin_users') %>">
-            <a class="nav-link text-uppercase" href="<%= admin_users_path %>">Admin Users</a>
+            <a class="nav-link text-uppercase" href="<%= admin_users_path %>">User Account</a>
           </li>
         <% end %>
       </ul>
