@@ -9,7 +9,7 @@ class ApplicationPolicy
   end
 
   def index?
-    user.admin? || user.editor? || user.viewer?
+    true
   end
 
   def create?
