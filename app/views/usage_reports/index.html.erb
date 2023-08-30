@@ -1,0 +1,42 @@
+<% content_for :page_title do %>
+  <%= "Usage Report for #{params[:q][:month_eq]}/#{params[:q][:year_eq]}" %>
+<% end %>
+
+<%= content_for :action do %>
+  <%= link_to_if policy(UsageReport).export?, 'Export', url_for(only_path: false, format: :xlsx), class: 'btn btn-primary ml-auto' %>
+<% end %>
+
+<div class="my-2">
+  <div class="row">
+    <div class="col-9 col-xl-10">
+      <%= render "tabs_menu" %>
+
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="added-case" role="tabpanel" aria-labelledby="added-case-tab">
+          <%= render "usage_reports/content/added_cases" %>
+        </div>
+
+        <div class="tab-pane fade" id="synced-case" role="tabpanel" aria-labelledby="synced-case-tab">
+          <%= render "usage_reports/content/synced_cases" %>
+        </div>
+
+        <div class="tab-pane fade" id="cross-referral-osca" role="tabpanel" aria-labelledby="cross-referral-osca-tab">
+          <%= render "usage_reports/content/cross_referral_oscar" %>
+        </div>
+
+        <div class="tab-pane fade" id="cross-referral-to-primero" role="tabpanel" aria-labelledby="cross-referral-to-primero-tab">
+          <%= render "usage_reports/content/cross_referral_from_primero" %>       
+        </div>
+
+        <div class="tab-pane fade" id="cross-referral-from-primero" role="tabpanel" aria-labelledby="cross-referral-from-primero-tab">
+          <%= render "usage_reports/content/cross_referral_to_primero" %>
+        </div>
+      </div>
+    </div>
+
+    <%= render "filter" %>
+  </div>
+</div>
+
+
+

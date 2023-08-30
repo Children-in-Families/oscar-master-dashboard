@@ -1,0 +1,62 @@
+<% content_for :page_title do %>
+  <%= "Usage Report for #{params[:q][:month_eq]}/#{params[:q][:year_eq]}" %>
+<% end %>
+
+<div class="my-2">
+  <div class="row">
+    <div class="col-9 col-xl-10">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a href="#" class="nav-link font-weight-bold active" id="clients-status-tab" data-toggle="tab" data-target="#clients-status" role="tab" aria-controls="home" aria-selected="true">Clients' status</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link font-weight-bold" id="clients-age-gender-tab" data-toggle="tab" data-target="#clients-age-gender" role="tab" aria-controls="home" aria-selected="true">Clients' age and gender</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link font-weight-bold" id="cases-synced-to-primero-tab" data-toggle="tab" data-target="#cases-synced-to-primero" role="tab" aria-controls="home" aria-selected="true">Cases synced to primero</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link font-weight-bold" id="ngo-by-country-tab" data-toggle="tab" data-target="#ngo-by-country" role="tab" aria-controls="home" aria-selected="true">NGO by country</a>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="clients-status" role="tabpanel" aria-labelledby="clients-status-tab">
+          <div class="chart-container text-center mx-auto" max-width="800px">
+            <canvas widht="800" height="800" class="chart-holder" data-source="<%= { client_status: @chart_engine.client_status_data }.to_json %>">
+            </canvas>
+          </div>
+        </div>
+        
+        <div class="tab-pane fade" id="clients-age-gender" role="tabpanel" aria-labelledby="clients-age-gender-tab">
+          <div class="chart-container text-center mx-auto" max-width="600px">
+            <canvas widht="600" height="400" class="chart-holder" data-source="<%= { client_age_gender: @chart_engine.client_age_gender_data }.to_json %>">
+            </canvas>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="cases-synced-to-primero" role="tabpanel" aria-labelledby="cases-synced-to-primero-tab">
+          <div class="chart-container text-center mx-auto" max-width="600px">
+            <canvas widht="600" height="400" class="chart-holder" data-source="<%= { case_sync_to_primero: @chart_engine.client_age_gender_data }.to_json %>">
+            </canvas>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="ngo-by-country" role="tabpanel" aria-labelledby="ngo-by-country-tab">
+          <div class="chart-container text-center mx-auto" max-width="600px">
+            <canvas  widht="600" height="400" class="chart-holder" data-source="<%= { ngo_by_country: @chart_engine.ngo_by_country_data }.to_json %>">
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= render "filter" %>
+  </div>
+</div>
+
+
+

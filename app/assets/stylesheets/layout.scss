@@ -20,4 +20,14 @@ body {
     padding-left: 50px;
     padding-right: 50px;
   }
+
+  .chart-container {
+    max-width: 600px;
+  }
+
+  #ngo-by-country,
+  #cases-synced-to-primero,
+  #clients-age-gender {
+    max-height: 400px;
+  }
 }

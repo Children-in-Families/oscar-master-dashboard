@@ -10,8 +10,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <% if policy(:dashboard).show? %>
-          <li class="nav-item <%= active_class(controller_name == 'dashboards') %>">
-            <a class="nav-link text-uppercase" href="<%= dashboard_path %>">Dashboard <span class="sr-only">(current)</span></a>
+          <li class="nav-item <%= active_class(controller_name == 'usage_reports' && action_name == 'dashboard') %>">
+            <a class="nav-link text-uppercase" href="<%= root_path %>">Dashboard <span class="sr-only">(current)</span></a>
           </li>
         <% end %>
 
@@ -22,8 +22,8 @@
         <% end %>
 
         <% if policy(UsageReport).show? %>
-          <li class="nav-item <%= active_class(controller_name == 'usage_reports') %>">
-            <a class="nav-link text-uppercase" href="<%= usage_report_path(id: 'added_cases') %>">Usage Report</a>
+          <li class="nav-item <%= active_class(controller_name == 'usage_reports' && action_name == 'index') %>">
+            <a class="nav-link text-uppercase" href="<%= usage_reports_path %>">Usage Report</a>
           </li>
         <% end %>
 

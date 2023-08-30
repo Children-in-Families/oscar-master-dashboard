@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   devise_for :admin_users
-  root to: "dashboards#show"
-  
-  resource :dashboard, only: :show
+  root to: "usage_reports#dashboard"
   
   resources :organizations, path: 'instances' do
     member do
@@ -15,5 +13,9 @@ Rails.application.routes.draw do
   resources :finances
   resources :messages, only: [:index]
 
-  resources :usage_reports, only: [:show], constraints: { id: /added_cases|synced_cases|cross_referral_oscar|cross_referral_from_primero|cross_referral_to_primero/ }
+  resources :usage_reports, only: [:index] do
+    collection do
+      get :dashboard
+    end
+  end
 end

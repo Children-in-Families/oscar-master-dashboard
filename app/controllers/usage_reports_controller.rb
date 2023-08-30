@@ -1,5 +1,5 @@
 class UsageReportsController < ApplicationController
-  def show
+  def index
     authorize UsageReport
 
     params[:q] ||= {}
@@ -18,5 +18,10 @@ class UsageReportsController < ApplicationController
         send_file filename, disposition: :attachment
       end
     end
+  end
+
+  def dashboard
+    index
+    @chart_engine = ChartDataConverter.new(@usage_reports)
   end
 end

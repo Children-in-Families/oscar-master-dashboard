@@ -1,5 +1,5 @@
 <div class="col-3 col-xl-2">
-  <%= simple_form_for @q, url: usage_report_path(id: params[:id]), method: :get do |f| %>
+  <%= simple_form_for @q, url: url_for(only_path: false), method: :get do |f| %>
   
     <div class="row">
       <div class="col-6">
@@ -30,6 +30,6 @@
     
 
     <%= f.submit 'Submit', class: "btn btn-primary" %>
-    <%= link_to "Clear Search", usage_report_path(id: 'added_cases')  %>
+    <%= link_to "Clear Search", url_for(only_path: false, id: 'added_cases')  %>
   <% end %>
 </div>
