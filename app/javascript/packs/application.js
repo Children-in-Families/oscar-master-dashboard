@@ -78,7 +78,7 @@ function initClientsAgeChart() {
       responsive: true,
       plugins: {
         legend: {
-          position: 'top',
+          display: false,
         }
       }
     },
@@ -96,7 +96,7 @@ function initPrimeroChart() {
       responsive: true,
       plugins: {
         legend: {
-          position: 'top',
+          display: false,
         }
       }
     },

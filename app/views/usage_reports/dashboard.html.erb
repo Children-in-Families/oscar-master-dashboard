@@ -23,31 +23,31 @@
         </li>
       </ul>
 
-      <div class="tab-content" id="myTabContent">
+      <div class="tab-content mt-4" id="myTabContent">
         <div class="tab-pane fade show active" id="clients-status" role="tabpanel" aria-labelledby="clients-status-tab">
-          <div class="chart-container text-center mx-auto" max-width="800px">
+          <div class="chart-container text-center mx-auto" style="max-width: 500px">
             <canvas widht="800" height="800" class="chart-holder" data-source="<%= { client_status: @chart_engine.client_status_data }.to_json %>">
             </canvas>
           </div>
         </div>
         
         <div class="tab-pane fade" id="clients-age-gender" role="tabpanel" aria-labelledby="clients-age-gender-tab">
-          <div class="chart-container text-center mx-auto" max-width="600px">
-            <canvas widht="600" height="400" class="chart-holder" data-source="<%= { client_age_gender: @chart_engine.client_age_gender_data }.to_json %>">
+          <div class="chart-container text-center mx-auto">
+            <canvas style="width:100%; max-width:800px" class="chart-holder" data-source="<%= { client_age_gender: @chart_engine.client_age_gender_data }.to_json %>">
             </canvas>
           </div>
         </div>
 
         <div class="tab-pane fade" id="cases-synced-to-primero" role="tabpanel" aria-labelledby="cases-synced-to-primero-tab">
-          <div class="chart-container text-center mx-auto" max-width="600px">
-            <canvas widht="600" height="400" class="chart-holder" data-source="<%= { case_sync_to_primero: @chart_engine.client_age_gender_data }.to_json %>">
+          <div class="chart-container text-center mx-auto">
+            <canvas style="width:100%; max-width:800px" class="chart-holder" data-source="<%= { case_sync_to_primero: @chart_engine.primero_data }.to_json %>">
             </canvas>
           </div>
         </div>
 
         <div class="tab-pane fade" id="ngo-by-country" role="tabpanel" aria-labelledby="ngo-by-country-tab">
-          <div class="chart-container text-center mx-auto" max-width="600px">
-            <canvas  widht="600" height="400" class="chart-holder" data-source="<%= { ngo_by_country: @chart_engine.ngo_by_country_data }.to_json %>">
+          <div class="chart-container text-center mx-auto">
+            <canvas style="width:100%; max-width:800px" class="chart-holder" data-source="<%= { ngo_by_country: @chart_engine.ngo_by_country_data }.to_json %>">
             </canvas>
           </div>
         </div>
