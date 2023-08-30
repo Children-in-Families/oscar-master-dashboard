@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
     authorize Ahoy::Message
 
     params[:q] ||= {}
-    params[:q][:s] ||= "created_at desc"
+    params[:q][:s] ||= "sent_at desc"
     
     Organization.switch_to(params[:by_tenant]) if params[:by_tenant].present?
 

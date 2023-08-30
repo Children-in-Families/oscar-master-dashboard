@@ -6,7 +6,7 @@
           <tr>
             <th scope="col"><%= sort_link(@q, :subject) %></th>
             <th scope="col"><%= sort_link(@q, :to) %></th>
-            <th scope="col"><%= sort_link(@q, :created_at) %></th>
+            <th scope="col"><%= sort_link(@q, :sent_at) %></th>
           </tr>
         </thead>
         <tbody>
@@ -14,7 +14,7 @@
             <tr>
               <td><%= message.subject %></td>
               <td><%= format_value(message.to) %></td>
-              <td><%= format_value(message.created_at.to_date) %></td>
+              <td><%= format_value(message.sent_at.to_date) %></td>
             </tr>
           <% end %>
         </tbody>
@@ -29,14 +29,14 @@
       <%= f.input :to_cont, label: "To" %>
       <%= f.input :subject_cont, label: "Subject" %>
       
-      <%= f.label :created_at %>
+      <%= f.label :sent_at %>
       <div class="row">
         <div class="col-6">
-          <%= f.input :created_at_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_at_gteq) }, placeholder: "From" %>
+          <%= f.input :sent_at_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :sent_at_gteq) }, placeholder: "From" %>
         </div>
       
         <div class="col-6">
-          <%= f.input :created_at_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_at_lteq) }, placeholder: "To" %>
+          <%= f.input :sent_at_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :sent_at_lteq) }, placeholder: "To" %>
         </div>
       </div>
 
