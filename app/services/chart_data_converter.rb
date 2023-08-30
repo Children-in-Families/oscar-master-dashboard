@@ -11,8 +11,8 @@ class ChartDataConverter
       datasets: [
         {
           data: [300, 50, 100, 40],
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00FF00'],
-          hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00FF00']
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00cc99'],
+          hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00cc99']
         }
       ]
     }
@@ -29,8 +29,8 @@ class ChartDataConverter
             reports.sum{ |report| report.added_cases['child_female'] },
             reports.sum{ |report| report.added_cases['child_male'] },
           ],
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00FF00', '#FF0000'],
-          hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00FF00', '#FF0000']
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00cc99', '#FF0000'],
+          hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00cc99', '#FF0000']
         }
       ]
     }
@@ -47,8 +47,8 @@ class ChartDataConverter
             reports.sum{ |report| report.cross_referral_to_primero_cases['child_female'] },
             reports.sum{ |report| report.cross_referral_to_primero_cases['child_male'] },
           ],
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00FF00', '#FF0000'],
-          hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00FF00', '#FF0000']
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00cc99', '#FF0000'],
+          hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00cc99', '#FF0000']
         }
       ]
     }

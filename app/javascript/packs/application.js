@@ -5,7 +5,10 @@ require("channels")
 
 import 'jquery-ui/ui/widgets/datepicker';
 import "@selectize/selectize";
+
 import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+Chart.register(ChartDataLabels);
 
 import jQuery from "jquery";
 global.$ = jQuery;
@@ -61,6 +64,13 @@ function initChartjs () {
       plugins: {
         legend: {
           position: 'top',
+        },
+        datalabels: {
+          display: true,
+          color: '#fff',
+          font: {
+            size: 12,
+          }
         }
       }
     },
@@ -79,6 +89,15 @@ function initClientsAgeChart() {
       plugins: {
         legend: {
           display: false,
+        },
+        datalabels: {
+          display: true,
+          align: 'end',
+          anchor: 'end',
+          color: '#000',
+          font: {
+            size: 12,
+          }
         }
       }
     },
@@ -97,6 +116,15 @@ function initPrimeroChart() {
       plugins: {
         legend: {
           display: false,
+        },
+        datalabels: {
+          display: true,
+          align: 'end',
+          anchor: 'end',
+          color: '#000',
+          font: {
+            size: 12,
+          }
         }
       }
     },
@@ -117,6 +145,15 @@ function initNGOChart() {
       plugins: {
         legend: {
           position: 'top',
+        },
+        datalabels: {
+          display: true,
+          align: 'end',
+          anchor: 'end',
+          color: '#000',
+          font: {
+            size: 12,
+          }
         }
       }
     },

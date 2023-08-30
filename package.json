@@ -9,6 +9,7 @@
     "@selectize/selectize": "^0.15.2",
     "bootstrap": "4",
     "chart.js": "^4.4.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "jquery": "^3.7.0",
     "jquery-ui": "^1.13.2",
     "popper.js": "^1.16.1",
