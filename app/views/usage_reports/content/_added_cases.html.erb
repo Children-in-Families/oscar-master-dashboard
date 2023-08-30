@@ -6,6 +6,7 @@
           <thead>
             <tr>
               <th scope="col">NGO Name</th>
+              <th scope="col"># Login</th>
               <th scope="col">Total client</th>
               <th scope="col">Adult female without disability</th>
               <th scope="col">Adult female with disability</th>
@@ -22,6 +23,7 @@
             <% @usage_reports.each do |report| %>
               <tr>
                 <td><%= report.organization.full_name %></td>
+                <td><%= report.added_cases['login_per_month'] %></td>
                 <td><%= report.added_cases['total'] %></td>
                 <td><%= report.added_cases['adult_female_without_disability'] %></td>
                 <td><%= report.added_cases['adult_female_with_disability'] %></td>
