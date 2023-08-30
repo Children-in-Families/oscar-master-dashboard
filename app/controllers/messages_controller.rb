@@ -4,15 +4,10 @@ class MessagesController < ApplicationController
 
     params[:q] ||= {}
     params[:q][:s] ||= "created_at desc"
+    
+    Organization.switch_to(params[:by_tenant]) if params[:by_tenant].present?
 
-    if params[:by_tenant]
-      Apartment::Tenant.switch(params[:by_tenant]) do
-        @q = Ahoy::Message.page(params[:page]).ransack(params[:q])
-        @messages = @q.result(distinct: true)
-      end
-    else
-      @q = Ahoy::Message.ransack(params[:q])
-      @messages = @q.result
-    end
+    @q = Ahoy::Message.page(params[:page]).ransack(params[:q])
+    @messages = @q.result(distinct: true)
   end
 end
