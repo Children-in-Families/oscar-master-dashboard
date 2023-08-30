@@ -46,7 +46,7 @@
         <% end %>
 
         <li class="nav-item <%= active_class(controller_name == 'messages') %>">
-          <a class="nav-link text-uppercase" href="<%= messages_path %>">Messages</a>
+          <a class="nav-link text-uppercase" href="<%= messages_path(by_tenant: :cif) %>">Messages</a>
         </li>
       </ul>
     </div>
