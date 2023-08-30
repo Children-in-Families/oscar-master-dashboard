@@ -44,6 +44,10 @@
             <a class="nav-link text-uppercase" href="<%= admin_users_path %>">User Account</a>
           </li>
         <% end %>
+
+        <li class="nav-item <%= active_class(controller_name == 'messages') %>">
+          <a class="nav-link text-uppercase" href="<%= messages_path %>">Messages</a>
+        </li>
       </ul>
     </div>
 

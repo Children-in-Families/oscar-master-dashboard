@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :admin_users
   resources :duplications
   resources :finances
+  resources :messages, only: [:index]
 
   resources :usage_reports, only: [:show], constraints: { id: /added_cases|synced_cases|cross_referral_oscar|cross_referral_from_primero|cross_referral_to_primero/ }
 end

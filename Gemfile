@@ -74,3 +74,4 @@ gem "pundit", "~> 2.3"
 gem "enumerize", "~> 2.7"
 
 gem "caxlsx", "~> 3.0"
+gem "ahoy_email", "1.0.3"
