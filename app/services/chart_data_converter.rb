@@ -1,16 +1,21 @@
 class ChartDataConverter
-  attr_reader :reports
+  attr_reader :organizations
 
-  def initialize(reports)
-    @reports = reports
+  def initialize(organizations)
+    @organizations = organizations
   end
 
   def client_status_data
     {
-      labels: ['Active', 'Inactive', 'Exited', 'Referred'],
+      labels: ['Active', 'Accepted', 'Exited', 'Referred'],
       datasets: [
         {
-          data: [300, 50, 100, 40],
+          data: [
+            organizations.sum{ |org| org.cache_count[:active_client] || 0 },
+            organizations.sum{ |org| org.cache_count[:accepted_client] || 0 },
+            organizations.sum{ |org| org.cache_count[:exited_client] || 0},
+            organizations.sum{ |org| org.cache_count[:referred_count] || 0 }
+          ],
           backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00cc99'],
           hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00cc99']
         }
@@ -24,10 +29,11 @@ class ChartDataConverter
       datasets: [
         {
           data: [
-            reports.sum{ |report| report.added_cases['adult_female'] },
-            reports.sum{ |report| report.added_cases['adult_male'] },
-            reports.sum{ |report| report.added_cases['child_female'] },
-            reports.sum{ |report| report.added_cases['child_male'] },
+            organizations.sum{ |org| org.cache_count[:adult_female] || 0 },
+            organizations.sum{ |org| org.cache_count[:adult_male] || 0 },
+            organizations.sum{ |org| org.cache_count[:child_female] || 0 },
+            organizations.sum{ |org| org.cache_count[:child_male] || 0 },
+            organizations.sum{ |org| org.cache_count[:without_age_nor_gender] || 0 },
           ],
           backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00cc99', '#FF0000'],
           hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00cc99', '#FF0000']
@@ -42,10 +48,11 @@ class ChartDataConverter
       datasets: [
         {
           data: [
-            reports.sum{ |report| report.cross_referral_to_primero_cases['adult_female'] },
-            reports.sum{ |report| report.cross_referral_to_primero_cases['adult_male'] },
-            reports.sum{ |report| report.cross_referral_to_primero_cases['child_female'] },
-            reports.sum{ |report| report.cross_referral_to_primero_cases['child_male'] },
+            organizations.sum{ |org| org.cache_count[:cases_synced_to_primero][:adult_female] || 0 },
+            organizations.sum{ |org| org.cache_count[:cases_synced_to_primero][:adult_male] || 0 },
+            organizations.sum{ |org| org.cache_count[:cases_synced_to_primero][:child_female] || 0 },
+            organizations.sum{ |org| org.cache_count[:cases_synced_to_primero][:child_male] || 0 },
+            organizations.sum{ |org| org.cache_count[:cases_synced_to_primero][:without_age_nor_gender] || 0 },
           ],
           backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00cc99', '#FF0000'],
           hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00cc99', '#FF0000']
@@ -55,18 +62,18 @@ class ChartDataConverter
   end
 
   def ngo_by_country_data
-    by_countries = reports.group_by{ |report| report.organization.country }
+    by_countries = organizations.group_by(&:country)
 
     {
       labels: by_countries.keys.map(&:titleize),
       datasets: [
         {
-          data: by_countries.map{ |_country, reports| reports.map(&:organization_id).uniq.count },
+          data: by_countries.map{ |_country, organizations| organizations.size },
           backgroundColor: '#36A2EB',
           label: '# of NGO'
         },
         {
-          data: by_countries.map{ |_country, reports| reports.sum{ |report| report.synced_cases['total'] } },
+          data: by_countries.map{ |_country, organizations| organizations.sum{ |org| org.cache_count[:referred_count] || 0 } },
           backgroundColor: '#FFCE56',
           label: '# of Cases'
         }

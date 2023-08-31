@@ -21,7 +21,11 @@ class UsageReportsController < ApplicationController
   end
 
   def dashboard
-    index
-    @chart_engine = ChartDataConverter.new(@usage_reports)
+    authorize UsageReport
+
+    params[:q] ||= {}
+ 
+    @q = Organization.without_shared.active.non_demo.ransack(params[:q])
+    @chart_engine = ChartDataConverter.new(@q.result)
   end
 end

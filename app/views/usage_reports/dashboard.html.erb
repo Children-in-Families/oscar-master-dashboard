@@ -54,7 +54,28 @@
       </div>
     </div>
 
-    <%= render "filter" %>
+    <div class="col-3 col-xl-2">
+      <%= simple_form_for @q, url: url_for(only_path: false), method: :get do |f| %>
+        <%= f.input :id_in, label: 'NGO', collection: Organization.pluck(:full_name, :id), input_html: { multiple: true } %>
+        <%= f.input :full_name_cont, label: "NGO Full Name" %>
+        <%= f.input :country_in, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, input_html: { multiple: true }, label: "Country" %>
+        <%= f.input :integrated_eq, collection: [['Yes', true], ['No', false]], label: 'Interoperability?' %>
+
+        <%= f.label :onboarding_date, label: "Onboarding date" %>
+        <div class="row">
+          <div class="col-6">
+            <%= f.input :created_date_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_date_gteq) }, placeholder: "From" %>
+          </div>
+        
+          <div class="col-6">
+            <%= f.input :created_date_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_date_lteq) }, placeholder: "To" %>
+          </div>
+        </div>
+
+        <%= f.submit 'Submit', class: "btn btn-primary" %>
+        <%= link_to "Clear Search", url_for(only_path: false, id: 'added_cases')  %>
+      <% end %>
+    </div>
   </div>
 </div>
 

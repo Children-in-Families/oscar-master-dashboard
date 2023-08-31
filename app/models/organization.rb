@@ -48,6 +48,7 @@ class Organization < ApplicationRecord
   scope :demo, -> { where(demo: true) }
   scope :non_demo, -> { where.not(demo: true) }
   scope :without_shared, -> { where.not(short_name: "shared") }
+  scope :active, -> { where(onboarding_status: 'completed') }
 
   # Replacement for only_deleted which is not working with apartment gem
   scope :archived, -> { unscoped{ Organization.where.not(deleted_at: nil) } }
@@ -84,6 +85,33 @@ class Organization < ApplicationRecord
     end
   end
 
+  def cache_count(reload: false)
+    Organization.switch_to(short_name)
+
+    Rails.cache.fetch("#{cache_key_with_version}/count", expires_in: 30.minutes, force: reload) do
+      {
+        clients_count: Client.reportable.count,
+        active_client: Client.reportable.active_status.count,
+        accepted_client: Client.reportable.accepted_status.count,
+        exited_client: Client.reportable.exited_status.count,
+        users_count: User.non_devs.count,
+        referred_count: Client.reportable.joins(:referrals).distinct.count,
+        adult_male: Client.reportable.adult.male.count,
+        adult_female: Client.reportable.adult.female.count,
+        child_male: Client.reportable.child.male.count,
+        child_female: Client.reportable.child.female.count,
+        without_age_nor_gender: Client.reportable.without_age_nor_gender.count,
+        cases_synced_to_primero: {
+          adult_male: cases_synced_to_primero.adult.male.count,
+          adult_female: cases_synced_to_primero.adult.female.count,
+          child_male: cases_synced_to_primero.child.male.count,
+          child_female: cases_synced_to_primero.child.female.count,
+          without_age_nor_gender: cases_synced_to_primero.without_age_nor_gender.count
+        }
+      }
+    end
+  end
+
   def display_supported_languages
     supported_languages.map { |lang| SUPPORTED_LANGUAGES[lang.to_sym] }.to_sentence
   end
@@ -107,5 +135,9 @@ class Organization < ApplicationRecord
 
   def deletable?
     !mande? && !shared? && clients_count.zero?
+  end
+
+  def cases_synced_to_primero
+    Client.reportable.joins(:referrals).where(referrals: { referred_to: 'MoSVY External System' }).distinct
   end
 end
