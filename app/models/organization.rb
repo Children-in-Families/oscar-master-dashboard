@@ -87,6 +87,7 @@ class Organization < ApplicationRecord
 
   def cache_count(reload: false)
     Organization.switch_to(short_name)
+    puts "Organization.switch_to(short_name) #{short_name}"
 
     Rails.cache.fetch("#{cache_key_with_version}/count", expires_in: 30.minutes, force: reload) do
       {
