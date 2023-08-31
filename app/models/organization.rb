@@ -111,6 +111,28 @@ class Organization < ApplicationRecord
         }
       }
     end
+  rescue ActiveRecord::StatementInvalid
+    # This instance isn't properly onboarded, skip it
+    {
+        clients_count: 0,
+        active_client: 0,
+        accepted_client: 0,
+        exited_client: 0,
+        users_count: 0,
+        referred_count: 0,
+        adult_male: 0,
+        adult_female: 0,
+        child_male: 0,
+        child_female: 0,
+        without_age_nor_gender: 0,
+        cases_synced_to_primero: {
+          adult_male: 0,
+          adult_female: 0,
+          child_male: 0,
+          child_female: 0,
+          without_age_nor_gender: 0
+        }
+      }
   end
 
   def display_supported_languages
