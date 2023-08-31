@@ -21,7 +21,6 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog-aws'
 
-gem 'sidekiq', '~> 4.1.0'
 gem 'httparty'
 gem 'paper_trail'
 
@@ -76,4 +75,4 @@ gem "enumerize", "~> 2.7"
 gem "caxlsx", "~> 3.0"
 gem "ahoy_email", "1.0.3"
 
-gem 'redis'
+gem 'redis', "~> 4.0"
