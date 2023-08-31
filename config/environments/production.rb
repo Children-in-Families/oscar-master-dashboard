@@ -60,7 +60,8 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "OSCaR_MD_production"
 
-  config.action_mailer.perform_caching = false
+  onfig.action_controller.perform_caching = true
+  config.cache_store = :redis_cache_store, { url: (ENV["REDIS_URL"] || 'redis://localhost:6379/0') }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

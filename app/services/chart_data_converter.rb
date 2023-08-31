@@ -73,9 +73,9 @@ class ChartDataConverter
           label: '# of NGO'
         },
         {
-          data: by_countries.map{ |_country, organizations| organizations.sum{ |org| org.cache_count[:referred_count] || 0 } },
+          data: by_countries.map{ |_country, organizations| organizations.sum{ |org| org.cache_count[:active_client] || 0 } },
           backgroundColor: '#FFCE56',
-          label: '# of Cases'
+          label: '# of Active cases'
         }
       ]
     }
