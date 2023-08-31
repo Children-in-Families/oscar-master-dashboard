@@ -435,6 +435,7 @@ DEPENDENCIES
   pundit (~> 2.3)
   rails (~> 6.0.2, >= 6.0.2.2)
   ransack (~> 2.3)
+  redis (~> 3.3)
   responders (~> 3.0)
   sass-rails (>= 6)
   selenium-webdriver
