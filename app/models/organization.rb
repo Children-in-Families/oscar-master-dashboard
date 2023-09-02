@@ -97,7 +97,7 @@ class Organization < ApplicationRecord
         accepted_client: Client.reportable.accepted_status.count,
         exited_client: Client.reportable.exited_status.count,
         users_count: User.non_devs.count,
-        referred_count: Client.reportable.joins(:referrals).distinct.count,
+        referred_count: Client.reportable.where(status: 'Referred').count,
         adult_male: Client.reportable.adult.male.count,
         adult_female: Client.reportable.adult.female.count,
         child_male: Client.reportable.child.male.count,
