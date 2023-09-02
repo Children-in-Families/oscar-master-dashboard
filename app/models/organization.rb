@@ -84,6 +84,12 @@ class Organization < ApplicationRecord
         end
       end
     end
+
+    def update_cache
+      find_each do |organization|
+        organization.cache_count(reload: true)
+      end
+    end
   end
 
   def cache_count(reload: false)
