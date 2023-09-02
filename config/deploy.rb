@@ -12,3 +12,4 @@ set :pty, false
 set :keep_releases, 5
 set :passenger_restart_with_touch, true
 set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+set :whenever_roles, ->{ :app }
