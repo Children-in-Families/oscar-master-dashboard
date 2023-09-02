@@ -42,7 +42,7 @@ class UsageReportExportHandler
       'Client\'s current province'
     ]
 
-    package.workbook.add_worksheet(name: "Referral from Primero #{ date.strftime('%B %Y') }") do |sheet|
+    package.workbook.add_worksheet(name: "Referral from Primero #{ date.month }-#{date.year}") do |sheet|
       sheet.add_row headers
       collection.each do |report|
         sheet.add_row [
@@ -79,7 +79,7 @@ class UsageReportExportHandler
       'Client\'s current province'
     ]
 
-    package.workbook.add_worksheet(name: "Referral to Primero #{ date.strftime('%B %Y') }") do |sheet|
+    package.workbook.add_worksheet(name: "Referral to Primero #{ date.month }-#{date.year}") do |sheet|
       sheet.add_row headers
       collection.each do |report|
         sheet.add_row [
@@ -116,7 +116,7 @@ class UsageReportExportHandler
       'Agency name received the case'
     ]
 
-    package.workbook.add_worksheet(name: "Referral within OSCaR #{ date.strftime('%B %Y') }") do |sheet|
+    package.workbook.add_worksheet(name: "Referral within OSCaR #{ date.month }-#{date.year}") do |sheet|
       sheet.add_row headers
       collection.each do |report|
         sheet.add_row [
@@ -154,7 +154,7 @@ class UsageReportExportHandler
       'Other'
     ]
 
-    package.workbook.add_worksheet(name: "Synced cases #{ date.strftime('%B %Y') }") do |sheet|
+    package.workbook.add_worksheet(name: "Synced cases #{ date.month }-#{date.year}") do |sheet|
       sheet.add_row headers
       collection.each do |report|
         sheet.add_row [
@@ -191,12 +191,13 @@ class UsageReportExportHandler
       'Other'
     ]
 
-    package.workbook.add_worksheet(name: "Added cases #{ date.strftime('%B %Y') }") do |sheet|
+    package.workbook.add_worksheet(name: "Added cases #{ date.month }-#{date.year}") do |sheet|
       sheet.add_row headers
 
       collection.each do |report|
         sheet.add_row [
           report.organization.full_name,
+          report.added_cases['login_per_month'],
           report.added_cases['total'],
           report.added_cases['adult_female_without_disability'],
           report.added_cases['adult_female_with_disability'],

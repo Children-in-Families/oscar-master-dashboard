@@ -21,6 +21,7 @@ class Organization < ApplicationRecord
     :accepted_client,
     :active_client,
     :exited_client,
+    :users_count,
     :referral_source_category_name,
     :supported_languages,
     :demo,

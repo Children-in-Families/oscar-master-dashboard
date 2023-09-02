@@ -30,7 +30,7 @@
           <td><%= report.cross_referral_from_primero_cases['child_male_without_disability'] %></td>
           <td><%= report.cross_referral_from_primero_cases['child_male_with_disability'] %></td>
           <td><%= report.cross_referral_from_primero_cases['other'] %></td>
-          <td><%= report.cross_referral_from_primero_cases['provinces'].join(', ') %></td>
+          <td><%= report.cross_referral_from_primero_cases['provinces'].uniq.join(', ') %></td>
         </tr>
       <% end %>
     </tbody>
