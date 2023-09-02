@@ -11,3 +11,5 @@ set :rvm_ruby_version, '2.7.0@oscar-md'
 set :pty, false
 set :keep_releases, 5
 set :passenger_restart_with_touch, true
+set :whenever_environment, defer { stage }
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
