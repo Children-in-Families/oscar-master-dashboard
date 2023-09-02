@@ -2,16 +2,20 @@ class Client < ActiveRecord::Base
   acts_as_paranoid
 
   has_many :referrals
+  has_many :shared_clients, foreign_key: :slug, primary_key: :slug
   
   scope :accepted,               ->        { where(state: 'accepted') }
   scope :rejected,               ->        { where(state: 'rejected') }
-  scope :male,                   ->        { where(gender: 'male') }
-  scope :female,                 ->        { where(gender: 'female') }
+
+  scope :male,                   ->        { joins(:shared_clients).where('shared.shared_clients.gender = ?', 'male') }
+  scope :female,                 ->        { joins(:shared_clients).where('shared.shared_clients.gender = ?', 'female') }
+  scope :non_binary,             ->        { joins(:shared_clients).where('shared.shared_clients.gender NOT IN (?)', %w(male female)) }
+
   scope :active_status,          ->        { where(status: 'Active') }
   scope :accepted_status,        ->        { where(status: 'Accepted') }
   scope :exited_status,          ->        { where(status: 'Exited') }
   scope :reportable,             ->        { with_deleted.where(for_testing: false) }
   scope :adult,                  ->        { where("(EXTRACT(year FROM age(current_date, clients.date_of_birth)) :: int) >= ?", 18) }
   scope :child,                  ->        { where("(EXTRACT(year FROM age(current_date, clients.date_of_birth)) :: int) < ?", 18) }
-  scope :without_age_nor_gender, ->        { where(date_of_birth: nil).where.not(gender: %w(male female)) }
+  scope :without_age_nor_gender, ->        { non_binary.where(date_of_birth: nil) }
 end

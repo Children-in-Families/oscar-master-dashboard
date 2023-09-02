@@ -90,7 +90,7 @@ class Organization < ApplicationRecord
     Organization.switch_to(short_name)
     puts "Organization.switch_to(short_name) #{short_name}"
 
-    Rails.cache.fetch("#{cache_key_with_version}/count", expires_in: 30.minutes, force: reload) do
+    Rails.cache.fetch("#{cache_key_with_version}/count", expires_in: 70.minutes, force: reload) do
       {
         clients_count: Client.reportable.count,
         active_client: Client.reportable.active_status.count,
