@@ -108,11 +108,18 @@ function initClientsAgeChart() {
 }
 
 function initPrimeroChart() {
+  var data = $("#cases-synced-to-primero .chart-holder").data("source").case_sync_to_primero
+
   const config = {
     type: 'bar',
-    data: $("#cases-synced-to-primero .chart-holder").data("source").case_sync_to_primero,
+    data: data,
     options: {
       responsive: true,
+      scales: {
+        y: {
+          max: Math.max(...data) + 10,
+        }
+      }
       plugins: {
         legend: {
           display: false,
