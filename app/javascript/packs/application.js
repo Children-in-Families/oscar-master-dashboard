@@ -81,11 +81,19 @@ function initChartjs () {
 }
 
 function initClientsAgeChart() {
+  var data = $("#clients-age-gender .chart-holder").data("source").client_age_gender
+  var max = Math.max.apply(Math, data.datasets[0].data);
+
   const config = {
     type: 'bar',
-    data: $("#clients-age-gender .chart-holder").data("source").client_age_gender,
+    data: data,
     options: {
       responsive: true,
+      scales: {
+        y: {
+          max: max + (max >= 10 ? max/10 : 1),
+        }
+      },
       plugins: {
         legend: {
           display: false,
@@ -110,6 +118,7 @@ function initClientsAgeChart() {
 
 function initPrimeroChart() {
   var data = $("#cases-synced-to-primero .chart-holder").data("source").case_sync_to_primero
+  var max = Math.max.apply(Math, data.datasets[0].data);
 
   const config = {
     type: 'bar',
@@ -118,7 +127,7 @@ function initPrimeroChart() {
       responsive: true,
       scales: {
         y: {
-          max: Math.max.apply(Math, data.datasets[0].data) + 10,
+          max: max + (max >= 10 ? max/10 : 1),
         }
       },
       plugins: {
@@ -145,12 +154,20 @@ function initPrimeroChart() {
 
 
 function initNGOChart() {
+  var data = $("#ngo-by-country .chart-holder").data("source").ngo_by_country
+  var max = Math.max.apply(Math, data.datasets[0].data);
+
   const config = {
     type: 'bar',
     data: $("#ngo-by-country .chart-holder").data("source").ngo_by_country,
     options: {
       indexAxis: 'y',
       responsive: true,
+      scales: {
+        x: {
+          max: max + (max >= 10 ? max/10 : 1),
+        }
+      },
       plugins: {
         legend: {
           position: 'top',
