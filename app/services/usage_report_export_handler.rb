@@ -179,7 +179,7 @@ class UsageReportExportHandler
   def add_cases_sheet(package)
     headers = [
       'NGO Name',
-      '# Login'
+      '# Login',
       'Total client',
       'Adult female without disability',
       'Adult female with disability',
