@@ -118,7 +118,7 @@ function initPrimeroChart() {
       responsive: true,
       scales: {
         y: {
-          max: Math.max(...data) + 10,
+          max: Math.max.apply(Math, data) + 10,
         }
       },
       plugins: {
