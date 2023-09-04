@@ -119,7 +119,7 @@ function initPrimeroChart() {
         y: {
           max: Math.max(...data) + 10,
         }
-      }
+      },
       plugins: {
         legend: {
           display: false,
