@@ -92,9 +92,10 @@ function initClientsAgeChart() {
         },
         datalabels: {
           display: true,
+          color: '#000',
+          clip: true,
           align: 'end',
           anchor: 'end',
-          color: '#000',
           font: {
             size: 12,
           }
@@ -126,6 +127,7 @@ function initPrimeroChart() {
         },
         datalabels: {
           display: true,
+          clip: true,
           align: 'end',
           anchor: 'end',
           color: '#000',
@@ -157,6 +159,7 @@ function initNGOChart() {
           display: true,
           align: 'end',
           anchor: 'end',
+          clip: true,
           color: '#000',
           font: {
             size: 12,

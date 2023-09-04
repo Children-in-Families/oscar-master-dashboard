@@ -25,7 +25,7 @@ class UsageReportsController < ApplicationController
 
     params[:q] ||= {}
  
-    @q = Organization.without_shared.active.non_demo.ransack(params[:q])
+    @q = Organization.without_shared.active.ransack(params[:q])
     @chart_engine = ChartDataConverter.new(@q.result)
   end
 end
