@@ -155,7 +155,9 @@ function initPrimeroChart() {
 
 function initNGOChart() {
   var data = $("#ngo-by-country .chart-holder").data("source").ngo_by_country
-  var max = Math.max.apply(Math, data.datasets[0].data);
+  var max1 = Math.max.apply(Math, data.datasets[0].data);
+  var max2 = Math.max.apply(Math, data.datasets[1].data);
+  var max = Math.max(max1, max2);
 
   const config = {
     type: 'bar',
