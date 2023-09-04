@@ -1,4 +1,6 @@
 class UsageReportExportHandler
+  include ApplicationHelper
+
   def self.call(collection, month, year, file_name)
     new(collection, month, year, file_name).call
   end
@@ -47,17 +49,17 @@ class UsageReportExportHandler
       collection.each do |report|
         sheet.add_row [
           report.organization.full_name,
-          report.cross_referral_to_primero_cases['total'],
-          report.cross_referral_to_primero_cases['adult_female_without_disability'],
-          report.cross_referral_to_primero_cases['adult_female_with_disability'],
-          report.cross_referral_to_primero_cases['adult_male_without_disability'],
-          report.cross_referral_to_primero_cases['adult_male_with_disability'],
-          report.cross_referral_to_primero_cases['child_female_without_disability'],
-          report.cross_referral_to_primero_cases['child_female_with_disability'],
-          report.cross_referral_to_primero_cases['child_male_without_disability'],
-          report.cross_referral_to_primero_cases['child_male_with_disability'],
-          report.cross_referral_to_primero_cases['other'],
-          '',
+          report.cross_referral_from_primero_cases['total'],
+          report.cross_referral_from_primero_cases['adult_female_without_disability'],
+          report.cross_referral_from_primero_cases['adult_female_with_disability'],
+          report.cross_referral_from_primero_cases['adult_male_without_disability'],
+          report.cross_referral_from_primero_cases['adult_male_with_disability'],
+          report.cross_referral_from_primero_cases['child_female_without_disability'],
+          report.cross_referral_from_primero_cases['child_female_with_disability'],
+          report.cross_referral_from_primero_cases['child_male_without_disability'],
+          report.cross_referral_from_primero_cases['child_male_with_disability'],
+          report.cross_referral_from_primero_cases['other'],
+          report.cross_referral_from_primero_cases['provinces'].uniq.join(', '),
         ]
       end
     end
@@ -94,7 +96,7 @@ class UsageReportExportHandler
           report.cross_referral_to_primero_cases['child_male_without_disability'],
           report.cross_referral_to_primero_cases['child_male_with_disability'],
           report.cross_referral_to_primero_cases['other'],
-          '',
+          report.cross_referral_to_primero_cases['provinces'].uniq.join(', '),
         ]
       end
     end
@@ -131,7 +133,7 @@ class UsageReportExportHandler
           report.cross_referral_cases['child_male_without_disability'],
           report.cross_referral_cases['child_male_with_disability'],
           report.cross_referral_cases['other'],
-          report.cross_referral_cases['agencies'].join(', ')
+          report.cross_referral_cases['agencies'].uniq.join(', ')
         ]
       end
     end
@@ -159,8 +161,8 @@ class UsageReportExportHandler
       collection.each do |report|
         sheet.add_row [
           report.organization.full_name,
-          '',
-          '',
+          format_value(report.synced_cases['signed_up_date']),
+          format_value(report.synced_cases['current_sharing']),
           report.synced_cases['total'],
           report.synced_cases['adult_female_without_disability'],
           report.synced_cases['adult_female_with_disability'],
