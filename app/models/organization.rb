@@ -73,18 +73,6 @@ class Organization < ApplicationRecord
       Apartment::Tenant.switch!(tenant_name)
     end
 
-    def update_client_data
-      find_each do |organization|
-        Apartment::Tenant.switch(organization.short_name) do
-          organization.update_columns(
-            clients_count: Client.count,
-            active_client: Client.active_status.count,
-            accepted_client: Client.accepted_status.count
-          )
-        end
-      end
-    end
-
     def update_cache
       find_each do |organization|
         organization.cache_count(reload: true)
