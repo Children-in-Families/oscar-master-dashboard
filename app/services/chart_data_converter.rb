@@ -16,8 +16,8 @@ class ChartDataConverter
             organizations.sum{ |org| org.cache_count[:exited_client] || 0},
             organizations.sum{ |org| org.cache_count[:referred_count] || 0 }
           ],
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00cc99'],
-          hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00cc99']
+          backgroundColor: ['#1ab394', '#23c6c8', '#c72132', '#ed5565'],
+          hoverBackgroundColor: ['#1ab394', '#23c6c8', '#c72132', '#ed5565']
         }
       ]
     }
