@@ -1,0 +1,84 @@
+<% content_for :page_title do %>
+  <%= "Usage Report for #{params[:q][:month_eq]}/#{params[:q][:year_eq]}" %>
+<% end %>
+
+<div class="my-2">
+  <div class="row">
+    <div class="col-9 col-xl-10">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a href="#" class="nav-link font-weight-bold active" id="clients-status-tab" data-toggle="tab" data-target="#clients-status" role="tab" aria-controls="home" aria-selected="true">Clients' status</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link font-weight-bold" id="clients-age-gender-tab" data-toggle="tab" data-target="#clients-age-gender" role="tab" aria-controls="home" aria-selected="true">Clients' age and gender</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link font-weight-bold" id="cases-synced-to-primero-tab" data-toggle="tab" data-target="#cases-synced-to-primero" role="tab" aria-controls="home" aria-selected="true">Cases synced to primero</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link font-weight-bold" id="ngo-by-country-tab" data-toggle="tab" data-target="#ngo-by-country" role="tab" aria-controls="home" aria-selected="true">NGO by country</a>
+        </li>
+      </ul>
+
+      <div class="tab-content mt-4" id="myTabContent">
+        <div class="tab-pane fade show active" id="clients-status" role="tabpanel" aria-labelledby="clients-status-tab">
+          <div class="chart-container text-center mx-auto" style="max-width: 500px">
+            <canvas widht="800" height="800" class="chart-holder" data-source="<%= { client_status: @chart_engine.client_status_data }.to_json %>">
+            </canvas>
+          </div>
+        </div>
+        
+        <div class="tab-pane fade" id="clients-age-gender" role="tabpanel" aria-labelledby="clients-age-gender-tab">
+          <div class="chart-container text-center mx-auto">
+            <canvas style="width:100%; max-width:800px" class="chart-holder" data-source="<%= { client_age_gender: @chart_engine.client_age_gender_data }.to_json %>">
+            </canvas>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="cases-synced-to-primero" role="tabpanel" aria-labelledby="cases-synced-to-primero-tab">
+          <div class="chart-container text-center mx-auto">
+            <canvas style="width:100%; max-width:800px" class="chart-holder" data-source="<%= { case_sync_to_primero: @chart_engine.primero_data }.to_json %>">
+            </canvas>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="ngo-by-country" role="tabpanel" aria-labelledby="ngo-by-country-tab">
+          <div class="chart-container text-center mx-auto">
+            <canvas style="width:100%; max-width:800px" class="chart-holder" data-source="<%= { ngo_by_country: @chart_engine.ngo_by_country_data }.to_json %>">
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-3 col-xl-2">
+      <%= simple_form_for @q, url: url_for(only_path: false), method: :get do |f| %>
+        <%= f.input :id_in, label: 'NGO', collection: Organization.pluck(:full_name, :id), input_html: { multiple: true } %>
+        <%= f.input :full_name_cont, label: "NGO Full Name" %>
+        <%= f.input :country_in, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, input_html: { multiple: true }, label: "Country" %>
+        <%= f.input :demo_eq, collection: [['Yes', true], ['No', false]], label: 'Demo?' %>
+        <%= f.input :integrated_eq, collection: [['Yes', true], ['No', false]], label: 'Interoperability?' %>
+
+        <%= f.label :onboarding_date, label: "Onboarding date" %>
+        <div class="row">
+          <div class="col-6">
+            <%= f.input :created_date_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_date_gteq) }, placeholder: "From" %>
+          </div>
+        
+          <div class="col-6">
+            <%= f.input :created_date_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_date_lteq) }, placeholder: "To" %>
+          </div>
+        </div>
+
+        <%= f.submit 'Submit', class: "btn btn-primary" %>
+        <%= link_to "Clear Search", url_for(only_path: false, id: 'added_cases')  %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+

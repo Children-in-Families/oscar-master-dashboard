@@ -27,9 +27,9 @@
           </li>
         <% end %>
 
-        <% if policy(:finance).index? %>
-          <li class="nav-item <%= active_class(controller_name == 'finances') %>">
-            <a class="nav-link text-uppercase" href="<%= finances_path %>">Finance</a>
+        <% if policy(BillableReport).index? %>
+          <li class="nav-item <%= active_class(controller_name == 'billable_reports') %>">
+            <a class="nav-link text-uppercase" href="<%= billable_reports_path %>">Finance</a>
           </li>
         <% end %>
 

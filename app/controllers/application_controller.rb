@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     user ||= current_admin_user
 
     if user.finance?
-      finances_path
+      billable_reports_path
     else
       root_path
     end

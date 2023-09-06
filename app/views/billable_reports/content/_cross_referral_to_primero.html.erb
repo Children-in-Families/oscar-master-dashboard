@@ -1,0 +1,38 @@
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-bordered table-hover">
+    <thead>
+      <tr>
+        <th scope="col">NGO Name referred the case to Primero</th>
+        <th scope="col"># of client referred</th>
+        <th scope="col">Adult female without disability</th>
+        <th scope="col">Adult female with disability</th>
+        <th scope="col">Adult male without disability</th>
+        <th scope="col">Adult male with disability</th>
+        <th scope="col">Child female without disability</th>
+        <th scope="col">Child female with disability</th>
+        <th scope="col">Child male without disability</th>
+        <th scope="col">Child male with disability</th>
+        <th scope="col">Other</th>
+        <th scope="col">Client's current province</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @usage_reports.each do |report| %>
+        <tr>
+          <td><%= report.organization.full_name %></td>
+          <td><%= report.cross_referral_to_primero_cases['total'] %></td>
+          <td><%= report.cross_referral_to_primero_cases['adult_female_without_disability'] %></td>
+          <td><%= report.cross_referral_to_primero_cases['adult_female_with_disability'] %></td>
+          <td><%= report.cross_referral_to_primero_cases['adult_male_without_disability'] %></td>
+          <td><%= report.cross_referral_to_primero_cases['adult_male_with_disability'] %></td>
+          <td><%= report.cross_referral_to_primero_cases['child_female_without_disability'] %></td>
+          <td><%= report.cross_referral_to_primero_cases['child_female_with_disability'] %></td>
+          <td><%= report.cross_referral_to_primero_cases['child_male_without_disability'] %></td>
+          <td><%= report.cross_referral_to_primero_cases['child_male_with_disability'] %></td>
+          <td><%= report.cross_referral_to_primero_cases['other'] %></td>
+          <td><%= report.cross_referral_to_primero_cases['provinces'].uniq.join(', ') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
