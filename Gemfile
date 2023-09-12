@@ -78,3 +78,5 @@ gem "ahoy_email", "1.0.3"
 gem 'redis', "~> 4.0"
 
 gem "whenever", "~> 1.0"
+
+gem "appsignal", "~> 3.4"
