@@ -90,7 +90,7 @@ class Organization < ApplicationRecord
         active_client: Client.reportable.active_status.count,
         accepted_client: Client.reportable.accepted_status.count,
         exited_client: Client.reportable.exited_status.count,
-        users_count: User.non_devs.count,
+        users_count: User.non_devs.where(deleted_at: nil).count,
         referred_count: Client.reportable.where(status: 'Referred').count,
         adult_male: Client.reportable.adult.male.count,
         adult_female: Client.reportable.adult.female.count,
