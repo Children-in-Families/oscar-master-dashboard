@@ -57,7 +57,6 @@ class OrganizationsController < ApplicationController
       begin
         Organization.transaction do
           GlobalIdentityOrganization.where(organization_id: @organization.id).delete_all
-          UsageReport.where(organization_id: @organization.id).delete_all
 
           @organization.destroy_fully!
           OrganizationMailer.notify_organization_deleted(@organization.full_name, current_admin_user).deliver_now

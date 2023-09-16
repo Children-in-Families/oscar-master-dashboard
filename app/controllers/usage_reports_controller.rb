@@ -5,9 +5,9 @@ class UsageReportsController < ApplicationController
     params[:q] ||= {}
     params[:q][:month_eq] ||= 1.month.ago.month
     params[:q][:year_eq] ||= Date.current.year
-    params[:q][:s] ||= "organizations.short_name ASC"
+    params[:q][:s] ||= "organizations_name ASC"
  
-    @q = UsageReport.joins(:organization).ransack(params[:q])
+    @q = UsageReport.ransack(params[:q])
     @usage_reports = @q.result.includes(:organization)
 
     respond_to do |format|

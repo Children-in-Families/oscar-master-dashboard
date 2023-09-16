@@ -20,7 +20,7 @@
     <tbody>
       <% @usage_reports.each do |report| %>
         <tr>
-          <td><%= report.organization.full_name %></td>
+          <td><%= report.organization_name %></td>
           <td><%= format_value(report.synced_cases['signed_up_date']) %></td>
           <td><%= format_value(report.synced_cases['current_sharing']) %></td>
           <td><%= report.synced_cases['total'] %></td>

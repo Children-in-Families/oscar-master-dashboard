@@ -48,7 +48,7 @@ class UsageReportExportHandler
       sheet.add_row headers
       collection.each do |report|
         sheet.add_row [
-          report.organization.full_name,
+          report.organization_name,
           report.cross_referral_from_primero_cases['total'],
           report.cross_referral_from_primero_cases['adult_female_without_disability'],
           report.cross_referral_from_primero_cases['adult_female_with_disability'],
@@ -85,7 +85,7 @@ class UsageReportExportHandler
       sheet.add_row headers
       collection.each do |report|
         sheet.add_row [
-          report.organization.full_name,
+          report.organization_name,
           report.cross_referral_to_primero_cases['total'],
           report.cross_referral_to_primero_cases['adult_female_without_disability'],
           report.cross_referral_to_primero_cases['adult_female_with_disability'],
@@ -122,7 +122,7 @@ class UsageReportExportHandler
       sheet.add_row headers
       collection.each do |report|
         sheet.add_row [
-          report.organization.full_name,
+          report.organization_name,
           report.cross_referral_cases['total'],
           report.cross_referral_cases['adult_female_without_disability'],
           report.cross_referral_cases['adult_female_with_disability'],
@@ -160,7 +160,7 @@ class UsageReportExportHandler
       sheet.add_row headers
       collection.each do |report|
         sheet.add_row [
-          report.organization.full_name,
+          report.organization_name,
           format_value(report.synced_cases['signed_up_date']),
           format_value(report.synced_cases['current_sharing']),
           report.synced_cases['total'],
@@ -199,7 +199,7 @@ class UsageReportExportHandler
 
       collection.each do |report|
         sheet.add_row [
-          report.organization.full_name,
+          report.organization_name,
           report.added_cases['login_per_month'],
           report.added_cases['total'],
           report.added_cases['adult_female_without_disability'],
