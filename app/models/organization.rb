@@ -33,6 +33,8 @@ class Organization < ApplicationRecord
 
   mount_uploader :logo, ImageUploader
 
+  has_many :global_identity_organizations, dependent: :destroy
+
   before_save :clean_supported_languages, if: :supported_languages?
 
   validates :supported_languages, presence: true
