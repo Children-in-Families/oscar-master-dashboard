@@ -5,7 +5,7 @@ class BillableReport < ActiveRecord::Base
   validates :year, presence: true
   validates :month, presence: true, uniqueness: { scope: [:organization_id, :year] }
 
-  has_many :billable_items, class_name: 'PaperTrail::Version', foreign_key: :billable_report_id
-  has_many :billable_clients, -> { where(item_type: 'Client') }, class_name: 'PaperTrail::Version', foreign_key: :billable_report_id
-  has_many :billable_families, -> { where(item_type: 'Family') }, class_name: 'PaperTrail::Version', foreign_key: :billable_report_id
+  has_many :billable_report_items
+  has_many :billable_clients, -> { joins(:version).where(versions: { item_type: 'Client' }) }
+  has_many :billable_families, -> { joins(:version).where(version: { item_type: 'Family' }) }
 end
