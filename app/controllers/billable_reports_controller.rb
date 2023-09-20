@@ -19,4 +19,17 @@ class BillableReportsController < ApplicationController
       # end
     end
   end
+
+  def show
+    respond_to do |format|
+      report = BillableReport.find(params[:id])
+      authorize report
+
+      format.xlsx do
+        filename = "tmp/billable-report-#{report.organization.short_name}-#{Date.today.strftime("%Y-%m-%d")}.xlsx"
+        BillableReportExportHandler.call(report, filename)
+        send_file filename, disposition: :attachment
+      end
+    end
+  end
 end

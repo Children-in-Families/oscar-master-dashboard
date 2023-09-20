@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :admin_users
   resources :duplications
-  resources :billable_reports, path: :finances
+  resources :billable_reports, only: [:index, :show], path: :finances
   resources :messages, only: [:index]
 
   resources :usage_reports, only: [:index] do

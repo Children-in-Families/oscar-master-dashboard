@@ -35,6 +35,7 @@
                 <td><%= instance.billable_report_items.client.where.not(billable_at: nil).size %></td>
                 <td><%= instance.billable_report_items.family.where.not(billable_at: nil).size %></td>
                 <td>
+                  <%= link_to 'Export', [instance, format: :xlsx] %>
                 </td>
               </tr>
             <% end %>

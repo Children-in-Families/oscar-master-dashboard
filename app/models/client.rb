@@ -3,6 +3,9 @@ class Client < ActiveRecord::Base
 
   has_many :referrals
   has_many :shared_clients, foreign_key: :slug, primary_key: :slug
+
+  has_many :case_worker_clients, dependent: :destroy
+  has_many :users, through: :case_worker_clients, validate: false
   
   scope :accepted,               ->        { where(state: 'accepted') }
   scope :rejected,               ->        { where(state: 'rejected') }
