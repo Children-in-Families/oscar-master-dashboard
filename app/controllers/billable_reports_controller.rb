@@ -12,11 +12,38 @@ class BillableReportsController < ApplicationController
 
     respond_to do |format|
       format.html
-      # format.xlsx do
-      #   filename = "tmp/usage-report-#{Date.today.strftime("%Y-%m-%d")}.xlsx"
-      #   UsageReportExportHandler.call(@usage_reports, params[:q][:month_eq], params[:q][:year_eq], filename)
-      #   send_file filename, disposition: :attachment
-      # end
+      format.xlsx do
+        filename = "tmp/billable-report-#{Date.today.strftime("%Y-%m-%d")}.xlsx"
+        Axlsx::Package.new do |p|
+          p.workbook.add_worksheet(name: "Billable clients #{ params[:q][:month_eq] }-#{params[:q][:year_eq]}") do |sheet|
+            sheet.add_row [
+              'Organization full name',
+              'Organization short name',
+              'Country',
+              'Onboarded date',
+              'Demo',
+              'Billable clients',
+              'Billable families',
+            ]
+
+            @usage_reports.each do |report|
+              sheet.add_row [
+                report.organization.full_name,
+                report.organization.short_name,
+                report.organization.country,
+                report.organization.created_at.strftime('%Y-%m-%d'),
+                report.organization.demo? ? 'Yes' : 'No',
+                report.billable_report_items.client.where.not(billable_at: nil).count,
+                report.billable_report_items.family.where.not(billable_at: nil).count,
+              ]
+            end
+          end
+          
+          p.serialize(filename)
+        end
+
+        send_file filename, disposition: :attachment
+      end
     end
   end
 
