@@ -13,7 +13,7 @@
         <table class="table table-striped table-bordered table-bordered table-hover">
           <thead>
             <tr>
-              <th scope="col"><%= sort_link(@q, :organization_full_name) %></th>
+              <th scope="col"><%= sort_link(@q, :organization_name) %></th>
               <th scope="col"><%= sort_link(@q, :organization_short_name) %></th>
               <th scope="col"><%= sort_link(@q, :organization_country) %></th>
               <th scope="col"><%= sort_link(@q, :organization_created_at) %></th>
@@ -27,15 +27,17 @@
           <tbody>
             <% @usage_reports.each do |instance| %>
               <tr>
-                <td><%= instance.organization.full_name %></td>
-                <td><%= instance.organization.short_name %></td>
-                <td><%= instance.organization.country&.titleize %></td>
-                <td><%= format_value(instance.organization.created_at.to_date) %></td>
-                <td><%= format_value instance.organization.demo? %></td>
+                <td><%= instance.organization_name %></td>
+                <td><%= instance.organization_short_name %></td>
+                <td><%= instance.organization&.country&.titleize %></td>
+                <td><%= format_value(instance.organization&.created_at.to_date) %></td>
+                <td><%= format_value instance.organization&.demo? %></td>
                 <td><%= instance.billable_report_items.client.where.not(billable_at: nil).size %></td>
                 <td><%= instance.billable_report_items.family.where.not(billable_at: nil).size %></td>
                 <td>
-                  <%= link_to 'Export', [instance, format: :xlsx] %>
+                  <% if instance.organization %>
+                    <%= link_to 'Export', [instance, format: :xlsx] %>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

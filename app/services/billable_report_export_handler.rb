@@ -49,7 +49,7 @@ class BillableReportExportHandler
           format_value(version.created_at),
           client_item.billable_status,
           client.status,
-          client.users.map(&:name).join(', ')
+          client.users.uniq.map(&:name).join(', ')
         ]
       end
     end
@@ -78,7 +78,7 @@ class BillableReportExportHandler
           format_value(version.created_at),
           family_item.billable_status,
           family.status,
-          family.case_workers.map(&:name).join(', ')
+          family.case_workers.uniq.map(&:name).join(', ')
         ]
       end
     end

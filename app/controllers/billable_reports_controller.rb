@@ -7,7 +7,7 @@ class BillableReportsController < ApplicationController
     params[:q][:year_eq] ||= Date.current.year
     params[:q][:s] ||= "organizations.short_name ASC"
  
-    @q = BillableReport.joins(:organization).ransack(params[:q])
+    @q = BillableReport.ransack(params[:q])
     @usage_reports = @q.result.includes(:organization)
 
     respond_to do |format|
@@ -28,11 +28,11 @@ class BillableReportsController < ApplicationController
 
             @usage_reports.each do |report|
               sheet.add_row [
-                report.organization.full_name,
-                report.organization.short_name,
-                report.organization.country,
-                report.organization.created_at.strftime('%Y-%m-%d'),
-                report.organization.demo? ? 'Yes' : 'No',
+                report.organization_name,
+                report.organization_short_name,
+                report.organization&.country,
+                report.organization&.created_at&.strftime('%Y-%m-%d'),
+                report.organization&.demo? ? 'Yes' : 'No',
                 report.billable_report_items.client.where.not(billable_at: nil).count,
                 report.billable_report_items.family.where.not(billable_at: nil).count,
               ]
@@ -53,7 +53,7 @@ class BillableReportsController < ApplicationController
       authorize report
 
       format.xlsx do
-        filename = "tmp/billable-report-#{report.organization.short_name}-#{Date.today.strftime("%Y-%m-%d")}.xlsx"
+        filename = "tmp/billable-report-#{report.organization_short_name}-#{Date.today.strftime("%Y-%m-%d")}.xlsx"
         BillableReportExportHandler.call(report, filename)
         send_file filename, disposition: :attachment
       end
