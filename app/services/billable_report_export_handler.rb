@@ -39,7 +39,7 @@ class BillableReportExportHandler
     package.workbook.add_worksheet(name: "Billable clients #{ report.month }-#{report.year}") do |sheet|
       sheet.add_row headers
       
-      report.billable_report_items.client.includes(:version, :billable).each do |client_item|
+      report.billable_report_items.client.where.not(billable_at: nil).includes(:version, :billable).each do |client_item|
         client = client_item.billable
         version = client_item.version
 
@@ -68,7 +68,7 @@ class BillableReportExportHandler
     package.workbook.add_worksheet(name: "Billable families #{ report.month }-#{report.year}") do |sheet|
       sheet.add_row headers
       
-      report.billable_report_items.family.includes(:version, :billable).each do |family_item|
+      report.billable_report_items.family.where.not(billable_at: nil).includes(:version, :billable).each do |family_item|
         family = family_item.billable
         version = family_item.version
 
