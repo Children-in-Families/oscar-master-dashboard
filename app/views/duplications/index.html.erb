@@ -1,1 +1,59 @@
-<h1>Duplications</h1>
+<% content_for :page_title do %>
+  <%= "Duplication List" %>
+<% end %>
+
+<%= content_for :action do %>
+  <%= link_to_if true, 'Export', url_for(only_path: false, format: :xlsx), class: 'btn btn-primary ml-auto' %>
+<% end %>
+
+<div class="my-2">
+  <div class="row">
+    <div class="col-12 col-xl-12">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-bordered table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Client ID</th>
+              <th scope="col">Local Name</th>
+              <th scope="col">English Name</th>
+              <th scope="col">Date of Birth</th>
+              <th scope="col">Gender</th>
+              <th scope="col">Birth Province</th>
+              <th scope="col">Current Address</th>
+              <th scope="col">NGO Name</th>
+              <th scope="col">Created Date</th>
+              <th scope="col">Duplicate to NGO</th>
+              <th scope="col">Duplicate to Client</th>
+              <th scope="col">Duplicated Fields</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% Organization.active.without_shared.each do |organization| %>
+              <% Apartment::Tenant.switch(organization.short_name) do %>
+                <% Client.duplicate.find_each do |client| %>
+                  <tr>
+                    <td><%= client.slug %></td>
+                    <td><%= client.local_name %></td>
+                    <td><%= client.en_name %></td>
+                    <td><%= format_value(client.date_of_birth) %></td>
+                    <td><%= client.gender %></td>
+                    <td><%= client.slug %></td>
+                    <td><%= client.slug %></td>
+                    <td><%= organization.full_name %></td>
+                    <td><%= format_value(client.created_at) %></td>
+                    <td><%= client.duplicate_with['duplicated_with_ngo'] %></td>
+                    <td><%= client.duplicate_with['duplicated_with_client_id'] %></td>
+                    <td><%= client.duplicate_with['duplicate_fields'].join(', ') %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

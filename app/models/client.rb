@@ -22,4 +22,13 @@ class Client < ActiveRecord::Base
   scope :adult,                  ->        { where("(EXTRACT(year FROM age(current_date, clients.date_of_birth)) :: int) >= ?", 18) }
   scope :child,                  ->        { where("(EXTRACT(year FROM age(current_date, clients.date_of_birth)) :: int) < ?", 18) }
   scope :without_age_nor_gender, ->        { non_binary.where(date_of_birth: nil) }
+  scope :duplicate,              ->        { where(duplicate: true) }
+
+  def local_name
+    [local_given_name, local_family_name].select(&:present?).join(' ')
+  end
+
+  def en_name
+    [given_name, family_name].select(&:present?).join(' ')
+  end
 end
