@@ -24,7 +24,7 @@ class DuplicationsController < ApplicationController
               'Duplicated Fields'
             ]
 
-            @clients.find_each do |client|
+            @clients.each do |client|
               sheet.add_row [
                 client.slug,
                 client.local_name,
