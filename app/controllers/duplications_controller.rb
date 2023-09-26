@@ -2,6 +2,9 @@ class DuplicationsController < ApplicationController
   def index
     authorize :duplication
 
+    @q = SharedClient.duplicate.ransack(params[:q])
+    @clients = @q.result
+
     respond_to do |format|
       format.html
       format.xlsx do
@@ -21,7 +24,7 @@ class DuplicationsController < ApplicationController
               'Duplicated Fields'
             ]
 
-            SharedClient.duplicate.find_each do |client|
+            @clients.find_each do |client|
               sheet.add_row [
                 client.slug,
                 client.local_name,
