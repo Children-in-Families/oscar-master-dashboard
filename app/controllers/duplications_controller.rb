@@ -4,7 +4,7 @@ class DuplicationsController < ApplicationController
     
     respond_to do |format|
       format.html do
-        @q = SharedClient.duplicate.ransack(params[:q]).page(params[:page]).per(50)
+        @q = SharedClient.duplicate.page(params[:page]).per(50).ransack(params[:q])
         @clients = @q.result
       end
 
