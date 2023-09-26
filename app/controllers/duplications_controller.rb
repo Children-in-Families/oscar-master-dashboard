@@ -1,13 +1,17 @@
 class DuplicationsController < ApplicationController
   def index
     authorize :duplication
-
-    @q = SharedClient.duplicate.ransack(params[:q])
-    @clients = @q.result
-
+    
     respond_to do |format|
-      format.html
+      format.html do
+        @q = SharedClient.duplicate.ransack(params[:q]).page(params[:page]).per(50)
+        @clients = @q.result
+      end
+
       format.xlsx do
+        @q = SharedClient.duplicate.ransack(params[:q])
+        @clients = @q.result
+
         filename = "tmp/duplicate-clients-#{Date.today.strftime("%Y-%m-%d")}.xlsx"
         Axlsx::Package.new do |p|
           p.workbook.add_worksheet(name: "Duplicate clients") do |sheet|
