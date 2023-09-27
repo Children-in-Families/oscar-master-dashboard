@@ -8,7 +8,7 @@
 
 <div class="my-2">
   <div class="row">
-    <div class="col-12 col-xl-12">
+    <div class="col-9 col-xl-10">
       <div class="table-responsive">
         <table class="table table-striped table-bordered table-bordered table-hover">
           <thead>
@@ -43,6 +43,20 @@
           </tbody>
         </table>
       </div>
+    </div>
+
+    <div class="col-3 col-xl-2">
+      <%= simple_form_for @q, url: duplications_path, method: :get do |f| %>
+        <%= hidden_field_tag :scope, params[:scope] %>
+        <%= f.input :organization_id_in, label: 'NGO', collection: Organization.pluck(:full_name, :id), input_html: { multiple: true } %>
+        <%= f.input :ngo_name_cont, label: "Full Name" %>
+        <%= f.input :archived_slug_start, label: "Short Name" %>
+        <%= f.input :organization_country_in, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, label: "Country", input_html: { multiple: true } %>
+        <%= f.input :organization_demo_eq, collection: [['Yes', true], ['No', false]], label: 'Demo?' %>
+
+        <%= f.submit 'Submit', class: "btn btn-primary" %>
+        <%= link_to "Clear Search", organizations_path(scope: params[:scope])  %>
+      <% end %>
     </div>
   </div>
 

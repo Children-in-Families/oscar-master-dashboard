@@ -1,6 +1,9 @@
 class DuplicationsController < ApplicationController
   def index
     authorize :duplication
+
+    params[:q] ||= {}
+    params[:q][:s] ||= 'client_created_at desc'
     
     respond_to do |format|
       format.html do
