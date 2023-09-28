@@ -53,4 +53,13 @@ class DuplicationsController < ApplicationController
       end
     end
   end
+
+  def resolve
+    authorize :duplication
+
+    @client = SharedClient.find(params[:id])
+    @client.resolve_duplication!
+
+    redirect_to duplications_path, notice: 'Client duplication removed!'
+  end
 end

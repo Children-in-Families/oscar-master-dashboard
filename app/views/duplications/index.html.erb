@@ -23,6 +23,9 @@
               <th scope="col">Duplicate to NGO</th>
               <th scope="col">Duplicate to Client</th>
               <th scope="col">Duplicated Fields</th>
+              <% if policy(:duplication).resolve? %>
+                <th scope="col"></th>
+              <% end %>
             </tr>
           </thead>
           <tbody>
@@ -38,6 +41,12 @@
                 <td><%= client.duplicate_with['duplicated_with_ngo'] %></td>
                 <td><%= client.duplicate_with['duplicated_with_client_id'] %></td>
                 <td><%= client.duplicate_with['duplicate_fields'].join(', ') %></td>
+                
+                <% if policy(:duplication).resolve? %>
+                  <td>
+                    <%= link_to 'Remove', resolve_duplication_path(client), data: { method: :put, confirm: "Are you sure?" } %>
+                  </td>
+                <% end %>
               </tr>
             <% end %>
           </tbody>

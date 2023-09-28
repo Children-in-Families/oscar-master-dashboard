@@ -1,8 +1,5 @@
 class DuplicationPolicy < ApplicationPolicy
-  class Scope < Scope
-    # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    #   scope.all
-    # end
+  def resolve?
+    user.admin?
   end
 end

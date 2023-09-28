@@ -9,7 +9,10 @@ Rails.application.routes.draw do
   end
 
   resources :admin_users
-  resources :duplications
+  resources :duplications, only: :index do
+    put :resolve, on: :member
+  end
+
   resources :billable_reports, only: [:index, :show], path: :finances
   resources :messages, only: [:index]
 
