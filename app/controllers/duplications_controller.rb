@@ -58,7 +58,7 @@ class DuplicationsController < ApplicationController
     authorize :duplication
 
     @client = SharedClient.find(params[:id])
-    @client.resolve_duplication!
+    @client.resolve_duplication!(current_admin_user)
 
     redirect_to duplications_path, notice: 'Client duplication removed!'
   end
