@@ -40,9 +40,9 @@ class BillableReportExportHandler
       sheet.add_row headers
       
       report.billable_report_items.client.where.not(billable_at: nil).includes(:version, :billable).each do |client_item|
-        client = client_item.billable
         version = client_item.version
-
+        client = client_item.billable || Client.new(version.object)
+        
         sheet.add_row [
           client.slug,
           format_value(client.created_at),
