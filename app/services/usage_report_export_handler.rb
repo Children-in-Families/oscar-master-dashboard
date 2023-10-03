@@ -13,7 +13,7 @@ class UsageReportExportHandler
     @file_name = file_name
   end
 
-  
+
   def call
     Axlsx::Package.new do |p|
       add_cases_sheet(p)
@@ -21,7 +21,8 @@ class UsageReportExportHandler
       cross_referral_sheet(p)
       cross_referral_to_primero(p)
       cross_referral_from_primero(p)
-      
+      vulnerability_and_service_type(p)
+
       p.serialize(file_name)
     end
   end
@@ -194,7 +195,7 @@ class UsageReportExportHandler
       'Other'
     ]
 
-    package.workbook.add_worksheet(name: "Added cases #{ date.month }-#{date.year}") do |sheet|
+    package.workbook.add_worksheet(name: "Added cases #{date.month}-#{date.year}") do |sheet|
       sheet.add_row headers
 
       collection.each do |report|
@@ -212,6 +213,48 @@ class UsageReportExportHandler
           report.added_cases['child_male_with_disability'],
           report.added_cases['other']
         ]
+      end
+    end
+  end
+
+  def vulnerability_and_service_type(package)
+    headers = [
+      'NGO Name',
+      'ID',
+      'Gender',
+      'Status',
+      'Age',
+      'Created Date',
+      'Current Province',
+      'Type of Services',
+      'កុមារ​មានជំងឺរ៉ាំរ៉ែ និង/ឬ​ពិការភាព / History of disability and/or illness',
+      'ការបង្កទុក្ខទោស​ និង​ការ​កេង​ប្រវ័ញ្ច / History of Harm',
+      'ការ​បំពានគ្រឿង​ញៀនឬគ្រឿង​ស្រវឹង និង​ល្បែងស៉ីសង / History of high-risk behaviours',
+      'Is the child at-risk of family separation?',
+      'ការបែកចេញ​ពី​គ្រួសារ - Reason for Family Separation'
+    ]
+    package.workbook.add_worksheet(name: "Vulnerability cases #{date.month}-#{date.year}") do |sheet|
+      sheet.add_row headers
+      collection.map(&:vulnerability).each do |report|
+        next if report.blank?
+
+        report.each do |record|
+          sheet.add_row [
+            record['ngo_name'],
+            record['client_id'],
+            record['client_gender'],
+            record['client_status'],
+            record['client_age'],
+            record['client_created_date'],
+            record['current_province'],
+            record['type_of_service'],
+            record['កុមារ​មានជំងឺរ៉ាំរ៉ែ និង/ឬ​ពិការភាព / History of disability and/or illness'],
+            record['ការបង្កទុក្ខទោស​ និង​ការ​កេង​ប្រវ័ញ្ច / History of Harm'],
+            record['ការ​បំពានគ្រឿង​ញៀនឬគ្រឿង​ស្រវឹង និង​ល្បែងស៉ីសង / History of high-risk behaviours'],
+            record['Is the child at-risk of family separation?'],
+            record['ការបែកចេញ​ពី​គ្រួសារ - Reason for Family Separation']
+          ]
+        end
       end
     end
   end
