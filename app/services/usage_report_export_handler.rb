@@ -13,7 +13,6 @@ class UsageReportExportHandler
     @file_name = file_name
   end
 
-
   def call
     Axlsx::Package.new do |p|
       add_cases_sheet(p)
@@ -45,7 +44,7 @@ class UsageReportExportHandler
       'Client\'s current province'
     ]
 
-    package.workbook.add_worksheet(name: "Referral from Primero #{ date.month }-#{date.year}") do |sheet|
+    package.workbook.add_worksheet(name: "Referral from Primero #{date.month}-#{date.year}") do |sheet|
       sheet.add_row headers
       collection.each do |report|
         sheet.add_row [
@@ -60,7 +59,7 @@ class UsageReportExportHandler
           report.cross_referral_from_primero_cases['child_male_without_disability'],
           report.cross_referral_from_primero_cases['child_male_with_disability'],
           report.cross_referral_from_primero_cases['other'],
-          report.cross_referral_from_primero_cases['provinces'].uniq.join(', '),
+          report.cross_referral_from_primero_cases['provinces'].uniq.join(', ')
         ]
       end
     end
@@ -82,7 +81,7 @@ class UsageReportExportHandler
       'Client\'s current province'
     ]
 
-    package.workbook.add_worksheet(name: "Referral to Primero #{ date.month }-#{date.year}") do |sheet|
+    package.workbook.add_worksheet(name: "Referral to Primero #{date.month}-#{date.year}") do |sheet|
       sheet.add_row headers
       collection.each do |report|
         sheet.add_row [
@@ -97,7 +96,7 @@ class UsageReportExportHandler
           report.cross_referral_to_primero_cases['child_male_without_disability'],
           report.cross_referral_to_primero_cases['child_male_with_disability'],
           report.cross_referral_to_primero_cases['other'],
-          report.cross_referral_to_primero_cases['provinces'].uniq.join(', '),
+          report.cross_referral_to_primero_cases['provinces'].uniq.join(', ')
         ]
       end
     end
@@ -119,7 +118,7 @@ class UsageReportExportHandler
       'Agency name received the case'
     ]
 
-    package.workbook.add_worksheet(name: "Referral within OSCaR #{ date.month }-#{date.year}") do |sheet|
+    package.workbook.add_worksheet(name: "Referral within OSCaR #{date.month}-#{date.year}") do |sheet|
       sheet.add_row headers
       collection.each do |report|
         sheet.add_row [
@@ -157,7 +156,7 @@ class UsageReportExportHandler
       'Other'
     ]
 
-    package.workbook.add_worksheet(name: "Synced cases #{ date.month }-#{date.year}") do |sheet|
+    package.workbook.add_worksheet(name: "Synced cases #{date.month}-#{date.year}") do |sheet|
       sheet.add_row headers
       collection.each do |report|
         sheet.add_row [
@@ -231,7 +230,8 @@ class UsageReportExportHandler
       'ការបង្កទុក្ខទោស​ និង​ការ​កេង​ប្រវ័ញ្ច / History of Harm',
       'ការ​បំពានគ្រឿង​ញៀនឬគ្រឿង​ស្រវឹង និង​ល្បែងស៉ីសង / History of high-risk behaviours',
       'Is the child at-risk of family separation?',
-      'ការបែកចេញ​ពី​គ្រួសារ - Reason for Family Separation'
+      'ការបែកចេញ​ពី​គ្រួសារ - Reason for Family Separation',
+      'Protection Concern'
     ]
     package.workbook.add_worksheet(name: "Vulnerability cases #{date.month}-#{date.year}") do |sheet|
       sheet.add_row headers
@@ -252,7 +252,8 @@ class UsageReportExportHandler
             record['ការបង្កទុក្ខទោស​ និង​ការ​កេង​ប្រវ័ញ្ច / History of Harm'],
             record['ការ​បំពានគ្រឿង​ញៀនឬគ្រឿង​ស្រវឹង និង​ល្បែងស៉ីសង / History of high-risk behaviours'],
             record['Is the child at-risk of family separation?'],
-            record['ការបែកចេញ​ពី​គ្រួសារ - Reason for Family Separation']
+            record['ការបែកចេញ​ពី​គ្រួសារ - Reason for Family Separation'],
+            record['protection_concern']
           ]
         end
       end
