@@ -80,3 +80,5 @@ gem 'redis', "~> 4.0"
 gem "whenever", "~> 1.0"
 
 gem "appsignal", "~> 3.4"
+
+gem "tinymce-rails", "~> 6.7"

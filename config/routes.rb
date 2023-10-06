@@ -13,6 +13,12 @@ Rails.application.routes.draw do
     put :resolve, on: :member
   end
 
+  resources :release_notes, except: :destroy do
+    member do
+      put :publish
+    end
+  end
+
   resources :billable_reports, only: [:index, :show], path: :finances
   resources :messages, only: [:index]
 

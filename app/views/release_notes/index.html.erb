@@ -1,0 +1,67 @@
+<% content_for :page_title do %>
+  <%= "Release Note" %>
+<% end %>
+
+<%= content_for :action do %>
+  <%= link_to_if policy(ReleaseNote).new?, 'New', new_release_note_path, class: 'btn btn-primary ml-auto' %>
+<% end %>
+
+<div class="my-2">
+  <div class="row">
+    <div class="col-9 col-xl-10">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-bordered table-hover">
+          <thead>
+            <tr>
+              <th scope="col"><%= sort_link(@q, :created_at)%></th>
+              <th scope="col">Content</th>
+              <th scope="col"><%= sort_link(@q, :published_at)%></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @release_notes.each do |release_note| %>
+              <tr>
+                <td><%= format_value(release_note.created_at) %></td>
+                <td><%= release_note.content.html_safe %></td>
+                <td><%= format_value(release_note.published_at) %></td>
+                
+                <% if policy(release_note).publish? %>
+                  <td>
+                    <%= link_to 'Publish', publish_release_note_path(release_note), method: :put, data: { method: :put, confirm: "Are you sure?" } %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-3 col-xl-2">
+      <%= simple_form_for @q, url: release_notes_path, method: :get do |f| %>
+        <%= f.input :published_eq, collection: [['Yes', true], ['No', false]], label: 'Published?' %>
+        <%= f.label :created_date %>
+        <div class="row">
+          <div class="col-6">
+            <%= f.input :created_date_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_date_gteq) }, placeholder: "From" %>
+          </div>
+        
+          <div class="col-6">
+            <%= f.input :created_date_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_date_lteq) }, placeholder: "To" %>
+          </div>
+        </div>
+        
+        <%= f.submit 'Submit', class: "btn btn-primary" %>
+        <%= link_to "Clear Search", release_notes_path %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="text-center py-3">
+    <%= paginate @release_notes %>
+  </div>
+</div>
+
+
+

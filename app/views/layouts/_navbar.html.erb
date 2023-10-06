@@ -39,6 +39,12 @@
           </li>
         <% end %>
 
+        <% if policy(ReleaseNote).index? %>
+          <li class="nav-item <%= active_class(controller_name == 'release_notes') %>">
+            <a class="nav-link text-uppercase" href="<%= release_notes_path %>">Release Note</a>
+          </li>
+        <% end %>
+
         <% if policy(AdminUser).index? %>
           <li class="nav-item <%= active_class(controller_name == 'admin_users') %>">
             <a class="nav-link text-uppercase" href="<%= admin_users_path %>">User Account</a>

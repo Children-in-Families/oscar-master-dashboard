@@ -1,0 +1,7 @@
+<%= simple_form_for resource, wrapper: :horizontal_form do |f| %>
+  <%= f.input :content, input_html: { class: "tinymce" } %>
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>
+
+<%= tinymce_assets %>
+<%= tinymce %>
