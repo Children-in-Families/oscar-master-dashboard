@@ -1,12 +1,12 @@
 class ReleaseNote < ActiveRecord::Base
-  self.table_name = 'public.relase_notes'
+  self.table_name = 'public.release_notes'
 
   validates :content, presence: true
 
   after_commit :create_notifications
 
   ransacker :created_date do
-    Arel.sql('date(public.relase_notes.created_at)')
+    Arel.sql('date(public.release_notes.created_at)')
   end
 
   private
