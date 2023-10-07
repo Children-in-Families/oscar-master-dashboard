@@ -9,12 +9,12 @@ class ReleaseNotesController < ApplicationController
   end
 
   def create
-    resource.update(created_by_id: current_admin_user.id)
-    upload_attachments
-
-    redirect_to release_notes_path, notice: 'Congration, this release note has been successfully created!'
     create! do |format|
       format.html do
+        resource.update(created_by_id: current_admin_user.id)
+        upload_attachments
+
+        redirect_to release_notes_path, notice: 'Congration, this release note has been successfully created!'
       end
     end
   end
