@@ -10,7 +10,9 @@
 
 <script>
   document.addEventListener('turbolinks:before-cache', function() {
-    tinymce.remove();
+    if (typeof tinymce !== 'undefined') {
+      tinymce.remove();
+    }
   });
 
   document.addEventListener("turbolinks:load", function() {
