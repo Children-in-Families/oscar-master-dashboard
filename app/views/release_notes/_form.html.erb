@@ -16,10 +16,9 @@
   document.addEventListener("turbolinks:load", function() {
     tinymce.init({
       selector: 'textarea.tinymce',
-      plugins: 'lists',
+      plugins: 'lists table',
       width : '100%',
-      toolbar: 'bold italic numlist bullist',
-      menubar: false
+      toolbar: 'styles | undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | table',
     })
   })
 </script>

@@ -26,11 +26,13 @@
                 <td><%= release_note.content.html_safe %></td>
                 <td><%= format_value(release_note.published_at) %></td>
                 
-                <% if policy(release_note).publish? %>
-                  <td>
+                <td>
+                  <% if policy(release_note).publish? %>
+                    <%= link_to 'Edit', edit_release_note_path(release_note) %>
+                    <br>
                     <%= link_to 'Publish', publish_release_note_path(release_note), method: :put, data: { method: :put, confirm: "Are you sure?" } %>
-                  </td>
-                <% end %>
+                  <% end %>
+                </td>
               </tr>
             <% end %>
           </tbody>
