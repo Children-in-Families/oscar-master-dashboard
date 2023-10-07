@@ -12,6 +12,7 @@ class ReleaseNotesController < ApplicationController
     create! do |format|
       format.html do
         resource.update(created_by_id: current_admin_user.id)
+        redirect_to release_notes_path, notice: 'Congration, this release note has been successfully created!'
       end
     end
   end

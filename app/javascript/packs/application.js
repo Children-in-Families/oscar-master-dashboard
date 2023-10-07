@@ -26,10 +26,14 @@ $(document).on("turbolinks:load", function() {
   $("select").selectize({});
 
   deleteInstanceHandler();
-  initChartjs();
-  initClientsAgeChart();
-  initPrimeroChart();
-  initNGOChart();
+
+  if ($("#clients-status .chart-holder").length > 0) {
+    initChartjs();
+    initClientsAgeChart();
+    initPrimeroChart();
+    initNGOChart();
+  }
+
 })
 
 $(document).on('turbolinks:before-cache', function() {
