@@ -1,5 +1,6 @@
 <%= content_for :extra_head do %>
   <script src="https://cdn.tiny.cloud/1/npglv10u9nxkmsg6rsv4ymunjcg7qi9idqtxuma4wpssu1y0/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <meta name="turbolinks-visit-control" content="reload">
 <% end %>
 
 <%= simple_form_for resource, wrapper: :horizontal_form do |f| %>
@@ -9,13 +10,7 @@
 
 
 <script>
-  document.addEventListener('turbolinks:before-cache', function() {
-    if (typeof tinymce !== 'undefined') {
-      tinymce.remove();
-    }
-  });
-
-  document.addEventListener("turbolinks:load", function() {
+  document.addEventListener("DOMContentLoaded", function() {
     tinymce.init({
       selector: 'textarea.tinymce',
       plugins: 'lists table',
