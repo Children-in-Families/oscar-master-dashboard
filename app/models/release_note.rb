@@ -19,11 +19,16 @@ class ReleaseNote < ActiveRecord::Base
       Organization.switch_to(organization.short_name)
 
       User.find_each do |user|
-        Notification.create(
-          key: 'relase_note',
-          user: user,
-          notifiable: self
-        )
+        begin
+          Notification.create(
+            key: 'relase_note',
+            user: user,
+            notifiable: self
+          )
+        rescue ActiveRecord::StatementInvalid => e
+          Rails.logger.error e.message
+          puts "Skip for bad instance: #{organization.short_name}"
+        end
       end
     end
   end
