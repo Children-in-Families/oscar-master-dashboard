@@ -1,5 +1,3 @@
-//= require tinymce
-
 $(document).on("turbolinks:load", function() {
   tinymce.init({
     selector: 'textarea.tinymce',
