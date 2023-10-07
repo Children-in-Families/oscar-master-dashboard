@@ -1,6 +1,6 @@
 class ReleaseNotesController < ApplicationController
   inherit_resources
-  actions :all, except: [:destroy]
+  actions :all, except: [:destroy, :show]
 
   before_action :authorize_resource!, except: :publish
 
@@ -9,10 +9,22 @@ class ReleaseNotesController < ApplicationController
   end
 
   def create
+    resource.update(created_by_id: current_admin_user.id)
+    upload_attachments
+
+    redirect_to release_notes_path, notice: 'Congration, this release note has been successfully created!'
     create! do |format|
       format.html do
-        resource.update(created_by_id: current_admin_user.id)
-        redirect_to release_notes_path, notice: 'Congration, this release note has been successfully created!'
+      end
+    end
+  end
+
+  def update
+    update! do |format|
+      format.html do
+        upload_attachments
+
+        redirect_to release_notes_path, notice: 'Congration, this release note has been successfully updated!'
       end
     end
   end
@@ -26,6 +38,22 @@ class ReleaseNotesController < ApplicationController
   end
 
   protected
+
+  def upload_attachments
+    attachments = params.dig(:release_note, :attachments)
+    
+    if attachments.present?
+      current_admin_user.generate_token!
+      attributes = {
+        headers: { Authorization: "Token token=#{current_admin_user.token}" },
+        body: {
+          attachments: attachments
+        }
+      }
+
+      HTTParty.put("#{ENV["OSCAR_HOST"]}/api/v1/release_notes/#{resource.id}/upload_attachments", attributes)
+    end
+  end
 
   def collection
     params[:q] ||= {}

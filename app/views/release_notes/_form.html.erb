@@ -5,6 +5,7 @@
 
 <%= simple_form_for resource, wrapper: :horizontal_form do |f| %>
   <%= f.input :content, input_html: { class: "tinymce" } %>
+  <%= f.input :attachments, as: :file, input_html: { value: "", multiple: true, accept: "image/*,application/pdf" } %>
   <%= f.submit class: 'btn btn-primary' %>
 <% end %>
 
