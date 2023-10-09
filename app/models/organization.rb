@@ -34,6 +34,7 @@ class Organization < ApplicationRecord
   mount_uploader :logo, ImageUploader
 
   has_many :global_identity_organizations, dependent: :destroy
+  has_many :usage_reports
 
   before_save :clean_supported_languages, if: :supported_languages?
 
@@ -100,11 +101,11 @@ class Organization < ApplicationRecord
         child_female: Client.reportable.child.female.count,
         without_age_nor_gender: Client.reportable.without_age_nor_gender.count,
         cases_synced_to_primero: {
-          adult_male: cases_synced_to_primero.adult.male.count,
-          adult_female: cases_synced_to_primero.adult.female.count,
-          child_male: cases_synced_to_primero.child.male.count,
-          child_female: cases_synced_to_primero.child.female.count,
-          without_age_nor_gender: cases_synced_to_primero.without_age_nor_gender.count
+          adult_male: usage_reports.cross_referral_to_primero_cases['adult_male'],
+          adult_female: usage_reports.cross_referral_to_primero_cases['adult_female'],
+          child_male: usage_reports.cross_referral_to_primero_cases['child_male'],
+          child_female: usage_reports.cross_referral_to_primero_cases['child_female'],
+          without_age_nor_gender: usage_reports.cross_referral_to_primero_cases['other']
         }
       }
     end
