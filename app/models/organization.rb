@@ -101,11 +101,11 @@ class Organization < ApplicationRecord
         child_female: Client.reportable.child.female.count,
         without_age_nor_gender: Client.reportable.without_age_nor_gender.count,
         cases_synced_to_primero: {
-          adult_male: usage_reports.sum{ |r| r.cross_referral_to_primero_cases['adult_male'] },
-          adult_female: usage_reports.sum{ |r| r.cross_referral_to_primero_cases['adult_female'] },
-          child_male: usage_reports.sum{ |r| r.cross_referral_to_primero_cases['child_male'] },
-          child_female: usage_reports.sum{ |r| r.cross_referral_to_primero_cases['child_female'] },
-          without_age_nor_gender: usage_reports.sum{ |r| r.cross_referral_to_primero_cases['other'] }
+          adult_male: usage_reports.sum{ |r| r.synced_cases['adult_male'] },
+          adult_female: usage_reports.sum{ |r| r.synced_cases['adult_female'] },
+          child_male: usage_reports.sum{ |r| r.synced_cases['child_male'] },
+          child_female: usage_reports.sum{ |r| r.synced_cases['child_female'] },
+          without_age_nor_gender: usage_reports.sum{ |r| r.synced_cases['other'] }
         }
       }
     end
@@ -156,9 +156,5 @@ class Organization < ApplicationRecord
 
   def deletable?
     !mande? && !shared? && clients_count.zero?
-  end
-
-  def cases_synced_to_primero
-    Client.reportable.joins(:referrals).where(referrals: { referred_to: 'MoSVY External System' }).distinct
   end
 end
