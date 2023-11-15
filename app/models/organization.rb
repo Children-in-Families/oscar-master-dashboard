@@ -5,11 +5,12 @@ class Organization < ApplicationRecord
   default_options.update(verify: false, timeout: 120)
 
   acts_as_paranoid
-  
+
   SUPPORTED_LANGUAGES = {
     en: "English",
     km: "Khmer",
-    my: "Burmese"
+    my: "Burmese",
+    in: "Bahasa"
   }.freeze
 
   EXPORTABLE_COLUMNS = [
@@ -28,7 +29,7 @@ class Organization < ApplicationRecord
     :created_at
   ].freeze
 
-  SUPPORTED_COUNTRY = ["cambodia", "myanmar", "thailand", "lesotho", "nepal", "haiti"].freeze
+  SUPPORTED_COUNTRY = ["cambodia", "myanmar", "thailand", "indonesia", "lesotho", "nepal", "haiti"].freeze
   REFERRAL_SOURCES = ["ក្រសួង សអយ/មន្ទីរ សអយ", "អង្គការមិនមែនរដ្ឋាភិបាល", "មន្ទីរពេទ្យ", "នគរបាល", "តុលាការ/ប្រព័ន្ធយុត្តិធម៌", "រកឃើញនៅតាមទីសាធារណៈ", "ស្ថាប័នរដ្ឋ", "មណ្ឌលថែទាំបណ្ដោះអាសន្ន", "ទូរស័ព្ទទាន់ហេតុការណ៍", "មកដោយខ្លួនឯង", "គ្រួសារ", "មិត្តភក្ដិ", "អាជ្ញាធរដែនដី", "ផ្សេងៗ", "សហគមន៍", "ព្រះវិហារ", "MoSVY External System"].freeze
 
   mount_uploader :logo, ImageUploader
