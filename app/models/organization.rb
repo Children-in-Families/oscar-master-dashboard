@@ -10,7 +10,8 @@ class Organization < ApplicationRecord
     en: "English",
     km: "Khmer",
     my: "Burmese",
-    in: "Bahasa"
+    id: "Bahasa",
+    th: "Thailand"
   }.freeze
 
   EXPORTABLE_COLUMNS = [
@@ -61,6 +62,8 @@ class Organization < ApplicationRecord
   scope :km, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%km%") }
   scope :en, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%en%") }
   scope :my, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%my%") }
+  scope :id, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%id%") }
+  scope :th, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%th%") }
 
   before_destroy :deletable?, prepend: true
 
