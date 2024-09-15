@@ -7,6 +7,8 @@ class Client < ActiveRecord::Base
   has_many :case_worker_clients, dependent: :destroy
   has_many :users, through: :case_worker_clients, validate: false
   
+  has_one :risk_assessment
+  
   scope :accepted,               ->        { where(state: 'accepted') }
   scope :rejected,               ->        { where(state: 'rejected') }
 

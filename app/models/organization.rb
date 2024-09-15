@@ -56,7 +56,7 @@ class Organization < ApplicationRecord
   scope :active, -> { where(onboarding_status: 'completed') }
 
   # Replacement for only_deleted which is not working with apartment gem
-  scope :archived, -> { unscoped{ Organization.where.not(deleted_at: nil) } }
+  scope :archived, -> { unscoped { Organization.where.not(deleted_at: nil) } }
 
   scope :km, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%km%") }
   scope :en, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%en%") }
@@ -102,11 +102,11 @@ class Organization < ApplicationRecord
         child_female: Client.reportable.child.female.count,
         without_age_nor_gender: Client.reportable.without_age_nor_gender.count,
         cases_synced_to_primero: {
-          adult_male: usage_reports.sum{ |r| r.synced_cases['adult_male'] },
-          adult_female: usage_reports.sum{ |r| r.synced_cases['adult_female'] },
-          child_male: usage_reports.sum{ |r| r.synced_cases['child_male'] },
-          child_female: usage_reports.sum{ |r| r.synced_cases['child_female'] },
-          without_age_nor_gender: usage_reports.sum{ |r| r.synced_cases['other'] }
+          adult_male: usage_reports.sum { |r| r.synced_cases['adult_male'] },
+          adult_female: usage_reports.sum { |r| r.synced_cases['adult_female'] },
+          child_male: usage_reports.sum { |r| r.synced_cases['child_male'] },
+          child_female: usage_reports.sum { |r| r.synced_cases['child_female'] },
+          without_age_nor_gender: usage_reports.sum { |r| r.synced_cases['other'] }
         }
       }
     end

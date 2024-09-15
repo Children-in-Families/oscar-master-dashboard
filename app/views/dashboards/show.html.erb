@@ -1,0 +1,56 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link font-weight-bold <%= active_class(params[:scope] != 'archived') %>" href="<%= organizations_path %>">All instances (<%= Organization.count %>)</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link font-weight-bold <%= active_class(params[:scope] == 'archived') %>" href="<%= organizations_path(scope: :archived) %>">Archived instances (<%= Organization.archived.count %>)</a>
+  </li>
+</ul>
+
+<div class="row my-2">
+  <div class="col-9 col-xl-10">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-bordered table-hover">
+        <thead>
+          <tr>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-3 col-xl-2">
+    <%= simple_form_for @q, url: root_path, method: :get do |f| %>
+      <%= f.label :created_at, label: "Case created date" %>
+      <div class="row">
+        <div class="col-6">
+          <%= f.input :created_date_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_date_gteq) }, placeholder: "From" %>
+        </div>
+      
+        <div class="col-6">
+          <%= f.input :created_date_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_date_lteq) }, placeholder: "To" %>
+        </div>
+      </div>
+
+
+      <%= f.label :initial_referral_date, label: "Case initial_referral date" %>
+      <div class="row">
+        <div class="col-6">
+          <%= f.input :initial_referral_date_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :initial_referral_date_gteq) }, placeholder: "From" %>
+        </div>
+      
+        <div class="col-6">
+          <%= f.input :initial_referral_date_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :initial_referral_date_lteq) }, placeholder: "To" %>
+        </div>
+      </div>
+
+      <%= f.input :province_id_eq, label: 'Current province' %>
+      <%= f.input :status_eq, label: 'Case status' %>
+      <%= f.input :risk_assessment_has_disability_eq, label: 'Case status' %>
+
+      <%= f.submit 'Submit', class: "btn btn-primary" %>
+      <%= link_to "Clear Search", root_path(scope: params[:scope])  %>
+    <% end %>
+  </div>
+</div>
