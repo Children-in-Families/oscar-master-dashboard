@@ -18,7 +18,6 @@ class Client < ActiveRecord::Base
   scope :accepted_status,        ->        { where(status: 'Accepted') }
   scope :exited_status,          ->        { where(status: 'Exited') }
   scope :reportable,             ->        { where(for_testing: false) }
-  # scope :reportable,             ->        { with_deleted.where(for_testing: false) }
   scope :adult,                  ->        { where("(EXTRACT(year FROM age(current_date, clients.date_of_birth)) :: int) >= ?", 18) }
   scope :child,                  ->        { where("(EXTRACT(year FROM age(current_date, clients.date_of_birth)) :: int) < ?", 18) }
   scope :without_age_nor_gender, ->        { non_binary.where(date_of_birth: nil) }
