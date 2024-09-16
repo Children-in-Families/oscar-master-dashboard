@@ -10,6 +10,7 @@
 <div class="row my-2">
   <div class="col-9 col-xl-10">
     <div class="table-responsive">
+      <p><%= @report_data %></p>
       <table class="table table-striped table-bordered table-bordered table-hover">
         <thead>
           <tr>
@@ -25,11 +26,11 @@
       <%= f.label :created_at, label: "Case created date" %>
       <div class="row">
         <div class="col-6">
-          <%= f.input :created_date_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_date_gteq) }, placeholder: "From" %>
+          <%= f.input :created_at_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_at_gteq) }, placeholder: "From" %>
         </div>
       
         <div class="col-6">
-          <%= f.input :created_date_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_date_lteq) }, placeholder: "To" %>
+          <%= f.input :created_at_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_at_lteq) }, placeholder: "To" %>
         </div>
       </div>
 
