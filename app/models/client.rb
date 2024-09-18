@@ -49,6 +49,24 @@ class Client < ActiveRecord::Base
     ActiveRecord::Base.connection.execute(query).first
   end
 
+  def self.child_protection_aggregates
+    query = <<-SQL.squish
+      SELECT
+        COUNT(DISTINCT clients.id) FILTER (WHERE gender = 'male') AS child_protection_male_count,
+        COUNT(DISTINCT clients.id) FILTER (WHERE gender = 'female') AS child_protection_female_count,
+        COUNT(DISTINCT clients.id) FILTER (WHERE gender NOT IN ('male', 'female')) as child_protection_non_binary_count
+      FROM clients
+      JOIN client_enrollments ON client_enrollments.client_id = clients.id
+      JOIN program_streams ON program_streams.id = client_enrollments.program_stream_id
+      JOIN program_stream_services ON program_stream_services.program_stream_id = program_streams.id
+      JOIN services ON services.id = program_stream_services.service_id
+      WHERE services.name IN ('Family Based Care', 'Drug/Alcohol', 'Anti-Trafficking') AND
+            EXTRACT(YEAR FROM AGE(CURRENT_DATE, date_of_birth)) < 18;
+    SQL
+
+    ActiveRecord::Base.connection.execute(query).first
+  end
+
   def self.client_risk_assessments_aggregates
     query = <<-SQL.squish
       WITH combined_risk_levels AS (
@@ -84,5 +102,11 @@ class Client < ActiveRecord::Base
     SQL
 
     ActiveRecord::Base.connection.execute(query).first
+  end
+
+  def self.primero_aggregates
+    query = <<-SQL.squish
+      
+    SQL
   end
 end
