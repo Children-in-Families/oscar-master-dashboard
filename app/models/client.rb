@@ -30,6 +30,7 @@ class Client < ActiveRecord::Base
   def self.client_based_aggregates
     query = <<-SQL.squish
       SELECT
+        COUNT(*) AS total_cases,
         COUNT(*) FILTER (WHERE status = 'Exited') AS exited,
         COUNT(*) FILTER (WHERE status = 'Accepted') AS accepted,
         COUNT(*) FILTER (WHERE status = 'Active') AS active,
@@ -52,6 +53,7 @@ class Client < ActiveRecord::Base
   def self.child_protection_aggregates
     query = <<-SQL.squish
       SELECT
+        COUNT(DISTINCT clients.id) as child_protection_total,
         COUNT(DISTINCT clients.id) FILTER (WHERE gender = 'male') AS child_protection_male_count,
         COUNT(DISTINCT clients.id) FILTER (WHERE gender = 'female') AS child_protection_female_count,
         COUNT(DISTINCT clients.id) FILTER (WHERE gender NOT IN ('male', 'female')) as child_protection_non_binary_count
@@ -93,6 +95,7 @@ class Client < ActiveRecord::Base
         ORDER BY client_id, created_at DESC
       )
       SELECT
+        COUNT(*) AS total_risk_assessments,
         COUNT(*) FILTER (WHERE level_of_risk = 'low') AS risk_low,
         COUNT(*) FILTER (WHERE level_of_risk = 'medium') AS risk_medium,
         COUNT(*) FILTER (WHERE level_of_risk = 'high') AS risk_high,
@@ -106,7 +109,7 @@ class Client < ActiveRecord::Base
 
   def self.primero_aggregates
     query = <<-SQL.squish
-      
+
     SQL
   end
 end
