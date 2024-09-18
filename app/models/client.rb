@@ -51,13 +51,36 @@ class Client < ActiveRecord::Base
 
   def self.client_risk_assessments_aggregates
     query = <<-SQL.squish
+      WITH combined_risk_levels AS (
+        SELECT
+          client_id,
+          level_of_risk,
+          created_at
+        FROM risk_assessments
+
+        UNION ALL
+
+        SELECT
+          client_id,
+          level_of_risk,
+          created_at
+        FROM assessments
+      ),
+      latest_risk_levels AS (
+        SELECT DISTINCT ON (client_id)
+          client_id,
+          level_of_risk
+        FROM combined_risk_levels
+        WHERE level_of_risk IS NOT NULL AND level_of_risk != ''
+        ORDER BY client_id, created_at DESC
+      )
       SELECT
         COUNT(*) FILTER (WHERE level_of_risk = 'low') AS risk_low,
         COUNT(*) FILTER (WHERE level_of_risk = 'medium') AS risk_medium,
         COUNT(*) FILTER (WHERE level_of_risk = 'high') AS risk_high,
         COUNT(*) FILTER (WHERE level_of_risk = 'no action') AS risk_no_action
-      FROM clients
-      JOIN risk_assessments ON clients.id = risk_assessments.client_id;
+      FROM latest_risk_levels
+      JOIN clients ON clients.id = latest_risk_levels.client_id;
     SQL
 
     ActiveRecord::Base.connection.execute(query).first
