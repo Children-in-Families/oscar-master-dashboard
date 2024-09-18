@@ -4,6 +4,6 @@ class DashboardsController < ApplicationController
     Organization.switch_to('cif')
 
     @q = Client.with_deleted.reportable.ransack(params[:q])
-    @report = DashboardAggregator.new.call
+    @report = DashboardAggregator.new.overview
   end
 end

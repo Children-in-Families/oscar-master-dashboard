@@ -27,7 +27,7 @@ $(document).on("turbolinks:load", function() {
 
   deleteInstanceHandler();
 
-  if ($("#clients-status .chart-holder").length > 0) {
+  if ($(".pie-chart-wrapper .chart-holder").length > 0) {
     initChartjs();
     initClientsAgeChart();
     initPrimeroChart();
@@ -60,28 +60,34 @@ function deleteInstanceHandler() {
 
 
 function initChartjs () {
-  const config = {
-    type: 'pie',
-    data: $("#clients-status .chart-holder").data("source").client_status,
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'top',
-        },
-        datalabels: {
-          display: true,
-          color: '#fff',
-          font: {
-            size: 12,
+  const pieChartHolders = $(".pie-chart-wrapper .chart-holder")
+
+  $.each(pieChartHolders, function(_index, pieChartHolder) {
+    console.log(pieChartHolder)
+    
+    const config = {
+      type: 'pie',
+      data: $(pieChartHolder).data("source").client_status,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          datalabels: {
+            display: true,
+            color: '#fff',
+            font: {
+              size: 12,
+            }
           }
         }
-      }
-    },
-  };
-
-  var ctx = $('#clients-status .chart-holder')[0].getContext('2d');
-  var myChart = new Chart(ctx, config);
+      },
+    };
+  
+    var ctx = $(pieChartHolder)[0].getContext('2d');
+    new Chart(ctx, config);
+  })
 }
 
 function initClientsAgeChart() {

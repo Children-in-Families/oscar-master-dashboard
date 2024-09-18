@@ -6,68 +6,54 @@
 
 <div class="row my-2">
   <div class="col-9 col-xl-10">
-    <div class="row">
+    <div class="row pie-chart-wrapper text-center">
       <div class="col-12 col-md-4">
-        <h4>Total Cases <%= @report['total_cases'] %></h4>
+        <div class="card">
+          <div class="card-header">
+            <h5>Total Cases <%= @report[:raw_data][:case_overview_total] %></h5>
+          </div>
 
-        <ul>
-          <li>Openning Cases <%= @report['accepted'] + @report['active'] %></li>
-          <li>Reaccepting Cases <%= @report['accepted'] %></li>
-          <li>Closed Cases <%= @report['exited'] %></li>
-        </ul>
+          <div class="card-body">
+            <div class="chart-container mx-auto" style="max-width: 500px">
+              <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_overview] }.to_json %>">
+              </canvas>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-12 col-md-4">
-        <h4>Total of Child Protection <%= @report['child_protection_total'] %></h4>
 
-        <ul>
-          <li>Male <%= @report['child_protection_male_count'] %></li>
-          <li>Female <%= @report['child_protection_female_count'] %></li>
-          <li>Other <%= @report['child_protection_non_binary_count'] %></li>
-        </ul>
+      <div class="col-12 col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h5>Total of Child Protection <%= @report[:raw_data][:child_protection_total] %></h5>
+          </div>
+
+          <div class="card-body">
+            <div class="chart-container mx-auto" style="max-width: 500px">
+              <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:child_protection] }.to_json %>">
+              </canvas>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-12 col-md-4">
-        <h4>Total of Cases with Risk Assessment <%= @report['total_risk_assessments'] %></h4>
 
-        <ul>
-          <li>High <%= @report['risk_high'] %></li>
-          <li>Medium <%= @report['risk_medium'] %></li>
-          <li>Low <%= @report['risk_low'] %></li>
-          <li>No Action <%= @report['risk_no_action'] %></li>
-        </ul>
+      <div class="col-12 col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h5>Total of Cases with Risk Assessment <%= @report[:raw_data][:total_risk_assessments] %></h5>
+          </div>
+
+          <div class="card-body">
+            <div class="chart-container mx-auto" style="max-width: 500px">
+              <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:risk_assessments] }.to_json %>">
+              </canvas>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <div class="col-3 col-xl-2">
-    <%= simple_form_for @q, url: root_path, method: :get do |f| %>
-      <%= f.label :created_at, label: "Case Created Date" %>
-      <div class="row">
-        <div class="col-6">
-          <%= f.input :created_at_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_at_gteq) }, placeholder: "From" %>
-        </div>
-      
-        <div class="col-6">
-          <%= f.input :created_at_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :created_at_lteq) }, placeholder: "To" %>
-        </div>
-      </div>
-
-
-      <%= f.label :initial_referral_date, label: "Initial Referral Date" %>
-      <div class="row">
-        <div class="col-6">
-          <%= f.input :initial_referral_date_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :initial_referral_date_gteq) }, placeholder: "From" %>
-        </div>
-      
-        <div class="col-6">
-          <%= f.input :initial_referral_date_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:q, :initial_referral_date_lteq) }, placeholder: "To" %>
-        </div>
-      </div>
-
-      <%= f.input :province_id_eq, label: 'Current Province' %>
-      <%= f.input :status_eq, label: 'Case Status' %>
-      <%= f.input :risk_assessment_has_disability_eq, label: 'Disability' %>
-
-      <%= f.submit 'Submit', class: "btn btn-primary" %>
-      <%= link_to "Clear Search", root_path(scope: params[:scope])  %>
-    <% end %>
+    <%= render 'filter' %>
   </div>
 </div>

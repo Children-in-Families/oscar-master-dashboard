@@ -5,3 +5,6 @@ Style/HashSyntax:
 
 Layout/TrailingWhitespace:
   Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
