@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
   devise_for :admin_users
-  root to: "dashboards#show"
+  root to: "usage_reports#dashboard"
   
   resources :organizations, path: 'instances' do
     member do
       put :restore
     end
+  end
+
+  resource :dashboard, only: :show do
   end
 
   resources :admin_users
