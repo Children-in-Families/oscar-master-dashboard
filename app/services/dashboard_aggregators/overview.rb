@@ -79,7 +79,7 @@ module DashboardAggregators
         FROM clients
       SQL
 
-      ActiveRecord::Base.connection.execute(query).first
+      ActiveRecord::Base.connection.execute(query).first || {}
     end
 
     def reaccepting_cases
@@ -88,7 +88,7 @@ module DashboardAggregators
         FROM clients
         JOIN enter_ngos ON enter_ngos.client_id = clients.id
         GROUP BY clients.id
-        HAVING COUNT(enter_ngos.id) > 1;
+        HAVING COUNT(enter_ngos.client_id) > 1;
       SQL
 
       ActiveRecord::Base.connection.execute(query).first || {}
@@ -109,7 +109,7 @@ module DashboardAggregators
         WHERE services.name IN ('Family Based Care', 'Drug/Alcohol', 'Anti-Trafficking') AND #{IS_CHILD};
       SQL
   
-      ActiveRecord::Base.connection.execute(query).first
+      ActiveRecord::Base.connection.execute(query).first || {}
     end
 
     def client_risk_assessments
@@ -147,7 +147,7 @@ module DashboardAggregators
         JOIN clients ON clients.id = latest_risk_levels.client_id;
       SQL
   
-      ActiveRecord::Base.connection.execute(query).first
+      ActiveRecord::Base.connection.execute(query).first || {}
     end
   end
 end
