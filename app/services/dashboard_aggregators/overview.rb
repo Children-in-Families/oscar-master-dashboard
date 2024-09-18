@@ -3,11 +3,20 @@
 module DashboardAggregators
   class Overview < Base
     def call
-      data = case_overview
-        .merge(reaccepting_cases)
-        .merge(child_protection)
-        .merge(client_risk_assessments)
-        .symbolize_keys
+      data = Organization.active.map do |organization|
+        Organization.switch_to(organization.short_name)
+
+        case_overview.merge(reaccepting_cases)
+          .merge(child_protection)
+          .merge(client_risk_assessments)
+          .symbolize_keys
+
+      end.each_with_object({}) do |data_per_org, output|
+        data_per_org.each do |key, value|
+          output[key] ||= 0
+          output[key] += value.to_i
+        end
+      end
 
       {
         raw_data: data,
@@ -82,7 +91,7 @@ module DashboardAggregators
         HAVING COUNT(enter_ngos.id) > 1;
       SQL
 
-      ActiveRecord::Base.connection.execute(query).first
+      ActiveRecord::Base.connection.execute(query).first || {}
     end
 
     def child_protection
