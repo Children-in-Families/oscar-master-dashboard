@@ -8,4 +8,9 @@ class DashboardsController < ApplicationController
     authorize :dashboard, :show?
     @report = DashboardAggregator.new.status_overview
   end
+
+  def sync_overview
+    authorize :dashboard, :show?
+    @report = DashboardAggregator.new.sync_overview
+  end
 end

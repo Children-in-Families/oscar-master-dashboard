@@ -1,0 +1,79 @@
+<%= render 'nav_tabs' %>
+
+<div class="row my-2">
+  <div class="col-9 col-xl-10">
+    <div class="row text-center">
+      <div class="col-12 col-md-4">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h4>Cases Synced to Primero <%= @report[:raw_data][:total_cases_synced] %></h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h4>Cases Referred to Primero <%= @report[:raw_data][:total_cases_referred_to_primero] %></h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h4>Cases Referred from Primero <%= @report[:raw_data][:total_cases_referred_from_primero] %></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row pie-chart-wrapper text-center">
+      <div class="col-12 col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5>
+              Synced Cases by Gender
+            </h5>
+
+            <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
+              <canvas widht="100%" height="auto" class="chart-case-by-age" data-source="<%= @report[:chart_data][:synced_case_by_gender].to_json %>">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5>
+              Case Referrals by Gender
+            </h5>
+            <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
+              <canvas widht="100%" height="auto" class="chart-case-by-age" data-source="<%= @report[:chart_data][:case_referral_by_gender].to_json %>">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5>
+              Referral Status
+            </h5>
+            <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
+              <canvas widht="100%" height="auto" class="chart-case-by-age" data-source="<%=  @report[:chart_data][:case_referral_by_status].to_json %>">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-3 col-xl-2">
+    <%= render 'filter' %>
+  </div>
+</div>

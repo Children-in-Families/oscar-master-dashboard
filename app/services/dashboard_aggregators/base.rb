@@ -7,6 +7,9 @@ module DashboardAggregators
     IS_NON_BINARY = "gender NOT IN ('male', 'female')"
 
     IS_ACCEPTED_OR_ACTIVE = "status IN ('Accepted', 'Active')"
+
+    REFERRED_TO_PRIMERO = "referred_to = 'MoSVY External System'"
+    REFERRED_FROM_PRIMERO = "referred_from = 'MoSVY External System'"
     
     IS_CHILD = 'EXTRACT(YEAR FROM AGE(CURRENT_DATE, date_of_birth)) < 18'
     IS_AGE_18PLUS = 'EXTRACT(YEAR FROM AGE(CURRENT_DATE, date_of_birth)) >= 18'
