@@ -44,6 +44,26 @@ module DashboardAggregators
                 hoverBackgroundColor: ['#1ab394', '#23c6c8', '#c72132', '#ed5565']
               }
             ]
+          },
+          case_by_age: {
+            labels: ['No DoB', '0-4', '5-9', '10-14', '15-17', '18+'],
+            datasets: [
+              {
+                label: 'Male',
+                data: data.slice(:no_dob_male, :age_0_4_male, :age_5_9_male, :age_10_14_male, :age_15_17_male, :age_18_plus_male).values,
+                backgroundColor: '#418ad4'
+              },
+              {
+                label: 'Female',
+                data: data.slice(:no_dob_female, :age_0_4_female, :age_5_9_female, :age_10_14_female, :age_15_17_female, :age_18_plus_female).values,
+                backgroundColor: '#23c6c8'
+              },
+              {
+                label: 'Other',
+                data: data.slice(:no_dob_non_binary, :age_0_4_non_binary, :age_5_9_non_binary, :age_10_14_non_binary, :age_15_17_non_binary, :age_18_plus_non_binary).values,
+                backgroundColor: '#c72132'
+              }
+            ]
           }
         }
       }
@@ -62,6 +82,7 @@ module DashboardAggregators
           COUNT(*) FILTER (WHERE #{IS_MALE}) AS male_count,
           COUNT(*) FILTER (WHERE #{IS_FEMALE}) AS female_count,
           COUNT(*) FILTER (WHERE #{IS_NON_BINARY}) as non_binary_count,
+          COUNT(*) FILTER (WHERE #{IS_CHILD}) AS age_child,
           COUNT(*) FILTER (WHERE #{IS_AGE_18PLUS}) AS age_18_plus,
           COUNT(*) FILTER (WHERE #{IS_AGE_18PLUS} AND #{IS_MALE}) AS age_18_plus_male,
           COUNT(*) FILTER (WHERE #{IS_AGE_18PLUS} AND #{IS_FEMALE}) AS age_18_plus_female,

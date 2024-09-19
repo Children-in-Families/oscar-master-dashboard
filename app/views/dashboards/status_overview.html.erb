@@ -2,19 +2,35 @@
 
 <div class="row my-2">
   <div class="col-9 col-xl-10">
+    <div class="row text-center">
+      <div class="col-12 col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h4>Total of Adult Cases <%= @report[:raw_data][:age_18_plus] %></h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h4>Total of Child Cases <%= @report[:raw_data][:age_child] %></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="row pie-chart-wrapper text-center">
       <div class="col-12 col-md-4">
         <div class="card">
-          <div class="card-header">
-            Case by Age
-          </div>
-
           <div class="card-body">
-            <div class="card-body">
-              <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-                <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_by_gender] }.to_json %>">
-                </canvas>
-              </div>
+            <h5>
+              Case by Age
+            </h5>
+
+            <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
+              <canvas widht="100%" height="auto" class="chart-case-by-age" data-source="<%= @report[:chart_data][:case_by_age].to_json  %>">
+              </canvas>
             </div>
           </div>
         </div>
@@ -22,16 +38,13 @@
 
       <div class="col-12 col-md-4">
         <div class="card">
-          <div class="card-header">
-            Case by Gender
-          </div>
-
           <div class="card-body">
-            <div class="card-body">
-              <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-                <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_by_gender] }.to_json %>">
-                </canvas>
-              </div>
+            <h5>
+              Case by Gender
+            </h5>
+            <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
+              <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_by_gender] }.to_json %>">
+              </canvas>
             </div>
           </div>
         </div>
@@ -39,16 +52,13 @@
 
       <div class="col-12 col-md-4">
         <div class="card">
-          <div class="card-header">
-            Case by Status
-          </div>
-
           <div class="card-body">
-            <div class="card-body">
-              <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-                <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_by_status] }.to_json %>">
-                </canvas>
-              </div>
+            <h5>
+              Case by Status
+            </h5>
+            <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
+              <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_by_status] }.to_json %>">
+              </canvas>
             </div>
           </div>
         </div>

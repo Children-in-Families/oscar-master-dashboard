@@ -88,6 +88,49 @@ function initChartjs () {
     var ctx = $(pieChartHolder)[0].getContext('2d');
     new Chart(ctx, config);
   })
+
+
+  const caseByAage = $('.chart-case-by-age')
+  const data = caseByAage.data("source")
+  const max1 = Math.max.apply(Math, data.datasets[0].data);
+  const max2 = Math.max.apply(Math, data.datasets[1].data);
+  const max = Math.max(max1, max2);
+
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      scales: {
+        x: {
+          stacked: true
+        },
+        y: {
+          stacked: true,
+          max: max + (max >= 10 ? max/10 : 1),
+        }
+      },
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        datalabels: {
+          display: true,
+          align: 'end',
+          anchor: 'end',
+          clip: true,
+          color: '#000',
+          font: {
+            size: 10,
+          }
+        }
+      }
+    },
+  };
+
+  const ctx = caseByAage[0].getContext('2d');
+  new Chart(ctx, config);
 }
 
 function initClientsAgeChart() {
