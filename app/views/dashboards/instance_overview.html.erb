@@ -1,0 +1,42 @@
+<%= render 'nav_tabs' %>
+
+<div class="row my-2">
+  <div class="col-9 col-xl-10">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>NGO Name</th>
+            <th>Country</th>
+            <th>Female without disability</th>
+            <th>Female with disability</th>
+            <th>Male without disability</th>
+            <th>Male with disability</th>
+            <th>Other</th>
+            <th>Opening Cases</th>
+            <th>Closed Cases</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @report.each do |row| %>
+            <tr>
+              <td><%= row[:organization_full_name] %></td>
+              <td><%= row[:country] %></td>
+              <td><%= row[:female_count] - row[:female_with_disability_count] %></td>
+              <td><%= row[:female_with_disability_count] %></td>
+              <td><%= row[:male_count] - row[:male_with_disability_count] %></td>
+              <td><%= row[:male_with_disability_count] %></td>
+              <td><%= row[:non_binary_count] %></td>
+              <td><%= row[:active] %></td>
+              <td><%= row[:exited] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-3 col-xl-2">
+    <%= render 'filter' %>
+  </div>
+</div>

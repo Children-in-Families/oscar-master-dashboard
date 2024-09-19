@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class DashboardAggregator
-  
   def initialize(filters = {})
     @filters = filters
   end
@@ -22,5 +21,9 @@ class DashboardAggregator
 
   def sync_overview
     DashboardAggregators::SyncOverview.new(@filters).call
+  end
+
+  def organization_overview
+    DashboardAggregators::OrganizationOverview.new(@filters).call
   end
 end
