@@ -1,0 +1,61 @@
+<%= render 'nav_tabs' %>
+
+<div class="row my-2">
+  <div class="col-9 col-xl-10">
+    <div class="row pie-chart-wrapper text-center">
+      <div class="col-12 col-md-4">
+        <div class="card">
+          <div class="card-header">
+            Case by Age
+          </div>
+
+          <div class="card-body">
+            <div class="card-body">
+              <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
+                <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_by_gender] }.to_json %>">
+                </canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="card">
+          <div class="card-header">
+            Case by Gender
+          </div>
+
+          <div class="card-body">
+            <div class="card-body">
+              <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
+                <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_by_gender] }.to_json %>">
+                </canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="card">
+          <div class="card-header">
+            Case by Status
+          </div>
+
+          <div class="card-body">
+            <div class="card-body">
+              <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
+                <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_by_status] }.to_json %>">
+                </canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-3 col-xl-2">
+    <%= render 'filter' %>
+  </div>
+</div>

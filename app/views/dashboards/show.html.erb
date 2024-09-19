@@ -1,8 +1,4 @@
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link font-weight-bold <%= active_class(params[:scope] != 'archived') %>" href="<%= organizations_path %>">Overview</a>
-  </li>
-</ul>
+<%= render 'nav_tabs' %>
 
 <div class="row my-2">
   <div class="col-9 col-xl-10">
