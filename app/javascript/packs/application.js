@@ -26,14 +26,13 @@ $(document).on("turbolinks:load", function() {
   $("select").selectize({});
 
   deleteInstanceHandler();
+  initChartjs();
+  initClientsAgeChart();
 
   if ($(".pie-chart-wrapper .chart-holder").length > 0) {
-    initChartjs();
-    initClientsAgeChart();
     initPrimeroChart();
     initNGOChart();
   }
-
 })
 
 $(document).on('turbolinks:before-cache', function() {
@@ -89,11 +88,12 @@ function initChartjs () {
     new Chart(ctx, config);
   })
 
-
   const caseByAages = $('.chart-case-by-age')
 
   $.each(caseByAages, function(_index, caseByAage) {
     const data = $(caseByAage).data("source")
+    console.log(data)
+
     const max1 = Math.max.apply(Math, data.datasets[0].data);
     const max2 = Math.max.apply(Math, data.datasets[1].data);
     const max = Math.max(max1, max2);
@@ -102,7 +102,7 @@ function initChartjs () {
       type: 'bar',
       data: data,
       options: {
-        indexAxis: 'y',
+        indexAxis: $(caseByAage).data("indexAxis"),
         responsive: true,
         scales: {
           x: {
@@ -137,39 +137,47 @@ function initChartjs () {
 }
 
 function initClientsAgeChart() {
-  var data = $("#clients-age-gender .chart-holder").data("source").client_age_gender
-  var max = Math.max.apply(Math, data.datasets[0].data);
+  const chatsContainer = $("#clients-age-gender .chart-holder")
 
-  const config = {
-    type: 'bar',
-    data: data,
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          max: max + (max >= 10 ? max/10 : 1),
-        }
-      },
-      plugins: {
-        legend: {
-          display: false,
+  $.each(chatsContainer, function(_index, chatContainer) {
+    console.log($(chatContainer).data("source").client_age_gender)
+
+    var data = $(chatContainer).data("source").client_age_gender
+    var max = Math.max.apply(Math, data.datasets[0].data);
+  
+    const config = {
+      type: 'bar',
+      data: data,
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            max: max + (max >= 10 ? max/10 : 1),
+          }
         },
-        datalabels: {
-          display: true,
-          color: '#000',
-          clip: true,
-          align: 'end',
-          anchor: 'end',
-          font: {
-            size: 12,
+        plugins: {
+          legend: {
+            display: false,
+          },
+          datalabels: {
+            display: true,
+            color: '#000',
+            clip: true,
+            align: 'end',
+            anchor: 'end',
+            font: {
+              size: 12,
+            }
           }
         }
-      }
-    },
-  };
+      },
+    };
+  
+    var ctx = $(chatContainer)[0].getContext('2d');
+    console.log(ctx)
+    new Chart(ctx, config);
+  })
 
-  var ctx = $('#clients-age-gender .chart-holder')[0].getContext('2d');
-  var myChart = new Chart(ctx, config);
 }
 
 function initPrimeroChart() {

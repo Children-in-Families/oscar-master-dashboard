@@ -29,7 +29,7 @@
             </h5>
 
             <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-              <canvas widht="100%" height="auto" class="chart-case-by-age" data-source="<%= @report[:chart_data][:case_by_age].to_json  %>">
+              <canvas widht="100%" height="auto" class="chart-case-by-age" data-index-axis='y' data-source="<%= @report[:chart_data][:case_by_age].to_json  %>">
               </canvas>
             </div>
           </div>
