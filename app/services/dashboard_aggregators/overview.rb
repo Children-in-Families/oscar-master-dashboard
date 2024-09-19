@@ -20,6 +20,7 @@ module DashboardAggregators
 
       {
         raw_data: data,
+        toal_organization: organizations.count,
         chart_data: {
           case_overview: {
             labels: ['Opening Cases', 'Reaccepting  Cases', 'Closed Cases'],
