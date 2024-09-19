@@ -3,7 +3,7 @@
 module DashboardAggregators
   class StatusOverview < Base
     def call
-      data = Organization.active.map do |organization|
+      data = organizations.map do |organization|
         Organization.switch_to(organization.short_name)
         basic_aggregates.symbolize_keys
       end.each_with_object({}) do |data_per_org, output|

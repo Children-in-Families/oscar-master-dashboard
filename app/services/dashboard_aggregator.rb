@@ -4,13 +4,7 @@ class DashboardAggregator
   def initialize(filters = {})
     @filters = filters
   end
-
-  def call
-    {}.merge(basic_aggregates)
-      .merge(child_protection_aggregates)
-      .merge(client_risk_assessments_aggregates)
-  end
-
+  
   def overview
     DashboardAggregators::Overview.new(@filters).call
   end

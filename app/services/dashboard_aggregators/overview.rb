@@ -3,7 +3,7 @@
 module DashboardAggregators
   class Overview < Base
     def call
-      data = Organization.active.map do |organization|
+      data = organizations.map do |organization|
         Organization.switch_to(organization.short_name)
 
         case_overview.merge(reaccepting_cases)

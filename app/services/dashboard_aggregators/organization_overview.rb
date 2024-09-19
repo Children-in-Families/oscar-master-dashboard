@@ -3,7 +3,7 @@
 module DashboardAggregators
   class OrganizationOverview < StatusOverview
     def call
-      Organization.active.order(:full_name).map do |organization|
+      organizations.order(:full_name).map do |organization|
         Organization.switch_to(organization.short_name)
         basic_aggregates
           .merge(disability_aggregates)

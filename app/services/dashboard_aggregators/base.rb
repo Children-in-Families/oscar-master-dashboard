@@ -18,9 +18,20 @@ module DashboardAggregators
     IS_AGE_5_9 = 'EXTRACT(YEAR FROM AGE(CURRENT_DATE, date_of_birth)) BETWEEN 5 AND 9'
     IS_AGE_0_4 = 'EXTRACT(YEAR FROM AGE(CURRENT_DATE, date_of_birth)) BETWEEN 0 AND 4'
     IS_NO_DOB = 'date_of_birth IS NULL'
+
     
     def initialize(filters = {})
       @filters = filters
+    end
+  
+    private
+
+    attr_reader :filters
+
+    def organizations
+      return Organization.active if filters[:organization_ids].blank? || filters[:organization_ids].all?(&:blank?)
+
+      Organization.where(id: filters[:organization_ids])
     end
   end
 end

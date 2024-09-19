@@ -3,7 +3,7 @@
 module DashboardAggregators
   class SyncOverview < Base
     def call
-      data = Organization.active.map do |organization|
+      data = organizations.map do |organization|
         Organization.switch_to(organization.short_name)
         cases_synced_to_primero
           .merge(cases_referred_primero)

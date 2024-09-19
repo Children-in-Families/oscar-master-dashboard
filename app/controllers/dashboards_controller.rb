@@ -27,6 +27,27 @@ class DashboardsController < ApplicationController
   private
 
   def report_aggregator
-    @report_aggregator ||= DashboardAggregator.new
+    @report_aggregator ||= DashboardAggregator.new(filter_params)
+  end
+
+  def filter_params
+    return {} if params[:dashboard].blank?
+
+    params[:dashboard][:organization_ids] = params[:dashboard][:organization_ids].reject(&:blank?)
+
+    params.require(:dashboard).permit(
+      :organization_integrated,
+      :organization_created_date_gteq,
+      :organization_created_date_lteq,
+      :has_disability,
+      :status,
+      :initial_referral_date_gteq,
+      :initial_referral_date_lteq,
+      :created_at_gteq,
+      :created_at_lteq,
+      province_id: [],
+      country: [],
+      organization_ids: []
+    )
   end
 end
