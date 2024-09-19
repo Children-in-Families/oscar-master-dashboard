@@ -26,4 +26,8 @@ class DashboardAggregator
   def organization_overview
     DashboardAggregators::OrganizationOverview.new(@filters).call
   end
+
+  def location_overview
+    DashboardAggregators::LocationOverview.new(@filters).call
+  end
 end

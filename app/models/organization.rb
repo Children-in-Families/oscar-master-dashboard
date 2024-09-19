@@ -61,6 +61,7 @@ class Organization < ApplicationRecord
   scope :km, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%km%") }
   scope :en, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%en%") }
   scope :my, -> { where("array_to_string(supported_languages, ',') LIKE (?)", "%my%") }
+  scope :international, -> { where.not(country: 'cambodia') }
 
   before_destroy :deletable?, prepend: true
 
