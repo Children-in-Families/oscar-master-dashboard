@@ -68,8 +68,8 @@ module DashboardAggregators
                   data[:accepted_cases_referred_to_primero],
                   data[:rejected_cases_referred_primero]
                 ],
-                backgroundColor: ['#1ab394', '#23c6c8', '#c72132'],
-                hoverBackgroundColor: ['#1ab394', '#23c6c8', '#c72132']
+                backgroundColor: ['#418ad4', '#23c6c8', '#c72132'],
+                hoverBackgroundColor: ['#418ad4', '#23c6c8', '#c72132']
               }
             ]
           }
