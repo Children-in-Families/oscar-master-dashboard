@@ -34,11 +34,12 @@ class DashboardsController < ApplicationController
     return {} if params[:dashboard].blank?
 
     params[:dashboard][:organization_ids] = params[:dashboard][:organization_ids].reject(&:blank?)
+    params[:dashboard][:country] = params[:dashboard][:country].reject(&:blank?)
 
     params.require(:dashboard).permit(
       :organization_integrated,
-      :organization_created_date_gteq,
-      :organization_created_date_lteq,
+      :organization_created_at_gteq,
+      :organization_created_at_lteq,
       :has_disability,
       :status,
       :initial_referral_date_gteq,
