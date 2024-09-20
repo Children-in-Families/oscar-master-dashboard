@@ -45,16 +45,19 @@ module DashboardAggregators
               {
                 label: 'Male',
                 data: data.slice(:male_cases_referred_to_primero, :male_cases_referred_from_primero).values,
+                maxBarThickness: 60,
                 backgroundColor: '#418ad4'
               },
               {
                 label: 'Female',
                 data: data.slice(:female_cases_referred_to_primero, :female_cases_referred_from_primero).values,
+                maxBarThickness: 60,
                 backgroundColor: '#23c6c8'
               },
               {
                 label: 'Other',
                 data: data.slice(:non_binary_cases_referred_to_primero, :non_binary_cases_referred_from_primero).values,
+                maxBarThickness: 60,
                 backgroundColor: '#c72132'
               }
             ]

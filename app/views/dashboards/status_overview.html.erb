@@ -21,7 +21,7 @@
     </div>
 
     <div class="row pie-chart-wrapper text-center">
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-6">
         <div class="card">
           <div class="card-body">
             <h5>
@@ -29,35 +29,35 @@
             </h5>
 
             <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-              <canvas widht="100%" height="auto" class="chart-case-by-age" data-index-axis='y' data-source="<%= @report[:chart_data][:case_by_age].to_json  %>">
+              <canvas class="chart-case-by-age" data-index-axis='y' data-source="<%= @report[:chart_data][:case_by_age].to_json  %>">
               </canvas>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-3">
         <div class="card">
           <div class="card-body">
             <h5>
               Case by Gender
             </h5>
             <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-              <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_by_gender] }.to_json %>">
+              <canvas class="pie-chart chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_by_gender] }.to_json %>">
               </canvas>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-3">
         <div class="card">
           <div class="card-body">
             <h5>
               Case by Status
             </h5>
             <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-              <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_by_status] }.to_json %>">
+              <canvas class="pie-chart chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_by_status] }.to_json %>">
               </canvas>
             </div>
           </div>

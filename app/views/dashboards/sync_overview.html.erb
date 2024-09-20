@@ -37,7 +37,7 @@
             </h5>
 
             <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-              <canvas widht="100%" height="auto" class="chart-case-by-age" data-index-axis='x' data-source="<%= @report[:chart_data][:synced_case_by_gender].to_json %>">
+              <canvas class="chart-case-by-age" data-index-axis='x' data-source="<%= @report[:chart_data][:synced_case_by_gender].to_json %>">
               </canvas>
             </div>
           </div>
@@ -51,7 +51,7 @@
               Case Referrals by Gender
             </h5>
             <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-              <canvas widht="100%" height="auto" class="chart-case-by-age" data-index-axis='x' data-source="<%= @report[:chart_data][:case_referral_by_gender].to_json %>">
+              <canvas class="chart-case-by-age" data-index-axis='x' data-source="<%= @report[:chart_data][:case_referral_by_gender].to_json %>">
               </canvas>
             </div>
           </div>
@@ -65,7 +65,7 @@
               Referral Status
             </h5>
             <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-              <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_age_gender: @report[:chart_data][:case_referral_by_status] }.to_json %>">
+              <canvas class="chart-holder" data-source="<%= { client_age_gender: @report[:chart_data][:case_referral_by_status] }.to_json %>">
               </canvas>
             </div>
           </div>

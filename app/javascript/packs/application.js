@@ -92,25 +92,19 @@ function initChartjs () {
 
   $.each(caseByAages, function(_index, caseByAage) {
     const data = $(caseByAage).data("source")
-    console.log(data)
-
-    const max1 = Math.max.apply(Math, data.datasets[0].data);
-    const max2 = Math.max.apply(Math, data.datasets[1].data);
-    const max = Math.max(max1, max2);
-  
     const config = {
       type: 'bar',
       data: data,
       options: {
         indexAxis: $(caseByAage).data("indexAxis"),
         responsive: true,
+        offset: true,
         scales: {
           x: {
-            stacked: true
+            stacked: true,
           },
           y: {
             stacked: true,
-            max: max + (max >= 10 ? max/10 : 1),
           }
         },
         plugins: {
@@ -151,8 +145,15 @@ function initClientsAgeChart() {
       options: {
         responsive: true,
         scales: {
+          x: {
+            barThickness: 20, // Fixed width of each bar
+            // Or use maxBarThickness for responsive width
+            maxBarThickness: 40 // Limits the maximum width
+          },
           y: {
             max: max + (max >= 10 ? max/10 : 1),
+            beginAtZero: true, // Ensures the chart starts at 0
+            suggestedMax: 100, // Sets a higher max value for the y-axis
           }
         },
         plugins: {

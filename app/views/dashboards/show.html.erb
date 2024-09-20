@@ -37,7 +37,7 @@
             </h5>
 
             <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-              <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_overview] }.to_json %>">
+              <canvas class="pie-chart chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_overview] }.to_json %>">
               </canvas>
             </div>
           </div>
@@ -52,7 +52,7 @@
             </h5>
 
             <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-              <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:child_protection] }.to_json %>">
+              <canvas class="pie-chart chart-holder" data-source="<%= { client_status: @report[:chart_data][:child_protection] }.to_json %>">
               </canvas>
             </div>
           </div>
@@ -67,7 +67,7 @@
             </h5>
 
             <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-              <canvas widht="100%" height="auto" class="chart-holder" data-source="<%= { client_status: @report[:chart_data][:risk_assessments] }.to_json %>">
+              <canvas class="pie-chart chart-holder" data-source="<%= { client_status: @report[:chart_data][:risk_assessments] }.to_json %>">
               </canvas>
             </div>
           </div>
