@@ -98,6 +98,9 @@ module DashboardAggregators
     end
 
     def child_protection
+      service_ids = Service.where(name: ['Family Based Care', 'Drug/Alcohol', 'Anti-Trafficking']).ids
+      service_ids += Service.where(parent_id: service_ids).ids
+
       query = <<-SQL.squish
         SELECT
           COUNT(DISTINCT clients.id) as child_protection_total,
@@ -109,7 +112,7 @@ module DashboardAggregators
         JOIN program_streams ON program_streams.id = client_enrollments.program_stream_id
         JOIN program_stream_services ON program_stream_services.program_stream_id = program_streams.id
         JOIN services ON services.id = program_stream_services.service_id
-        WHERE services.name IN ('Family Based Care', 'Drug/Alcohol', 'Anti-Trafficking') AND #{IS_CHILD} AND #{client_filters};
+        WHERE services.id IN (#{service_ids.join(', ')}) AND #{IS_CHILD} AND #{client_filters};
       SQL
   
       ActiveRecord::Base.connection.execute(query).first || {}
