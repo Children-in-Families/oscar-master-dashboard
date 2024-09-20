@@ -25,16 +25,19 @@ module DashboardAggregators
               {
                 label: 'Male',
                 data: data.slice(:adult_male_cases_synced, :child_male_cases_synced).values,
+                maxBarThickness: 60,
                 backgroundColor: '#418ad4'
               },
               {
                 label: 'Female',
                 data: data.slice(:adult_female_cases_synced, :child_female_cases_synced).values,
+                maxBarThickness: 60,
                 backgroundColor: '#23c6c8'
               },
               {
                 label: 'Other',
                 data: data.slice(:adult_non_binary_cases_synced, :child_non_binary_cases_synced).values,
+                maxBarThickness: 60,
                 backgroundColor: '#c72132'
               }
             ]
@@ -71,6 +74,7 @@ module DashboardAggregators
                   data[:accepted_cases_referred_to_primero],
                   data[:rejected_cases_referred_primero]
                 ],
+                maxBarThickness: 60,
                 backgroundColor: ['#418ad4', '#23c6c8', '#c72132'],
                 hoverBackgroundColor: ['#418ad4', '#23c6c8', '#c72132']
               }
