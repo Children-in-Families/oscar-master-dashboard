@@ -71,10 +71,14 @@ function initChartjs () {
         responsive: true,
         plugins: {
           legend: {
-            position: 'top',
+            position: 'bottom',
           },
           datalabels: {
-            display: true,
+            display: function(context) {
+              return context.dataset.data[context.dataIndex] > 0;
+            },
+            anchor: 'end',
+            align: 'start',
             color: '#fff',
             font: {
               size: 12,
@@ -102,20 +106,27 @@ function initChartjs () {
         scales: {
           x: {
             stacked: true,
+            beginAtZero: true,
+            barPercentage: 0.5, // Adjust as needed
+            categoryPercentage: 0.5 // Adjust as needed
           },
           y: {
             stacked: true,
+            beginAtZero: true,
+            barPercentage: 0.5, // Adjust as needed
+            categoryPercentage: 0.5 // Adjust as needed
           }
         },
         plugins: {
           legend: {
-            position: 'top',
+            position: 'bottom',
           },
           datalabels: {
-            display: true,
-            align: 'end',
+            display: function(context) {
+              return context.dataset.data[context.dataIndex] > 0;
+            },
             anchor: 'end',
-            clip: true,
+            align: 'start',
             color: '#000',
             font: {
               size: 10,
@@ -237,7 +248,7 @@ function initNGOChart() {
       },
       plugins: {
         legend: {
-          position: 'top',
+          position: 'bottom',
         },
         datalabels: {
           display: true,

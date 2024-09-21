@@ -25,19 +25,19 @@ module DashboardAggregators
               {
                 label: 'Male',
                 data: data.slice(:adult_male_cases_synced, :child_male_cases_synced).values,
-                maxBarThickness: 60,
+                maxBarThickness: 50,
                 backgroundColor: '#418ad4'
               },
               {
                 label: 'Female',
                 data: data.slice(:adult_female_cases_synced, :child_female_cases_synced).values,
-                maxBarThickness: 60,
+                maxBarThickness: 50,
                 backgroundColor: '#23c6c8'
               },
               {
                 label: 'Other',
                 data: data.slice(:adult_non_binary_cases_synced, :child_non_binary_cases_synced).values,
-                maxBarThickness: 60,
+                maxBarThickness: 50,
                 backgroundColor: '#c72132'
               }
             ]
@@ -48,19 +48,19 @@ module DashboardAggregators
               {
                 label: 'Male',
                 data: data.slice(:male_cases_referred_to_primero, :male_cases_referred_from_primero).values,
-                maxBarThickness: 60,
+                maxBarThickness: 50,
                 backgroundColor: '#418ad4'
               },
               {
                 label: 'Female',
                 data: data.slice(:female_cases_referred_to_primero, :female_cases_referred_from_primero).values,
-                maxBarThickness: 60,
+                maxBarThickness: 50,
                 backgroundColor: '#23c6c8'
               },
               {
                 label: 'Other',
                 data: data.slice(:non_binary_cases_referred_to_primero, :non_binary_cases_referred_from_primero).values,
-                maxBarThickness: 60,
+                maxBarThickness: 50,
                 backgroundColor: '#c72132'
               }
             ]
@@ -74,7 +74,7 @@ module DashboardAggregators
                   data[:accepted_cases_referred_to_primero],
                   data[:rejected_cases_referred_primero]
                 ],
-                maxBarThickness: 60,
+                maxBarThickness: 50,
                 backgroundColor: ['#418ad4', '#23c6c8', '#c72132'],
                 hoverBackgroundColor: ['#418ad4', '#23c6c8', '#c72132']
               }
