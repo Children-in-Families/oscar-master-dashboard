@@ -99,7 +99,7 @@ module DashboardAggregators
           COUNT(*) FILTER (WHERE #{IS_AGE_18PLUS} AND #{IS_FEMALE}) AS adult_female_cases_synced,
           COUNT(*) FILTER (WHERE #{IS_AGE_18PLUS} AND #{IS_NON_BINARY}) AS adult_non_binary_cases_synced
         FROM clients
-        WHERE synced_date IS NOT NULL;
+        WHERE synced_date IS NOT NULL AND #{client_query};
       SQL
 
       ActiveRecord::Base.connection.execute(query).first || {}
@@ -119,7 +119,7 @@ module DashboardAggregators
           COUNT(DISTINCT clients.id) FILTER (WHERE #{REFERRED_FROM_PRIMERO} AND #{IS_FEMALE}) AS female_cases_referred_from_primero,
           COUNT(DISTINCT clients.id) FILTER (WHERE #{REFERRED_FROM_PRIMERO} AND #{IS_NON_BINARY}) AS non_binary_cases_referred_from_primero
         FROM clients
-        JOIN referrals ON clients.id = referrals.client_id
+        JOIN referrals ON clients.id = referrals.client_id  AND #{client_query}
         WHERE #{REFERRED_TO_PRIMERO} OR #{REFERRED_FROM_PRIMERO};
       SQL
 
@@ -131,7 +131,7 @@ module DashboardAggregators
         SELECT
           COUNT(DISTINCT clients.id) AS rejected_cases_referred_primero
         FROM clients
-        JOIN referrals ON clients.id = referrals.client_id AND #{REFERRED_TO_PRIMERO}
+        JOIN referrals ON clients.id = referrals.client_id AND #{REFERRED_TO_PRIMERO} AND #{client_query}
         JOIN exit_ngos ON clients.id = exit_ngos.client_id AND exit_ngos.exit_circumstance = 'Rejected Referral';
       SQL
 

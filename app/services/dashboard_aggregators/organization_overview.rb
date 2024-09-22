@@ -25,7 +25,7 @@ module DashboardAggregators
           COUNT(clients.id) FILTER (WHERE #{IS_FEMALE}) AS female_with_disability_count,
           COUNT(clients.id) FILTER (WHERE #{IS_NON_BINARY}) AS non_binary_with_disability_count
         FROM clients
-        JOIN risk_assessments ON clients.id = risk_assessments.client_id AND risk_assessments.has_disability = true;
+        JOIN risk_assessments ON clients.id = risk_assessments.client_id AND risk_assessments.has_disability = true AND #{client_query};
       SQL
 
       ActiveRecord::Base.connection.execute(query).first || {}

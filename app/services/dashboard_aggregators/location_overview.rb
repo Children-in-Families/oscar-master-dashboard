@@ -8,7 +8,7 @@ module DashboardAggregators
         cambodia_aggregates.symbolize_keys
       end
 
-      international_data = Organization.active.map do |organization|
+      international_data = organizations.map do |organization|
         Organization.switch_to(organization.short_name)
         international_aggregates.symbolize_keys.merge(
           country: organization.country
@@ -30,6 +30,7 @@ module DashboardAggregators
           COUNT(*) FILTER (WHERE status = 'Exited') AS case_closed,
           COUNT(*) FILTER (WHERE #{IS_ACCEPTED_OR_ACTIVE}) AS case_opening
         FROM clients
+        WHERE #{client_query};
       SQL
 
       ActiveRecord::Base.connection.execute(query).first || {}
@@ -43,7 +44,7 @@ module DashboardAggregators
             COUNT(*) FILTER (WHERE #{IS_FEMALE}) AS female_count,
             COUNT(*) FILTER (WHERE #{IS_NON_BINARY}) AS non_binary_count
         FROM clients
-        JOIN provinces ON provinces.id = clients.province_id
+        JOIN provinces ON provinces.id = clients.province_id AND #{client_query}
         GROUP BY provinces.id;
       SQL
 
