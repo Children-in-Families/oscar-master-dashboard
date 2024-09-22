@@ -108,7 +108,7 @@ module DashboardAggregators
           COUNT(*) FILTER (WHERE #{IS_NO_DOB} AND #{IS_FEMALE}) AS no_dob_female,
           COUNT(*) FILTER (WHERE #{IS_NO_DOB} AND #{IS_NON_BINARY}) AS no_dob_non_binary
         FROM clients
-        WHERE #{client_filters};
+        WHERE #{client_query};
       SQL
   
       ActiveRecord::Base.connection.execute(query).first || {}

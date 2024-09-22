@@ -20,7 +20,6 @@ module DashboardAggregators
 
       {
         raw_data: data,
-        toal_organization: organizations.count,
         chart_data: {
           case_overview: {
             labels: ['Opening Cases', 'Reaccepting  Cases', 'Closed Cases'],
@@ -78,7 +77,7 @@ module DashboardAggregators
           COUNT(*) FILTER (WHERE status = 'Exited') AS case_overview_closed,
           COUNT(*) FILTER (WHERE #{IS_ACCEPTED_OR_ACTIVE}) AS case_overview_opening
         FROM clients
-        WHERE #{client_filters};
+        WHERE #{client_query};
       SQL
 
       ActiveRecord::Base.connection.execute(query).first || {}
@@ -89,7 +88,7 @@ module DashboardAggregators
         SELECT COUNT(*) as reaccepting_cases
         FROM clients
         JOIN enter_ngos ON enter_ngos.client_id = clients.id
-        WHERE #{client_filters}
+        WHERE #{client_query}
         GROUP BY clients.id
         HAVING COUNT(enter_ngos.client_id) > 1;
       SQL
@@ -112,7 +111,7 @@ module DashboardAggregators
         JOIN program_streams ON program_streams.id = client_enrollments.program_stream_id
         JOIN program_stream_services ON program_stream_services.program_stream_id = program_streams.id
         JOIN services ON services.id = program_stream_services.service_id
-        WHERE services.id IN (#{service_ids.join(', ')}) AND #{IS_CHILD} AND #{client_filters};
+        WHERE services.id IN (#{service_ids.join(', ')}) AND #{IS_CHILD} AND #{client_query};
       SQL
   
       ActiveRecord::Base.connection.execute(query).first || {}
@@ -151,7 +150,7 @@ module DashboardAggregators
           COUNT(*) FILTER (WHERE level_of_risk = 'no action') AS risk_no_action
         FROM latest_risk_levels
         JOIN clients ON clients.id = latest_risk_levels.client_id
-        WHERE #{client_filters};
+        WHERE #{client_query};
       SQL
   
       ActiveRecord::Base.connection.execute(query).first || {}

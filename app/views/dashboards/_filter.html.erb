@@ -1,12 +1,12 @@
-<%= simple_form_for :dashboard, url: url_for, method: :get do |f| %>
+<%= simple_form_for @q, url: url_for, method: :get do |f| %>
   <%= f.label :created_at, label: "Case Created Date" %>
   <div class="row">
     <div class="col-6">
-      <%= f.input :created_at_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:dashboard, :created_at_gteq) }, placeholder: "From" %>
+      <%= f.input :created_at_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "From" %>
     </div>
   
     <div class="col-6">
-      <%= f.input :created_at_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:dashboard, :created_at_lteq) }, placeholder: "To" %>
+      <%= f.input :created_at_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "To" %>
     </div>
   </div>
 
@@ -14,30 +14,30 @@
   <%= f.label :initial_referral_date, label: "Initial Referral Date" %>
   <div class="row">
     <div class="col-6">
-      <%= f.input :initial_referral_date_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:dashboard, :initial_referral_date_gteq) }, placeholder: "From" %>
+      <%= f.input :initial_referral_date_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "From" %>
     </div>
   
     <div class="col-6">
-      <%= f.input :initial_referral_date_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:dashboard, :initial_referral_date_lteq) }, placeholder: "To" %>
+      <%= f.input :initial_referral_date_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "To" %>
     </div>
   </div>
 
   <%= f.input :province_id, label: 'Current Province' %>
   <%= f.input :status, label: 'Case Status' %>
-  <%= f.input :has_disability, label: 'Disability?', collection: [['Yes', true], ['No', false]], selected: params.dig(:dashboard, :has_disability) %>
+  <%= f.input :has_disability, label: 'Disability?', collection: [['Yes', true], ['No', false]] %>
 
-  <%= f.input :organization_ids, label: 'NGO', collection: Organization.active.pluck(:full_name, :id), input_html: { multiple: true }, selected: params.dig(:dashboard, :organization_ids)&.map(&:to_i) %>
-  <%= f.input :country, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, input_html: { multiple: true }, label: "Country", selected: params.dig(:dashboard, :country) %>
-  <%= f.input :organization_integrated, collection: [['Yes', true], ['No', false]], label: 'Interoperability?', selected: params.dig(:dashboard, :organization_integrated) %>
+  <%= f.input :organization_ids, label: 'NGO', collection: Organization.active.pluck(:full_name, :id), input_html: { multiple: true } %>
+  <%= f.input :country, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, input_html: { multiple: true }, label: "Country" %>
+  <%= f.input :organization_integrated, collection: [['Yes', true], ['No', false]], label: 'Interoperability?' %>
 
   <%= f.label :onboarding_date, label: "Onboarding date" %>
   <div class="row">
     <div class="col-6">
-      <%= f.input :organization_created_at_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:dashboard, :organization_created_at_gteq) }, placeholder: "From" %>
+      <%= f.input :organization_created_at_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "From" %>
     </div>
   
     <div class="col-6">
-      <%= f.input :organization_created_at_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off", value: params.dig(:dashboard, :organization_created_at_lteq) }, placeholder: "To" %>
+      <%= f.input :organization_created_at_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "To" %>
     </div>
   </div>
 
