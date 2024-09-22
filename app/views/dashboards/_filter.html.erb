@@ -22,9 +22,12 @@
     </div>
   </div>
 
-  <%= f.input :province_id, label: 'Current Province' %>
-  <%= f.input :status, label: 'Case Status' %>
-  <%= f.input :has_disability, label: 'Disability?', collection: [['Yes', true], ['No', false]] %>
+
+  <div class="d-none">
+    <%= f.input :province_id, label: 'Current Province' %>
+    <%= f.input :status, label: 'Case Status', collection: ['active', 'accepted', 'referred', 'exited'].map{ |status| [status.titleize, status]}, input_html: { multiple: true } %>
+  </div>
+  <%= f.input :has_disability, label: 'Disability?', as: :boolean %>
 
   <%= f.input :organization_ids, label: 'NGO', collection: Organization.active.pluck(:full_name, :id), input_html: { multiple: true } %>
   <%= f.input :country, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, input_html: { multiple: true }, label: "Country" %>

@@ -38,4 +38,12 @@ class DashboardFilter
 
     query
   end
+
+  def disability_query
+    "JOIN risk_assessments ON clients.id = risk_assessments.client_id AND risk_assessments.has_disability = true" if disability?
+  end
+
+  def disability?
+    has_disability == true || has_disability == 'true' || has_disability == '1'
+  end
 end
