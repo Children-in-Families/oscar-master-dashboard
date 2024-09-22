@@ -46,4 +46,12 @@ class DashboardFilter
   def disability?
     has_disability == true || has_disability == 'true' || has_disability == '1'
   end
+
+  def status_query
+    query = "1 = 1"
+
+    query += " AND clients.status IN (#{status.map { |c| "'#{c}'" }.join(',')})" if status.present?
+
+    query
+  end
 end

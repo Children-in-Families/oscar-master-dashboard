@@ -19,7 +19,7 @@ module DashboardAggregators
     IS_AGE_0_4 = 'EXTRACT(YEAR FROM AGE(CURRENT_DATE, date_of_birth)) BETWEEN 0 AND 4'
     IS_NO_DOB = 'date_of_birth IS NULL'
 
-    delegate :organizations, :client_query, :disability_query, to: :filter
+    delegate :organizations, :client_query, :disability_query, :status_query, to: :filter
     
     def initialize(filter)
       @filter = filter

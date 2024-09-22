@@ -36,17 +36,18 @@ class DashboardsController < ApplicationController
 
     params[:dashboard_filter][:organization_ids] = params[:dashboard_filter][:organization_ids].reject(&:blank?)
     params[:dashboard_filter][:country] = params[:dashboard_filter][:country].reject(&:blank?)
+    params[:dashboard_filter][:status] = params[:dashboard_filter][:status].reject(&:blank?)
 
     params.require(:dashboard_filter).permit(
       :organization_integrated,
       :organization_created_at_gteq,
       :organization_created_at_lteq,
       :has_disability,
-      :status,
       :initial_referral_date_gteq,
       :initial_referral_date_lteq,
       :created_at_gteq,
       :created_at_lteq,
+      status: [],
       province_id: [],
       country: [],
       organization_ids: []

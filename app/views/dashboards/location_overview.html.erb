@@ -50,6 +50,7 @@
                 <% next if province_name.blank? %>
                 <tr>
                   <td><%= province_name %></td>
+                  <td><%= rows.sum{ |r| r[:total_count].to_i } %></td>
                   <td><%= rows.sum{ |r| r[:male_count].to_i } %></td>
                   <td><%= rows.sum{ |r| r[:female_count].to_i } %></td>
                   <td><%= rows.sum{ |r| r[:non_binary_count].to_i } %></td>

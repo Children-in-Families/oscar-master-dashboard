@@ -40,11 +40,12 @@ module DashboardAggregators
       query = <<~SQL.squish
         SELECT
             provinces.name AS province_name,
+            COUNT(*) AS total_count,
             COUNT(*) FILTER (WHERE #{IS_MALE}) AS male_count,
             COUNT(*) FILTER (WHERE #{IS_FEMALE}) AS female_count,
             COUNT(*) FILTER (WHERE #{IS_NON_BINARY}) AS non_binary_count
         FROM clients
-        JOIN provinces ON provinces.id = clients.province_id AND #{client_query}
+        JOIN provinces ON provinces.id = clients.province_id AND #{client_query} AND #{status_query}
         GROUP BY provinces.id;
       SQL
 

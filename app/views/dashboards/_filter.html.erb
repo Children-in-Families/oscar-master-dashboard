@@ -22,10 +22,10 @@
     </div>
   </div>
 
+  <%= f.input :status, label: 'Case Status', collection: ['Active', 'Accepted', 'Referred', 'Exited'], input_html: { multiple: true } %>
 
   <div class="d-none">
     <%= f.input :province_id, label: 'Current Province' %>
-    <%= f.input :status, label: 'Case Status', collection: ['active', 'accepted', 'referred', 'exited'].map{ |status| [status.titleize, status]}, input_html: { multiple: true } %>
   </div>
   <%= f.input :has_disability, label: 'Disability?', as: :boolean %>
 
