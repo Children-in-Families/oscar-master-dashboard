@@ -17,7 +17,7 @@
             </thead>
 
             <tbody>
-              <% @report[:international].group_by{ |r| r[:country] }.each do |country, rows| %>
+              <% @report[:all_ngo_data].group_by{ |r| r[:country] }.each do |country, rows| %>
                 <tr>
                   <td><%= country&.titleize.presence || 'N/A' %></td>
                   <td><%= rows.count %></td>

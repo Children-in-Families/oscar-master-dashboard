@@ -3,27 +3,27 @@
 module DashboardAggregators
   class LocationOverview < Base
     def call
-      cambodia_data = Organization.active.map do |organization|
+      cambodia_data = Organization.active.cambodia.map do |organization|
         Organization.switch_to(organization.short_name)
         cambodia_aggregates.symbolize_keys
       end
 
-      international_data = organizations.map do |organization|
+      all_ngo_data = organizations.map do |organization|
         Organization.switch_to(organization.short_name)
-        international_aggregates.symbolize_keys.merge(
+        ngo_aggregates.symbolize_keys.merge(
           country: organization.country
         )
       end
 
       {
         cambodia: cambodia_data,
-        international: international_data
+        all_ngo_data: all_ngo_data
       }
     end
 
     private
 
-    def international_aggregates
+    def ngo_aggregates
       query = <<~SQL.squish
         SELECT
           COUNT(*) AS total_cases,
