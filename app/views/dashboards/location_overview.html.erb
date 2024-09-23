@@ -1,0 +1,68 @@
+<%= render 'nav_tabs' %>
+
+<div class="row my-2">
+  <div class="col-9 col-xl-10">
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Country</th>
+                <th># of NGOs</th>
+                <th># of Total Cases</th>
+                <th># of Openning Cases</th>
+                <th># of Closed Cases</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @report[:all_ngo_data].group_by{ |r| r[:country] }.each do |country, rows| %>
+                <tr>
+                  <td><%= country&.titleize.presence || 'N/A' %></td>
+                  <td><%= rows.count %></td>
+                  <td><%= rows.sum{ |r| r[:total_cases].to_i } %></td>
+                  <td><%= rows.sum{ |r| r[:case_opening].to_i } %></td>
+                  <td><%= rows.sum{ |r| r[:case_closed].to_i } %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <div class="col-12 col-md-7">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Provinces in Cambodia</th>
+                <th>Total</th>
+                <th>Female</th>
+                <th>Male</th>
+                <th>Other</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @report[:cambodia].group_by{ |r| r[:province_name] }.each do |province_name, rows| %>
+                <% next if province_name.blank? %>
+                <tr>
+                  <td><%= province_name %></td>
+                  <td><%= rows.sum{ |r| r[:total_count].to_i } %></td>
+                  <td><%= rows.sum{ |r| r[:male_count].to_i } %></td>
+                  <td><%= rows.sum{ |r| r[:female_count].to_i } %></td>
+                  <td><%= rows.sum{ |r| r[:non_binary_count].to_i } %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-3 col-xl-2">
+    <%= render 'filter' %>
+  </div>
+</div>

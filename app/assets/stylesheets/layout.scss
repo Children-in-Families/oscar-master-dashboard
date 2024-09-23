@@ -35,4 +35,10 @@ body {
   .pagination {
     justify-content: center;
   }
+
+  canvas.pie-chart {
+    margin: auto;
+    max-width: 350px;
+    max-height: 350px;
+  }
 }

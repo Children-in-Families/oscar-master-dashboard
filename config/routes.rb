@@ -8,6 +8,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :dashboard, only: :show do
+    get :status_overview
+    get :sync_overview
+    get :instance_overview
+    get :location_overview
+  end
+
   resources :admin_users
   resources :duplications, only: :index do
     put :resolve, on: :member

@@ -39,12 +39,13 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 
-  gem "capistrano", "~> 3.14", require: false
-  gem "capistrano-rails", "~> 1.4", require: false
+  gem 'capistrano', '~> 3.14', require: false
+  gem 'capistrano-rails', '~> 1.4', require: false
   gem 'capistrano-rvm'
   gem 'capistrano-passenger'
   gem 'ed25519'
   gem 'bcrypt_pbkdf'
+  gem 'rubocop', '~> 0.92.0', require: false
 end
 
 group :test do
@@ -56,27 +57,27 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem "ransack", "~> 2.3"
+gem 'ransack', '~> 2.3'
 
-gem "responders", "~> 3.0"
+gem 'responders', '~> 3.0'
 
-gem "simple_form", "~> 5.2"
+gem 'simple_form', '~> 5.2'
 
-gem "kaminari", "~> 1.2"
+gem 'kaminari', '~> 1.2'
 
-gem "acts_as_paranoid", "~> 0.8.1"
+gem 'acts_as_paranoid', '~> 0.8.1'
 
-gem "inherited_resources", "~> 1.13"
+gem 'inherited_resources', '~> 1.13'
 
-gem "pundit", "~> 2.3"
+gem 'pundit', '~> 2.3'
 
-gem "enumerize", "~> 2.7"
+gem 'enumerize', '~> 2.7'
 
-gem "caxlsx", "~> 3.0"
-gem "ahoy_email", "1.0.3"
+gem 'caxlsx', '~> 3.0'
+gem 'ahoy_email', '1.0.3'
 
-gem 'redis', "~> 4.0"
+gem 'redis', '~> 4.0'
 
-gem "whenever", "~> 1.0"
+gem 'whenever', '~> 1.0'
 
-gem "appsignal", "~> 3.4"
+gem 'appsignal', '~> 3.4'

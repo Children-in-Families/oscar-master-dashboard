@@ -1,0 +1,74 @@
+<%= simple_form_for @q, url: url_for, method: :get do |f| %>
+  <% if action_name == 'sync_overview' %>
+    <%= f.label :synced_date, label: "Case Synced Date" %>
+    <div class="row">
+      <div class="col-6">
+        <%= f.input :synced_date_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "From" %>
+      </div>
+    
+      <div class="col-6">
+        <%= f.input :synced_date_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "To" %>
+      </div>
+    </div>
+
+
+    <%= f.label :referral_date, label: "Cross Referral Date" %>
+    <div class="row">
+      <div class="col-6">
+        <%= f.input :referral_date_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "From" %>
+      </div>
+    
+      <div class="col-6">
+        <%= f.input :referral_date_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "To" %>
+      </div>
+    </div>
+  <% else %>
+    <%= f.label :created_at, label: "Case Created Date" %>
+      <div class="row">
+        <div class="col-6">
+          <%= f.input :created_at_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "From" %>
+        </div>
+      
+        <div class="col-6">
+          <%= f.input :created_at_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "To" %>
+        </div>
+      </div>
+
+
+      <%= f.label :initial_referral_date, label: "Initial Referral Date" %>
+      <div class="row">
+        <div class="col-6">
+          <%= f.input :initial_referral_date_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "From" %>
+        </div>
+      
+        <div class="col-6">
+          <%= f.input :initial_referral_date_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "To" %>
+        </div>
+      </div>
+  <% end %>
+
+  <%= f.input :status, label: 'Case Status', collection: ['Active', 'Accepted', 'Referred', 'Exited'], input_html: { multiple: true } %>
+
+  <div class="d-none">
+    <%= f.input :province_id, label: 'Current Province' %>
+  </div>
+  <%= f.input :has_disability, label: 'Disability?', as: :boolean %>
+
+  <%= f.input :organization_ids, label: 'NGO', collection: Organization.active.pluck(:full_name, :id), input_html: { multiple: true } %>
+  <%= f.input :country, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, input_html: { multiple: true }, label: "Country" %>
+  <%= f.input :organization_integrated, collection: [['Yes', true], ['No', false]], label: 'Interoperability?' %>
+
+  <%= f.label :onboarding_date, label: "Onboarding date" %>
+  <div class="row">
+    <div class="col-6">
+      <%= f.input :organization_created_at_gteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "From" %>
+    </div>
+  
+    <div class="col-6">
+      <%= f.input :organization_created_at_lteq, label: false, input_html: { class: "form-control flatpickr", autocomplete: "off" }, placeholder: "To" %>
+    </div>
+  </div>
+
+  <%= f.submit 'Submit', class: "btn btn-primary" %>
+  <%= link_to "Clear Search", url_for({}) %>
+<% end %>
