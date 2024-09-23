@@ -2,7 +2,7 @@
 lock "~> 3.14.0"
 
 set :application, 'oscar-master-dashboard'
-set :repo_url, "git@github.com:rotati/#{fetch(:application)}.git"
+set :repo_url, "git@github.com:Children-in-Families/#{fetch(:application)}.git"
 set :deploy_to, "/var/www/#{fetch(:application)}"
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', "public/packs", ".bundle", "node_modules")
 set :linked_files, fetch(:linked_files, []).push('.env')
