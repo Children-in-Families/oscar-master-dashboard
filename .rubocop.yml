@@ -8,3 +8,6 @@ Layout/TrailingWhitespace:
 
 Layout/MultilineMethodCallIndentation:
   Enabled: false
+
+Layout/ArgumentAlignment:
+  Enabled: false
