@@ -1,0 +1,10 @@
+inherit_from: .rubocop_todo.yml
+
+Style/HashSyntax:
+  Enabled: false
+
+Layout/TrailingWhitespace:
+  Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: false

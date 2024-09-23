@@ -6,7 +6,7 @@
       <div class="col-12 col-md-4">
         <div class="card mb-3">
           <div class="card-header">
-            <h4>Total Cases <%= @report[:raw_data][:case_overview_total] %></h4>
+            <h4>Cases Synced to Primero <%= @report[:raw_data][:total_cases_synced] %></h4>
           </div>
         </div>
       </div>
@@ -14,7 +14,7 @@
       <div class="col-12 col-md-4">
         <div class="card mb-3">
           <div class="card-header">
-            <h4>Total of Child Protection <%= @report[:raw_data][:child_protection_total] %></h4>
+            <h4>Cases Referred from Primero <%= @report[:raw_data][:total_cases_referred_from_primero] %></h4>
           </div>
         </div>
       </div>
@@ -22,22 +22,22 @@
       <div class="col-12 col-md-4">
         <div class="card mb-3">
           <div class="card-header">
-            <h4>Total of Cases with Risk Assessment <%= @report[:raw_data][:total_risk_assessments] %></h4>
+            <h4>Cases Referred to Primero <%= @report[:raw_data][:total_cases_referred_to_primero] %></h4>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="row pie-chart-wrapper text-center">
+    <div class="row text-center">
       <div class="col-12 col-md-4">
         <div class="card">
           <div class="card-body">
             <h5>
-              Case Ovewview
+              Synced Cases by Gender
             </h5>
 
             <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-              <canvas class="pie-chart chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_overview] }.to_json %>">
+              <canvas class="chart-case-by-age" data-index-axis='x' data-source="<%= @report[:chart_data][:synced_case_by_gender].to_json %>">
               </canvas>
             </div>
           </div>
@@ -48,26 +48,24 @@
         <div class="card">
           <div class="card-body">
             <h5>
-              Case Protection
+              Case Referrals by Gender
             </h5>
-
             <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-              <canvas class="pie-chart chart-holder" data-source="<%= { client_status: @report[:chart_data][:child_protection] }.to_json %>">
+              <canvas class="chart-case-by-age" data-index-axis='x' data-source="<%= @report[:chart_data][:case_referral_by_gender].to_json %>">
               </canvas>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="col-12 col-md-4">
+      <div id="clients-age-gender" class="col-12 col-md-4">
         <div class="card">
           <div class="card-body">
             <h5>
-              Level of Risk of <%= @q.organizations.count %> NGO(s)
+              Referral Status
             </h5>
-
             <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-              <canvas class="pie-chart chart-holder" data-source="<%= { client_status: @report[:chart_data][:risk_assessments] }.to_json %>">
+              <canvas class="chart-holder" data-source="<%= { client_age_gender: @report[:chart_data][:case_referral_by_status] }.to_json %>">
               </canvas>
             </div>
           </div>

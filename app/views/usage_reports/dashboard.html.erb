@@ -7,7 +7,7 @@
     <div class="col-9 col-xl-10">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a href="#" class="nav-link font-weight-bold active" id="clients-status-tab" data-toggle="tab" data-target="#clients-status" role="tab" aria-controls="home" aria-selected="true">Clients' status</a>
+          <a href="#" class="nav-link font-weight-bold active" id="clients-status-tab" data-toggle="tab" data-target="#client-status" role="tab" aria-controls="home" aria-selected="true">Clients' status</a>
         </li>
 
         <li class="nav-item">
@@ -24,7 +24,7 @@
       </ul>
 
       <div class="tab-content mt-4" id="myTabContent">
-        <div class="tab-pane fade show active" id="clients-status" role="tabpanel" aria-labelledby="clients-status-tab">
+        <div class="tab-pane fade show active pie-chart-wrapper" id="clients-status" role="tabpanel" aria-labelledby="clients-status-tab">
           <div class="chart-container text-center mx-auto" style="max-width: 500px">
             <canvas widht="800" height="800" class="chart-holder" data-source="<%= { client_status: @chart_engine.client_status_data }.to_json %>">
             </canvas>

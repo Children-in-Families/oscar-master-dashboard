@@ -1,197 +1,219 @@
-require("@rails/ujs").start()
-require("turbolinks").start()
-require("@rails/activestorage").start()
-require("channels")
+require("@rails/ujs").start();
+require("turbolinks").start();
+require("@rails/activestorage").start();
+require("channels");
 
 import 'jquery-ui/ui/widgets/datepicker';
 import "@selectize/selectize";
-
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-Chart.register(ChartDataLabels);
-
 import jQuery from "jquery";
-global.$ = jQuery;
-
 require("bootstrap");
 
-$(document).on("turbolinks:load", function() {
+global.$ = jQuery;
+Chart.register(ChartDataLabels);
+
+$(document).on("turbolinks:load", function () {
+  initUIComponents();
+  initCharts();
+
+  deleteInstanceHandler();
+});
+
+$(document).on('turbolinks:before-cache', function () {
+  destroySelectizeInstances();
+});
+
+function initUIComponents() {
   $(".flatpickr").datepicker({
     changeMonth: true,
     changeYear: true,
     dateFormat: "yy-mm-dd"
   });
-  
+
   $('.dropdown-toggle').dropdown();
   $("select").selectize({});
+}
 
-  deleteInstanceHandler();
-
-  if ($("#clients-status .chart-holder").length > 0) {
-    initChartjs();
-    initClientsAgeChart();
-    initPrimeroChart();
-    initNGOChart();
-  }
-
-})
-
-$(document).on('turbolinks:before-cache', function() {
-  $('.select').each(function() {
+function destroySelectizeInstances() {
+  $('.select').each(function () {
     if (this.selectize) {
       this.selectize.destroy();
     }
   });
-});
-
+}
 
 function deleteInstanceHandler() {
-  $("input[name='instance_name'").on("keyup", function() {
-    var actualInstanceName = $(this).closest("form").find(".instance_name").text();
-    var deleteButton = $(this).closest("form").find(".submit-btn");
+  $("input[name='instance_name']").on("keyup", function () {
+    const actualInstanceName = $(this).closest("form").find(".instance_name").text();
+    const deleteButton = $(this).closest("form").find(".submit-btn");
 
-    if ($(this).val() == actualInstanceName) {
-      deleteButton.removeClass("disabled");
-    } else {
-      deleteButton.addClass("disabled");
-    }
-  })
+    $(this).val() === actualInstanceName ? deleteButton.removeClass("disabled") : deleteButton.addClass("disabled");
+  });
 }
 
+function initCharts() {
+  initChartjs();
+  initClientsAgeChart();
 
-function initChartjs () {
+  if ($(".pie-chart-wrapper .chart-holder").length > 0) {
+    initPrimeroChart();
+    initNGOChart();
+  }
+}
+
+function initChartjs() {
+  const pieChartHolders = $(".pie-chart-wrapper .chart-holder");
+
+  pieChartHolders.each(function () {
+    const data = $(this).data("source").client_status;
+    createPieChart(this, data);
+  });
+
+  const caseByAges = $('.chart-case-by-age');
+
+  caseByAges.each(function () {
+    const data = $(this).data("source");
+    const indexAxis = $(this).data("indexAxis");
+    createBarChart(this, data, indexAxis);
+  });
+}
+
+function createPieChart(element, data) {
   const config = {
     type: 'pie',
-    data: $("#clients-status .chart-holder").data("source").client_status,
+    data: data,
     options: {
       responsive: true,
       plugins: {
-        legend: {
-          position: 'top',
-        },
+        legend: { position: 'bottom' },
         datalabels: {
-          display: true,
+          display: context => context.dataset.data[context.dataIndex] > 0,
+          anchor: 'end',
+          align: 'start',
           color: '#fff',
-          font: {
-            size: 12,
-          }
+          font: { size: 12 }
         }
       }
-    },
+    }
   };
-
-  var ctx = $('#clients-status .chart-holder')[0].getContext('2d');
-  var myChart = new Chart(ctx, config);
+  const ctx = $(element)[0].getContext('2d');
+  new Chart(ctx, config);
 }
 
-function initClientsAgeChart() {
-  var data = $("#clients-age-gender .chart-holder").data("source").client_age_gender
-  var max = Math.max.apply(Math, data.datasets[0].data);
-
+function createBarChart(element, data, indexAxis = 'x') {
   const config = {
     type: 'bar',
     data: data,
     options: {
-      responsive: true,
-      scales: {
-        y: {
-          max: max + (max >= 10 ? max/10 : 1),
-        }
-      },
-      plugins: {
-        legend: {
-          display: false,
-        },
-        datalabels: {
-          display: true,
-          color: '#000',
-          clip: true,
-          align: 'end',
-          anchor: 'end',
-          font: {
-            size: 12,
-          }
-        }
-      }
-    },
-  };
-
-  var ctx = $('#clients-age-gender .chart-holder')[0].getContext('2d');
-  var myChart = new Chart(ctx, config);
-}
-
-function initPrimeroChart() {
-  var data = $("#cases-synced-to-primero .chart-holder").data("source").case_sync_to_primero
-  var max = Math.max.apply(Math, data.datasets[0].data);
-
-  const config = {
-    type: 'bar',
-    data: data,
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          max: max + (max >= 10 ? max/10 : 1),
-        }
-      },
-      plugins: {
-        legend: {
-          display: false,
-        },
-        datalabels: {
-          display: true,
-          clip: true,
-          align: 'end',
-          anchor: 'end',
-          color: '#000',
-          font: {
-            size: 12,
-          }
-        }
-      }
-    },
-  };
-
-  var ctx = $('#cases-synced-to-primero .chart-holder')[0].getContext('2d');
-  var myChart = new Chart(ctx, config);
-}
-
-
-function initNGOChart() {
-  var data = $("#ngo-by-country .chart-holder").data("source").ngo_by_country
-  var max1 = Math.max.apply(Math, data.datasets[0].data);
-  var max2 = Math.max.apply(Math, data.datasets[1].data);
-  var max = Math.max(max1, max2);
-
-  const config = {
-    type: 'bar',
-    data: $("#ngo-by-country .chart-holder").data("source").ngo_by_country,
-    options: {
-      indexAxis: 'y',
+      indexAxis: indexAxis,
       responsive: true,
       scales: {
         x: {
-          max: max + (max >= 10 ? max/10 : 1),
+          stacked: true,
+          beginAtZero: true,
+          barPercentage: 0.5,
+          categoryPercentage: 0.5
+        },
+        y: {
+          stacked: true,
+          beginAtZero: true,
+          barPercentage: 0.5,
+          categoryPercentage: 0.5
         }
       },
       plugins: {
-        legend: {
-          position: 'top',
-        },
+        legend: { position: 'bottom' },
+        datalabels: {
+          display: context => context.dataset.data[context.dataIndex] > 0,
+          anchor: 'end',
+          align: 'start',
+          color: '#000',
+          font: { size: 10 }
+        }
+      }
+    }
+  };
+  const ctx = $(element)[0].getContext('2d');
+  new Chart(ctx, config);
+}
+
+function initClientsAgeChart() {
+  const chartsContainer = $("#clients-age-gender .chart-holder");
+
+  chartsContainer.each(function () {
+    const data = $(this).data("source").client_age_gender;
+    const max = Math.max(...data.datasets[0].data);
+    createAgeGenderChart(this, data, max);
+  });
+}
+
+function createAgeGenderChart(element, data, max) {
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: true,
+      scales: {
+        x: { barThickness: 20, maxBarThickness: 40 },
+        y: {
+          max: max + (max >= 10 ? max / 10 : 1),
+          beginAtZero: true,
+          suggestedMax: 100
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        datalabels: {
+          display: true,
+          color: '#000',
+          clip: true,
+          align: 'end',
+          anchor: 'end',
+          font: { size: 12 }
+        }
+      }
+    }
+  };
+  const ctx = $(element)[0].getContext('2d');
+  new Chart(ctx, config);
+}
+
+function initPrimeroChart() {
+  const data = $("#cases-synced-to-primero .chart-holder").data("source").case_sync_to_primero;
+  const max = Math.max(...data.datasets[0].data);
+  createBarChartWithMax("#cases-synced-to-primero .chart-holder", data, max);
+}
+
+function initNGOChart() {
+  const data = $("#ngo-by-country .chart-holder").data("source").ngo_by_country;
+  const max = Math.max(Math.max(...data.datasets[0].data), Math.max(...data.datasets[1].data));
+  createBarChartWithMax("#ngo-by-country .chart-holder", data, max, 'y');
+}
+
+function createBarChartWithMax(selector, data, max, indexAxis = 'x') {
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      indexAxis: indexAxis,
+      responsive: true,
+      scales: {
+        [indexAxis === 'x' ? 'y' : 'x']: { max: max + (max >= 10 ? max / 10 : 1) }
+      },
+      plugins: {
+        legend: { position: 'bottom' },
         datalabels: {
           display: true,
           align: 'end',
           anchor: 'end',
           clip: true,
           color: '#000',
-          font: {
-            size: 12,
-          }
+          font: { size: 12 }
         }
       }
-    },
+    }
   };
-
-  var ctx = $('#ngo-by-country .chart-holder')[0].getContext('2d');
-  var myChart = new Chart(ctx, config);
+  const ctx = $(selector)[0].getContext('2d');
+  new Chart(ctx, config);
 }

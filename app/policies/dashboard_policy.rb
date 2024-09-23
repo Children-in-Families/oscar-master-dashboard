@@ -4,4 +4,8 @@ class DashboardPolicy < ApplicationPolicy
   def initialize(user, _record)
     @user = user
   end
+
+  def show?
+    user.admin? || user.editor?
+  end
 end

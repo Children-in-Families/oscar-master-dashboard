@@ -1,0 +1,21 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link font-weight-bold <%= active_class(action_name == 'show') %>" href="<%= dashboard_path %>">Overview</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link font-weight-bold <%= active_class(action_name == 'status_overview') %>" href="<%= status_overview_dashboard_path %>">Status, Age & Gender</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link font-weight-bold <%= active_class(action_name == 'sync_overview') %>" href="<%= sync_overview_dashboard_path %>">Interoperability</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link font-weight-bold <%= active_class(action_name == 'instance_overview') %>" href="<%= instance_overview_dashboard_path %>">NGO</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link font-weight-bold <%= active_class(action_name == 'location_overview') %>" href="<%= location_overview_dashboard_path %>">Location</a>
+  </li>
+</ul>
