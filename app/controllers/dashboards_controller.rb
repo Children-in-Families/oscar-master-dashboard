@@ -51,6 +51,7 @@ class DashboardsController < ApplicationController
       :synced_date_lteq,
       :referral_date_gteq,
       :referral_date_lteq,
+      :international,
       status: [],
       province_id: [],
       country: [],

@@ -8,6 +8,7 @@ class DashboardFilter
   attr_accessor :organization_created_at_gteq
   attr_accessor :organization_created_at_lteq
   attr_accessor :country
+  attr_accessor :international
 
   attr_accessor :has_disability
   attr_accessor :created_at_lteq
@@ -28,6 +29,12 @@ class DashboardFilter
     query += " AND organizations.integrated = #{organization_integrated}" if organization_integrated.present?
     query += " AND organizations.id IN (#{organization_ids.join(',')})" if organization_ids.present?
     query += " AND organizations.country IN (#{country.map { |c| "'#{c}'" }.join(',')})" if country.present?
+
+    if international == 'true'
+      query += " AND organizations.country != 'cambodia'"
+    elsif international == 'false'
+      query += " AND organizations.country = 'cambodia'"
+    end
 
     Organization.where(query)
   end
