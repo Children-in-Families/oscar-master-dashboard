@@ -36,7 +36,7 @@ class DashboardFilter
       query += " AND organizations.country = 'cambodia'"
     end
 
-    Organization.non_demo.active.where(query)
+    Organization.non_demo.active.without_shared.where(query)
   end
 
   def client_query
