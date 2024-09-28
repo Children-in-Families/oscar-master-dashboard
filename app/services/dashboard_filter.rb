@@ -41,6 +41,17 @@ class DashboardFilter
     Organization.non_demo.active.without_shared.where(query)
   end
 
+  def organizations_with_risk_assessment_enabled
+    counter = 0
+
+    organizations.each do |organization|
+      Organization.switch_to(organization.short_name)
+      counter += 1 if Setting.first&.enabled_risk_assessment?
+    end
+
+    counter
+  end
+
   def client_query
     query = "1 = 1"
 
