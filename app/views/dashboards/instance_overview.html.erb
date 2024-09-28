@@ -15,6 +15,7 @@
             <th>Other</th>
             <th>Opening Cases</th>
             <th>Closed Cases</th>
+            <th>Rejected Cases</th>
           </tr>
         </thead>
 
@@ -28,8 +29,9 @@
               <td><%= row[:male_count] - row[:male_with_disability_count] %></td>
               <td><%= row[:male_with_disability_count] %></td>
               <td><%= row[:non_binary_count] %></td>
-              <td><%= row[:active] %></td>
-              <td><%= row[:exited] %></td>
+              <td><%= row[:active] + row[:accepted] %></td>
+              <td><%= row[:exited] - row[:rejected_case] %></td>
+              <td><%= row[:rejected_case] %></td>
             </tr>
           <% end %>
         </tbody>

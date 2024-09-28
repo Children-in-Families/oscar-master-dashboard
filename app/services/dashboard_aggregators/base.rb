@@ -29,6 +29,20 @@ module DashboardAggregators
   
     private
 
+    def rejected_case
+      query = <<-SQL.squish
+        SELECT
+          COUNT(*) FILTER (WHERE status = 'Exited') AS rejected_case
+        FROM clients
+        LEFT JOIN enter_ngos ON enter_ngos.client_id = clients.id
+        #{disability_query}
+        #{joined_province_query}
+        WHERE enter_ngos.id IS NULL AND #{client_query}
+      SQL
+
+      ActiveRecord::Base.connection.execute(query).first || {}
+    end
+
     attr_reader :filter
   end
 end

@@ -10,14 +10,18 @@ module DashboardAggregators
 
       all_ngo_data = organizations.map do |organization|
         Organization.switch_to(organization.short_name)
-        ngo_aggregates.symbolize_keys.merge(
-          country: organization.country
-        )
+        ngo_aggregates
+          .merge(rejected_case)
+          .symbolize_keys.merge(
+            country: organization.country
+          )
       end
 
       chat_data = organizations.map do |organization|
         Organization.switch_to(organization.short_name)
-        case_overview.symbolize_keys
+        case_overview
+          .merge(rejected_case)
+          .symbolize_keys
       end.each_with_object({}) do |data_per_org, output|
         data_per_org.each do |key, value|
           output[key] ||= 0
@@ -30,16 +34,17 @@ module DashboardAggregators
         all_ngo_data: all_ngo_data,
         chart_data: {
           case_overview: {
-            labels: ['Opening Cases', 'Reaccepting  Cases', 'Closed Cases'],
+            labels: ['Opening Cases', 'Reaccepting  Cases', 'Closed Cases', 'Rejected Cases'],
             datasets: [
               {
                 data: [
                   chat_data[:case_overview_opening],
                   chat_data[:reaccepting_cases],
-                  chat_data[:case_overview_closed]
+                  chat_data[:case_overview_closed] - chat_data[:rejected_case],
+                  chat_data[:rejected_case]
                 ],
-                backgroundColor: ['#1ab394', '#23c6c8', '#c72132'],
-                hoverBackgroundColor: ['#1ab394', '#23c6c8', '#c72132']
+                backgroundColor: ['#1ab394', '#23c6c8', '#c72132', '#ed5565'],
+                hoverBackgroundColor: ['#1ab394', '#23c6c8', '#c72132', '#ed5565']
               }
             ]
           }

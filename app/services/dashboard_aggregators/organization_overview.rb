@@ -7,6 +7,7 @@ module DashboardAggregators
         Organization.switch_to(organization.short_name)
         basic_aggregates
           .merge(disability_aggregates)
+          .merge(rejected_case)
           .symbolize_keys
           .merge(
             organization_full_name: organization.full_name,

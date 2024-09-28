@@ -13,6 +13,7 @@
                 <th># of Total Cases</th>
                 <th># of Openning Cases</th>
                 <th># of Closed Cases</th>
+                <th># of Rejected Cases</th>
               </tr>
             </thead>
 
@@ -23,7 +24,8 @@
                   <td><%= rows.count %></td>
                   <td><%= rows.sum{ |r| r[:total_cases].to_i } %></td>
                   <td><%= rows.sum{ |r| r[:case_opening].to_i } %></td>
-                  <td><%= rows.sum{ |r| r[:case_closed].to_i } %></td>
+                  <td><%= rows.sum{ |r| r[:case_closed].to_i } - rows.sum{ |r| r[:rejected_case].to_i } %></td>
+                  <td><%= rows.sum{ |r| r[:rejected_case].to_i } %></td>
                 </tr>
               <% end %>
             </tbody>
