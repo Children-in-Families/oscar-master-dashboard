@@ -3,7 +3,7 @@
 module DashboardAggregators
   class LocationOverview < Base
     def call
-      cambodia_data = organizations.without_shared.cambodia.non_demo.map do |organization|
+      cambodia_data = organizations.cambodia.map do |organization|
         Organization.switch_to(organization.short_name)
         cambodia_aggregates.symbolize_keys
       end

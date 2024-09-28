@@ -29,11 +29,14 @@ module ApplicationHelper
   end
 
   def current_province_options
-    organization = Organization.non_demo.active.without_shared.cambodia.first
+    organizations = Organization.non_demo.active.without_shared.cambodia
 
-    return [] if organization.blank?
-    
-    Province.distinct.pluck(:name).sort
+    return [] if organizations.blank?
+
+    organizations.map do |organization|
+      Organization.switch_to(organization.short_name)
+      Province.distinct.pluck(:name)
+    end.flatten.uniq.sort
   end
 
   def link_to_if(condition, name, options = {}, html_options = {}, &block)
