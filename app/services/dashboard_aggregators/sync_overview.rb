@@ -7,7 +7,6 @@ module DashboardAggregators
         Organization.switch_to(organization.short_name)
         cases_synced_to_primero
           .merge(cases_referred_primero)
-          .merge(rejected_cases_referred_primero)
           .symbolize_keys
       end.each_with_object({}) do |data_per_org, output|
         data_per_org.each do |key, value|
@@ -115,6 +114,7 @@ module DashboardAggregators
           COUNT(DISTINCT clients.id) FILTER (WHERE #{REFERRED_TO_PRIMERO} AND #{IS_NON_BINARY}) AS non_binary_cases_referred_to_primero,
           COUNT(DISTINCT clients.id) FILTER (WHERE #{REFERRED_TO_PRIMERO} AND referrals.referral_status = 'Referred') AS pending_cases_referred_to_primero,
           COUNT(DISTINCT clients.id) FILTER (WHERE #{REFERRED_TO_PRIMERO} AND referrals.referral_status = 'Accepted') AS accepted_cases_referred_to_primero,
+          COUNT(DISTINCT clients.id) FILTER (WHERE #{REFERRED_TO_PRIMERO} AND referrals.referral_status = 'Exited') AS rejected_cases_referred_primero,
           COUNT(DISTINCT clients.id) FILTER (WHERE #{REFERRED_FROM_PRIMERO}) AS total_cases_referred_from_primero,
           COUNT(DISTINCT clients.id) FILTER (WHERE #{REFERRED_FROM_PRIMERO} AND #{IS_MALE}) AS male_cases_referred_from_primero,
           COUNT(DISTINCT clients.id) FILTER (WHERE #{REFERRED_FROM_PRIMERO} AND #{IS_FEMALE}) AS female_cases_referred_from_primero,
@@ -123,19 +123,6 @@ module DashboardAggregators
         #{joined_province_query}
         JOIN referrals ON clients.id = referrals.client_id  AND #{client_query} AND #{referral_query}
         WHERE #{REFERRED_TO_PRIMERO} OR #{REFERRED_FROM_PRIMERO};
-      SQL
-
-      ActiveRecord::Base.connection.execute(query).first || {}
-    end
-
-    def rejected_cases_referred_primero
-      query = <<-SQL.squish
-        SELECT
-          COUNT(DISTINCT clients.id) AS rejected_cases_referred_primero
-        FROM clients
-        #{joined_province_query}
-        JOIN referrals ON clients.id = referrals.client_id AND #{REFERRED_TO_PRIMERO} AND #{client_query} AND #{referral_query}
-        JOIN exit_ngos ON clients.id = exit_ngos.client_id AND exit_ngos.exit_circumstance = 'Rejected Referral';
       SQL
 
       ActiveRecord::Base.connection.execute(query).first || {}
