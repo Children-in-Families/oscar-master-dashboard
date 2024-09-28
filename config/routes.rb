@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :admin_users
-  root to: "usage_reports#dashboard"
+  root to: "dashboards#show"
   
   resources :organizations, path: 'instances' do
     member do
