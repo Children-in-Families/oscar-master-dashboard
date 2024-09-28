@@ -20,17 +20,18 @@ module DashboardAggregators
       {
         raw_data: data,
         chart_data: {
-          case_overview: {
-            labels: ['Opening Cases', 'Reaccepting  Cases', 'Closed Cases'],
+          case_by_status: {
+            labels: ['Active', 'Accepted', 'Exited', 'Referred'],
             datasets: [
               {
                 data: [
-                  data[:case_overview_opening],
-                  data[:reaccepting_cases],
-                  data[:case_overview_closed]
+                  data[:active],
+                  data[:accepted],
+                  data[:exited],
+                  data[:referred]
                 ],
-                backgroundColor: ['#1ab394', '#23c6c8', '#c72132'],
-                hoverBackgroundColor: ['#1ab394', '#23c6c8', '#c72132']
+                backgroundColor: ['#1ab394', '#23c6c8', '#c72132', '#ed5565'],
+                hoverBackgroundColor: ['#1ab394', '#23c6c8', '#c72132', '#ed5565']
               }
             ]
           },
@@ -73,6 +74,10 @@ module DashboardAggregators
       query = <<-SQL.squish
         SELECT
           COUNT(*) AS case_overview_total,
+          COUNT(*) FILTER (WHERE status = 'Exited') AS exited,
+          COUNT(*) FILTER (WHERE status = 'Accepted') AS accepted,
+          COUNT(*) FILTER (WHERE status = 'Active') AS active,
+          COUNT(*) FILTER (WHERE status = 'Referred') AS referred,
           COUNT(*) FILTER (WHERE status = 'Exited') AS case_overview_closed,
           COUNT(*) FILTER (WHERE #{IS_ACCEPTED_OR_ACTIVE}) AS case_overview_opening
         FROM clients

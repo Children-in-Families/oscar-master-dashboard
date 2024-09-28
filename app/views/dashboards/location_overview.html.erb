@@ -29,8 +29,20 @@
             </tbody>
           </table>
         </div>
-      </div>
 
+        <div class="card mt-4 pie-chart-wrapper">
+          <div class="card-body">
+            <h5>
+              Case Ovewview
+            </h5>
+
+            <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
+              <canvas class="pie-chart chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_overview] }.to_json %>">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="col-12 col-md-7">
         <div class="table-responsive">

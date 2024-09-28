@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DashboardAggregators
-  class LocationOverview < Base
+  class LocationOverview < Overview
     def call
       cambodia_data = organizations.cambodia.map do |organization|
         Organization.switch_to(organization.short_name)
@@ -15,9 +15,35 @@ module DashboardAggregators
         )
       end
 
+      chat_data = organizations.map do |organization|
+        Organization.switch_to(organization.short_name)
+        case_overview.symbolize_keys
+      end.each_with_object({}) do |data_per_org, output|
+        data_per_org.each do |key, value|
+          output[key] ||= 0
+          output[key] += value.to_i
+        end
+      end
+
       {
         cambodia: cambodia_data,
-        all_ngo_data: all_ngo_data
+        all_ngo_data: all_ngo_data,
+        chart_data: {
+          case_overview: {
+            labels: ['Opening Cases', 'Reaccepting  Cases', 'Closed Cases'],
+            datasets: [
+              {
+                data: [
+                  chat_data[:case_overview_opening],
+                  chat_data[:reaccepting_cases],
+                  chat_data[:case_overview_closed]
+                ],
+                backgroundColor: ['#1ab394', '#23c6c8', '#c72132'],
+                hoverBackgroundColor: ['#1ab394', '#23c6c8', '#c72132']
+              }
+            ]
+          }
+        }
       }
     end
 

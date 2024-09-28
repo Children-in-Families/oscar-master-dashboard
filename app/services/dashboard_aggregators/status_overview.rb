@@ -30,21 +30,6 @@ module DashboardAggregators
               }
             ]
           },
-          case_by_status: {
-            labels: ['Active', 'Accepted', 'Exited', 'Referred'],
-            datasets: [
-              {
-                data: [
-                  data[:active],
-                  data[:accepted],
-                  data[:exited],
-                  data[:referred]
-                ],
-                backgroundColor: ['#1ab394', '#23c6c8', '#c72132', '#ed5565'],
-                hoverBackgroundColor: ['#1ab394', '#23c6c8', '#c72132', '#ed5565']
-              }
-            ]
-          },
           case_by_age: {
             labels: ['No DoB', '0-4', '5-9', '10-14', '15-17', '18+'],
             datasets: [

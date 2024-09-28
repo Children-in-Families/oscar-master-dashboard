@@ -33,11 +33,10 @@
         <div class="card">
           <div class="card-body">
             <h5>
-              Case Ovewview
+              Case by Status
             </h5>
-
             <div class="chart-container text-center mx-auto" style="max-heigh: 500px">
-              <canvas class="pie-chart chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_overview] }.to_json %>">
+              <canvas class="pie-chart chart-holder" data-source="<%= { client_status: @report[:chart_data][:case_by_status] }.to_json %>">
               </canvas>
             </div>
           </div>
