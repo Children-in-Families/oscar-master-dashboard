@@ -8,6 +8,7 @@ class DashboardFilter
   attr_accessor :organization_created_at_gteq
   attr_accessor :organization_created_at_lteq
   attr_accessor :country
+  attr_accessor :cambodia_province
   attr_accessor :international
 
   attr_accessor :has_disability
@@ -16,7 +17,6 @@ class DashboardFilter
   attr_accessor :status
   attr_accessor :initial_referral_date_lteq
   attr_accessor :initial_referral_date_gteq
-  attr_accessor :province_id
   attr_accessor :synced_date_lteq
   attr_accessor :synced_date_gteq
   attr_accessor :referral_date_gteq
@@ -32,7 +32,9 @@ class DashboardFilter
 
     if international == 'true'
       query += " AND organizations.country != 'cambodia'"
-    elsif international == 'false'
+    end
+    
+    if international == 'false' || cambodia_province.present?
       query += " AND organizations.country = 'cambodia'"
     end
 
@@ -49,6 +51,17 @@ class DashboardFilter
     query += " AND clients.synced_date >= '#{synced_date_gteq}'" if synced_date_gteq.present?
     query += " AND clients.synced_date <= '#{synced_date_lteq}'" if synced_date_lteq.present?
 
+    query
+  end
+
+  def joined_province_query
+    "JOIN provinces ON clients.province_id = provinces.id AND provinces.name IN (#{cambodia_province.map { |c| "'#{c}'" }.join(',')})" if cambodia_province.present?
+  end
+
+  def province_query
+    query = "1 = 1"
+    query += " AND provinces.name IN (#{cambodia_province.map { |c| "'#{c}'" }.join(',')})" if cambodia_province.present?
+      
     query
   end
 

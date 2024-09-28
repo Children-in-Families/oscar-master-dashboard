@@ -30,6 +30,7 @@ module DashboardAggregators
           COUNT(*) FILTER (WHERE status = 'Exited') AS case_closed,
           COUNT(*) FILTER (WHERE #{IS_ACCEPTED_OR_ACTIVE}) AS case_opening
         FROM clients
+        #{joined_province_query}
         WHERE #{client_query};
       SQL
 
@@ -45,7 +46,7 @@ module DashboardAggregators
             COUNT(*) FILTER (WHERE #{IS_FEMALE}) AS female_count,
             COUNT(*) FILTER (WHERE #{IS_NON_BINARY}) AS non_binary_count
         FROM clients
-        JOIN provinces ON provinces.id = clients.province_id AND #{client_query} AND #{status_query}
+        JOIN provinces ON provinces.id = clients.province_id AND #{client_query} AND #{status_query} AND #{province_query}
         GROUP BY provinces.id;
       SQL
 

@@ -11,3 +11,6 @@ Layout/MultilineMethodCallIndentation:
 
 Layout/ArgumentAlignment:
   Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false

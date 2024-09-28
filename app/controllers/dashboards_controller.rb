@@ -37,6 +37,7 @@ class DashboardsController < ApplicationController
     params[:dashboard_filter][:organization_ids] = params[:dashboard_filter][:organization_ids].reject(&:blank?)
     params[:dashboard_filter][:country] = params[:dashboard_filter][:country].reject(&:blank?)
     params[:dashboard_filter][:status] = params[:dashboard_filter][:status].reject(&:blank?)
+    params[:dashboard_filter][:cambodia_province] = params[:dashboard_filter][:cambodia_province].reject(&:blank?)
 
     params.require(:dashboard_filter).permit(
       :organization_integrated,
@@ -53,7 +54,7 @@ class DashboardsController < ApplicationController
       :referral_date_lteq,
       :international,
       status: [],
-      province_id: [],
+      cambodia_province: [],
       country: [],
       organization_ids: []
     )

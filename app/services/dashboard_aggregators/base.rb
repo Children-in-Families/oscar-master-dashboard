@@ -20,6 +20,7 @@ module DashboardAggregators
     IS_NO_DOB = 'date_of_birth IS NULL'
 
     delegate :organizations, :client_query, :disability_query,
+      :joined_province_query, :province_query,
       :status_query, :referral_query, to: :filter
     
     def initialize(filter)

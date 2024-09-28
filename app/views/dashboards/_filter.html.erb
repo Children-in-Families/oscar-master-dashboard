@@ -48,13 +48,10 @@
   <% end %>
 
   <%= f.input :status, label: 'Case Status', collection: ['Active', 'Accepted', 'Referred', 'Exited'], input_html: { multiple: true } %>
-
-  <div class="d-none">
-    <%= f.input :province_id, label: 'Current Province' %>
-  </div>
+  <%= f.input :cambodia_province, collection: current_province_options, label: 'Current Province', input_html: { multiple: true } %>
   <%= f.input :has_disability, label: 'Disability?', as: :boolean %>
 
-  <%= f.input :organization_ids, label: 'NGO', collection: Organization.active.pluck(:full_name, :id), input_html: { multiple: true } %>
+  <%= f.input :organization_ids, label: 'NGO', collection: Organization.active.non_demo.without_shared.pluck(:full_name, :id), input_html: { multiple: true } %>
   <%= f.input :country, collection: [Organization::SUPPORTED_COUNTRY.map(&:titleize), Organization::SUPPORTED_COUNTRY].transpose, input_html: { multiple: true }, label: "Country" %>
   <%= f.input :international, collection: [['Yes', true], ['No', false]], label: 'International?' %>
   <%= f.input :organization_integrated, collection: [['Yes', true], ['No', false]], label: 'Interoperability?' %>

@@ -77,6 +77,7 @@ module DashboardAggregators
           COUNT(*) FILTER (WHERE #{IS_ACCEPTED_OR_ACTIVE}) AS case_overview_opening
         FROM clients
         #{disability_query}
+        #{joined_province_query}
         WHERE #{client_query};
       SQL
 
@@ -89,6 +90,7 @@ module DashboardAggregators
         FROM clients
         JOIN enter_ngos ON enter_ngos.client_id = clients.id
         #{disability_query}
+        #{joined_province_query}
         WHERE #{client_query}
         GROUP BY clients.id
         HAVING COUNT(enter_ngos.client_id) > 1;
@@ -113,6 +115,7 @@ module DashboardAggregators
         JOIN program_stream_services ON program_stream_services.program_stream_id = program_streams.id
         JOIN services ON services.id = program_stream_services.service_id
         #{disability_query}
+        #{joined_province_query}
         WHERE services.id IN (#{service_ids.join(', ')}) AND #{IS_CHILD} AND #{client_query};
       SQL
   
@@ -153,6 +156,7 @@ module DashboardAggregators
         FROM latest_risk_levels
         JOIN clients ON clients.id = latest_risk_levels.client_id
         #{disability_query}
+        #{joined_province_query}
         WHERE #{client_query};
       SQL
   
