@@ -123,8 +123,8 @@ module DashboardAggregators
         #{joined_province_query}
         WHERE services.id IN (#{service_ids.join(', ')}) AND #{IS_CHILD} AND #{client_query};
       SQL
-  
-      ActiveRecord::Base.connection.execute(query).first || {}
+
+      service_ids.present? && ActiveRecord::Base.connection.execute(query).first || {}
     end
 
     def client_risk_assessments
@@ -135,9 +135,9 @@ module DashboardAggregators
             level_of_risk,
             created_at
           FROM risk_assessments
-  
+
           UNION ALL
-  
+
           SELECT
             client_id,
             level_of_risk,
@@ -164,7 +164,7 @@ module DashboardAggregators
         #{joined_province_query}
         WHERE #{client_query};
       SQL
-  
+
       ActiveRecord::Base.connection.execute(query).first || {}
     end
   end
