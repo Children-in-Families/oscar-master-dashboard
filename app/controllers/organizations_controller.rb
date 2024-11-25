@@ -25,12 +25,13 @@ class OrganizationsController < ApplicationController
       Rails.logger.info "========================== @org =========================="
       Rails.logger.info @org
 
-      org_id = @org&.parsed_response&.dig('organization', 'id')
+      org_id = @org&.parsed_response&.dig('organization', 'id') if @org&.parsed_response.is_a?(Hash)
 
       if org_id
         @organization = Organization.find(org_id)
         redirect_to resource_url(@organization)
       else
+        flash[:alert] = @org&.parsed_response
         render :new
       end
     else
@@ -41,7 +42,7 @@ class OrganizationsController < ApplicationController
   def update
     if @organization
       @org = upsert_instance_request("PUT")
-     
+
       if @org && @org.dig("organization", "id")
         redirect_to resource_url(@organization)
       else
@@ -103,15 +104,7 @@ class OrganizationsController < ApplicationController
 
     attributes = {
       headers: { Authorization: "Token token=#{current_admin_user&.token}" },
-      body: {
-        full_name: params.dig(:organization, :full_name),
-        demo: params.dig(:organization, :demo),
-        short_name: @organization.new_record? ? params.dig(:organization, :short_name) : @organization.short_name,
-        country: params.dig(:organization, :country),
-        supported_languages: params.dig(:organization, :supported_languages),
-        referral_source_category_name: params.dig(:organization, :referral_source_category_name),
-        **logo
-      }
+      body: params.require(:organization).permit(:demo, :full_name, :short_name, :logo, :country, :referral_source_category_name, supported_languages: []).to_h
     }
 
     if http_verb == "POST"
