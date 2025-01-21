@@ -1,4 +1,5 @@
 <%= simple_form_for @organization, wrapper: :horizontal_form do |f| %>
+  <%= f.input :parent_id, as: :select, collection: Organization.pluck(:full_name, :id), wrapper: :horizontal_select %>
   <%= f.input :full_name %>
   <%= f.input :short_name, disabled: @organization.persisted? %>
   <%= f.input :demo %>

@@ -18,7 +18,7 @@ class OrganizationsController < ApplicationController
   end
 
   def create
-    @organization = Organization.new(params.require(:organization).permit(:demo, :full_name, :short_name, :logo, :country, :referral_source_category_name, supported_languages: []))
+    @organization = Organization.new(params.require(:organization).permit(:demo, :full_name, :short_name, :logo, :country, :referral_source_category_name, :parent_id, supported_languages: []))
 
     if @organization.valid?
       @org = upsert_instance_request("POST")
@@ -104,7 +104,7 @@ class OrganizationsController < ApplicationController
 
     attributes = {
       headers: { Authorization: "Token token=#{current_admin_user&.token}" },
-      body: params.require(:organization).permit(:demo, :full_name, :short_name, :logo, :country, :referral_source_category_name, supported_languages: []).to_h
+      body: params.require(:organization).permit(:demo, :full_name, :short_name, :logo, :country, :referral_source_category_name, :parent_id, supported_languages: []).to_h
     }
 
     if http_verb == "POST"

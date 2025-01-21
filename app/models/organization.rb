@@ -36,8 +36,10 @@ class Organization < ApplicationRecord
 
   mount_uploader :logo, ImageUploader
 
+  has_many :parent, class_name: 'Organization', foreign_key: 'parent_id'
   has_many :global_identity_organizations, dependent: :destroy
   has_many :usage_reports
+  has_many :children, class_name: 'Organization', foreign_key: 'parent_id', dependent: :restrict_with_error
 
   before_save :clean_supported_languages, if: :supported_languages?
 
